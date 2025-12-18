@@ -1,5 +1,5 @@
 #preview-bar-iframe { display:none; } 
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+/* Google Fonts loaded via preload in theme.liquid for better LCP */
 
 
 $bodyfont: 'Roboto', sans-serif;
@@ -47,10 +47,12 @@ $greyline: #e5e5e4;
 $greybk: #f7f7f7; 
 
 
+/* CLS Prevention: Image containers with aspect-ratio to prevent layout shifts */
 .image {
   display: block;
   margin: 0 auto;
   width: 100%;
+  height: auto;
 }
 
 .grid-view-item__image-wrapper .image {
@@ -58,14 +60,31 @@ $greybk: #f7f7f7;
   top: 0;
 }
 
+/* CLS Prevention: Maintain space for lazy-loaded images */
 .image.lazyload {
   opacity: 0;
+  min-height: 1px;
 }
 
 .image-wrapper {
   margin: 0 auto;
   position: relative;
   width: 100%;
+  /* CLS Prevention: Reserve space for images before they load */
+  aspect-ratio: 1 / 1;
+  background-color: #f7f7f7;
+}
+
+.image-wrapper--product {
+  aspect-ratio: 1 / 1;
+}
+
+.image-wrapper--hero {
+  aspect-ratio: 8 / 3;
+}
+
+.image-wrapper--banner {
+  aspect-ratio: 16 / 9;
 }
 
 
@@ -292,14 +311,13 @@ font-weight: $heavy;
     }
   }
   
+     /* CLS Prevention: Removed scale transform that causes layout shifts */
      .teaser.lazyload {
                 	opacity: 0;
-	                transform: scale(0.8);
                     }
                     .teaser.lazyloaded {
                 	opacity: 1;
-                	transform: scale(1);
-                	transition: all 700ms;
+                	transition: opacity 700ms ease-in-out;
                     }
 
   /*------------------------------------------------------------------*/

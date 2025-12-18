@@ -1,8 +1,10 @@
+/* CLS Prevention: Responsive image wrapper with aspect-ratio fallback */
 .responsive-image__wrapper {
   position: relative;
   overflow: hidden;
   width: 100%;
   margin: 0 auto;
+  background-color: #f7f7f7;
 }
 
 .responsive-image__wrapper::before {
@@ -14,6 +16,7 @@
 .responsive-image__wrapper img {
   display: block;
   width: 100%;
+  height: auto;
 }
 
 .responsive-image__wrapper--full-height {
@@ -33,15 +36,23 @@
   outline-offset: -4px;
 }
 
+/* CLS Prevention: Product card images with aspect-ratio */
 .product-card img {
   width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-color: #f7f7f7;
 }
 
+/* CLS Prevention: Fixed height for title to prevent shifts */
 .product-card .title {
   height: 34px;
+  min-height: 34px;
   line-height: 1.5rem;
   font-weight: var(--medium);
   font-family: var(--headerfont);
+  overflow: hidden;
 }
 
 .product-card .product-col-price {
@@ -146,13 +157,19 @@
   text-transform: uppercase;
 }
 
+/* CLS Prevention: Fixed header height to prevent layout shifts */
 .header {
   height: 100px;
+  min-height: 100px;
   background: var(--white);
+  contain: layout style;
 }
 
+/* CLS Prevention: Logo with explicit dimensions */
 .header .logo img {
   max-width: 175px;
+  width: 175px;
+  height: 67px;
 }
 
 @media (max-width: 575px) {
