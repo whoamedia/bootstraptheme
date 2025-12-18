@@ -80,6 +80,8 @@
     alt="{{ image.alt | escape }}"
     loading="lazy"
     decoding="async"
+    width="{{ max_width_image | round }}"
+    height="{{ max_height_image | round }}"
     {{ image_attributes }}
   >
 </div>
