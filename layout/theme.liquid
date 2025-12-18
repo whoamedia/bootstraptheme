@@ -22,6 +22,7 @@
     <link rel="preload" as="style" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css"></noscript>
     {{ 'custom-css.css' | asset_url | stylesheet_tag }}
+    {{ 'components.css' | asset_url | stylesheet_tag }}
     {{ 'animations.css' | asset_url | stylesheet_tag }}
     {% case template.name %}
       {% when 'index' %}
@@ -32,7 +33,12 @@
         {{ 'product.css' | asset_url | stylesheet_tag }}
       {% when 'cart' %}
         {{ 'cart.css' | asset_url | stylesheet_tag }}
+      {% when 'blog' or 'article' %}
+        {{ 'blog.css' | asset_url | stylesheet_tag }}
     {% endcase %}
+    {% if template.directory == 'customers' %}
+      {{ 'customer.css' | asset_url | stylesheet_tag }}
+    {% endif %}
     {% if template.name == 'index' %}
     <link rel="preload" as="image" href="{{ 'slide4.png' | asset_url }}" imagesrcset="{{ 'slide4.png' | asset_url }} 1600w" imagesizes="100vw" fetchpriority="high">
     {% endif %}
