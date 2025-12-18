@@ -22,8 +22,7 @@
     <link rel="preload" as="style" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css"></noscript>
     {{ 'custom-css.css' | asset_url | stylesheet_tag }}
-    <link rel="preload" as="style" href="{{ 'animate.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>{{ 'animate.css' | asset_url | stylesheet_tag }}</noscript>
+    {{ 'animations.css' | asset_url | stylesheet_tag }}
     {% case template.name %}
       {% when 'index' %}
         {{ 'home.css' | asset_url | stylesheet_tag }}
