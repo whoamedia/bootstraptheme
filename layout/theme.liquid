@@ -180,7 +180,7 @@
     {%- elsif template.name == 'product' -%}
     <script src="{{ 'product.js' | asset_url }}" defer></script>
     {%- endif -%}
-    {%- if template.name == 'collection' or template.name == 'blog' or template.name == 'product' -%}
+    {%- if template.name == 'collection' or template.name == 'blog' or template.name == 'product' or template.name == 'article' -%}
     <script>
     (function() {
       var addThisLoaded = false;
@@ -192,10 +192,15 @@
         script.async = true;
         document.body.appendChild(script);
       }
+      document.querySelectorAll('[class*="addthis_inline_share"]').forEach(function(el) {
+        el.addEventListener('mouseenter', loadAddThis, { once: true });
+        el.addEventListener('click', loadAddThis, { once: true });
+        el.addEventListener('touchstart', loadAddThis, { once: true, passive: true });
+      });
       if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadAddThis, { timeout: 3000 });
+        requestIdleCallback(function() { setTimeout(loadAddThis, 5000); });
       } else {
-        setTimeout(loadAddThis, 2000);
+        setTimeout(loadAddThis, 5000);
       }
     })();
     </script>
