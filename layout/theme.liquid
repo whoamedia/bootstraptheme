@@ -176,13 +176,16 @@
     {%- if template.name == 'collection'-%}
     <script src="{{ 'mixitup.min.js' | asset_url }}" defer></script>
     <script src="{{ 'mixitup-multifilter.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'filters.js' | asset_url }}" defer></script>
     <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
     {%- elsif template.name == 'blog' -%}
-    <script  src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
     {%- elsif template.name == 'product' -%}
-  <script defer="defer" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c"></script>
+    <script src="{{ 'product.js' | asset_url }}" defer></script>
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" defer></script>
     {%- endif -%}
     <script src="{{ 'mmenu-light.js' | asset_url }}" defer></script>
+    <script src="{{ 'menu.js' | asset_url }}" defer></script>
     <script src="{{ 'option_selection.js' | shopify_asset_url }}" defer></script>
     <script src="{{ 'bootstrap5.bundle.min.js' | asset_url }}" defer></script>
 
