@@ -391,12 +391,11 @@
         "id": "slideshow_show_1",
         "label": "Show First Slide"
       },
-      {
-        "type": "image_picker",
-        "id": "slideshow-image-1.jpg",
-        "label": "Image",
-        "max-width": 1200
-      },
+            {
+              "type": "image_picker",
+              "id": "slideshow_image_1",
+              "label": "Image"
+            },
       {
         "type": "text",
         "id": "slideshow_url_1",
@@ -430,12 +429,11 @@
         "id": "slideshow_url_2",
         "label": "Link URL (Optional)"
       },
-      {
-        "type": "image_picker",
-        "id": "slideshow-image-2.jpg",
-        "label": "Image",
-        "max-width": 1200
-      },
+            {
+              "type": "image_picker",
+              "id": "slideshow_image_2",
+              "label": "Image"
+            },
       {
         "type": "text",
         "id": "slideshow_title_2",
@@ -464,12 +462,11 @@
         "id": "slideshow_url_3",
         "label": "Link URL (Optional)"
       },
-      {
-        "type": "image_picker",
-        "id": "slideshow-image-3.jpg",
-        "label": "Image",
-        "max-width": 1200
-      },
+            {
+              "type": "image_picker",
+              "id": "slideshow_image_3",
+              "label": "Image"
+            },
       {
         "type": "text",
         "id": "slideshow_title_3",
@@ -498,12 +495,11 @@
         "id": "slideshow_url_4",
         "label": "Link URL (Optional)"
       },
-      {
-        "type": "image_picker",
-        "id": "slideshow-image-4.jpg",
-        "label": "Image",
-        "max-width": 1200
-      },
+            {
+              "type": "image_picker",
+              "id": "slideshow_image_4",
+              "label": "Image"
+            },
       {
         "type": "text",
         "id": "slideshow_title_4",
@@ -532,12 +528,11 @@
         "id": "slideshow_url_5",
         "label": "Link URL (Optional)"
       },
-      {
-        "type": "image_picker",
-        "id": "slideshow-image-5.jpg",
-        "label": "Image",
-        "max-width": 1200
-      },
+            {
+              "type": "image_picker",
+              "id": "slideshow_image_5",
+              "label": "Image"
+            },
       {
         "type": "text",
         "id": "slideshow_title_5",
