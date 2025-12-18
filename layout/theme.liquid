@@ -177,12 +177,28 @@
     <script src="{{ 'mixitup.min.js' | asset_url }}" defer></script>
     <script src="{{ 'mixitup-multifilter.min.js' | asset_url }}" defer></script>
     <script src="{{ 'filters.js' | asset_url }}" defer></script>
-    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
-    {%- elsif template.name == 'blog' -%}
-    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
     {%- elsif template.name == 'product' -%}
     <script src="{{ 'product.js' | asset_url }}" defer></script>
-    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" defer></script>
+    {%- endif -%}
+    {%- if template.name == 'collection' or template.name == 'blog' or template.name == 'product' -%}
+    <script>
+    (function() {
+      var addThisLoaded = false;
+      function loadAddThis() {
+        if (addThisLoaded) return;
+        addThisLoaded = true;
+        var script = document.createElement('script');
+        script.src = '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadAddThis, { timeout: 3000 });
+      } else {
+        setTimeout(loadAddThis, 2000);
+      }
+    })();
+    </script>
     {%- endif -%}
     <script src="{{ 'mmenu-light.js' | asset_url }}" defer></script>
     <script src="{{ 'menu.js' | asset_url }}" defer></script>
