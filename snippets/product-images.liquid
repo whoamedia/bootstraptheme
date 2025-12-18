@@ -1,7 +1,12 @@
-<link href="{{ 'magicscroll.css' | asset_url }}" rel="stylesheet">
-<link href="{{ 'magiczoomplus.css' | asset_url }}" rel="stylesheet">
-<script src="{{ 'magicscroll.js' | asset_url }}"></script>
-<script src="{{ 'magiczoomplus.js' | asset_url }}"></script>
+{%- comment -%} Defer non-critical CSS for better LCP {%- endcomment -%}
+<link rel="preload" href="{{ 'magicscroll.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="{{ 'magiczoomplus.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link href="{{ 'magicscroll.css' | asset_url }}" rel="stylesheet">
+  <link href="{{ 'magiczoomplus.css' | asset_url }}" rel="stylesheet">
+</noscript>
+<script src="{{ 'magicscroll.js' | asset_url }}" defer></script>
+<script src="{{ 'magiczoomplus.js' | asset_url }}" defer></script>
 <script>
 var mzOptions = {
 zoomPosition: "inner",
