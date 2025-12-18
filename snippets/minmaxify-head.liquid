@@ -1,7 +1,0 @@
-{% if content_for_header contains 'shopifyorderlimits.s3.amazonaws.com' %}
-{% if shop.permanent_domain == 'cheapundies.myshopify.com' %}
-<script src="https://shopifyorderlimits.s3.amazonaws.com/limits/cheapundies.myshopify.com?v=89c&r=20220417105909&shop=cheapundies.myshopify.com"></script>
-{% endif %}
-{% else %}
-<script type="text/javascript">console.error("MinMaxify is deactivated for this website. Please don't forget to remove minmaxify-head.liquid still being referenced by theme.liquid")</script>
-{% endif %}
