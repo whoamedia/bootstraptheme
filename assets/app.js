@@ -71,5 +71,5 @@ window.requestIdleCallback = window.requestIdleCallback || function(cb, options)
         return Math.max(0, 50 - (Date.now() - start));
       }
     });
-  }, options && options.timeout ? Math.min(options.timeout, 1) : 1);
+  }, 1);
 };
