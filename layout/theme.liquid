@@ -22,8 +22,8 @@
     <link rel="preload" as="style" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css"></noscript>
     {{ 'custom-css.css' | asset_url | stylesheet_tag }}
-    <link rel="preload" as="style" href="{{ 'animate.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>{{ 'animate.css' | asset_url | stylesheet_tag }}</noscript>
+    {{ 'components.css' | asset_url | stylesheet_tag }}
+    {{ 'animations.css' | asset_url | stylesheet_tag }}
     {% case template.name %}
       {% when 'index' %}
         {{ 'home.css' | asset_url | stylesheet_tag }}
@@ -33,7 +33,12 @@
         {{ 'product.css' | asset_url | stylesheet_tag }}
       {% when 'cart' %}
         {{ 'cart.css' | asset_url | stylesheet_tag }}
+      {% when 'blog' or 'article' %}
+        {{ 'blog.css' | asset_url | stylesheet_tag }}
     {% endcase %}
+    {% if template.directory == 'customers' %}
+      {{ 'customer.css' | asset_url | stylesheet_tag }}
+    {% endif %}
     {% if template.name == 'index' %}
     <link rel="preload" as="image" href="{{ 'slide4.png' | asset_url }}" imagesrcset="{{ 'slide4.png' | asset_url }} 1600w" imagesizes="100vw" fetchpriority="high">
     {% endif %}
@@ -171,13 +176,16 @@
     {%- if template.name == 'collection'-%}
     <script src="{{ 'mixitup.min.js' | asset_url }}" defer></script>
     <script src="{{ 'mixitup-multifilter.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'filters.js' | asset_url }}" defer></script>
     <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
     {%- elsif template.name == 'blog' -%}
-    <script  src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
     {%- elsif template.name == 'product' -%}
-  <script defer="defer" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c"></script>
+    <script src="{{ 'product.js' | asset_url }}" defer></script>
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" defer></script>
     {%- endif -%}
     <script src="{{ 'mmenu-light.js' | asset_url }}" defer></script>
+    <script src="{{ 'menu.js' | asset_url }}" defer></script>
     <script src="{{ 'option_selection.js' | shopify_asset_url }}" defer></script>
     <script src="{{ 'bootstrap5.bundle.min.js' | asset_url }}" defer></script>
 
