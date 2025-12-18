@@ -27,11 +27,13 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'home.scss.css' | asset_url | stylesheet_tag }}
     
-    {%- comment -%} Non-critical CSS: Defer icon fonts and animations {%- endcomment -%}
+    {%- comment -%} Non-critical CSS: Defer icon fonts, custom styles, and animations {%- endcomment -%}
     <link rel="preload" as="style" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css"></noscript>
-    {{ 'custom-css.css' | asset_url | stylesheet_tag }}
-    {{ 'components.css' | asset_url | stylesheet_tag }}
+    <link rel="preload" href="{{ 'custom-css.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>{{ 'custom-css.css' | asset_url | stylesheet_tag }}</noscript>
+    <link rel="preload" href="{{ 'components.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>{{ 'components.css' | asset_url | stylesheet_tag }}</noscript>
     <link rel="preload" href="{{ 'animations.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>{{ 'animations.css' | asset_url | stylesheet_tag }}</noscript>
     {% case template.name %}
