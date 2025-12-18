@@ -1,6 +1,0 @@
-{% assign productHandleArray = 'cheapundies-orange-classic-modal-brief,cheapundies-blue-classic-collection-brief' | split:',' %}
-{% for productHandle in productHandleArray %}
-  {% for variant in all_products[productHandle] %}
-    <p>Variant id: {{ variant.id }}</p>
-  {% endfor %}
-{% endfor %}
