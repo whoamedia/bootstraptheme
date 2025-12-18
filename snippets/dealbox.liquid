@@ -1,0 +1,98 @@
+<style>
+.dealbox .info {
+    padding: 10px;
+}
+
+.dealbox {
+    text-align: center;
+    /* background-color: #f8f9fa; */
+    /*    padding: 10px 15px;*/
+    /*    border-radius: 5px;
+    z-index: 5;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    border-radius: 10px;
+    margin-top: 20px;*/
+
+}
+
+.dealbox p {
+    margin-bottom: 0;
+    font-style: italic;
+}
+
+.dealbox .countdown .time span {
+    color: var(--red);
+}
+
+.dealbox h1 {
+    margin-bottom: 0;
+    margin-top: 0;
+    display: block;
+    color: var(--dark);
+    font-size: 1.4rem;
+}
+
+.dealbox h2 {
+    margin-bottom: 0;
+    margin-top: 0;
+    display: block;
+    color: var(--dark);
+    font-weight: var(--regular);
+    font-family: var(--bodyfont);
+    font-size: 1.4rem;
+}
+
+.dealbox .countdown {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+
+.dealbox .countdown span {
+    color: var(--red);
+    font-family: var(--bodyfont);
+}
+
+.dealbox {
+    position: relative;
+}
+</style>
+<section class="card-area pb-2 dealbox">
+    <div class="single-card card-style-one">
+        <div class="card-image">
+            {% include 'responsive-image' with
+            image: collection.image,
+            image_class: "image",
+            wrapper_class: "image-wrapper",
+            max_width: 486,
+            max_height: 324
+            %}
+        </div>
+        <div class="card-content">
+            <div class="row bg-light info">
+                <div class="text-start {% if featured == true %} col-12  {% else %} col-8  {% endif %} my-auto">
+                    <h1>
+                        <a href="/collections/{{ collection.handle }}" title="{{ collection.title }}" class=" stretched-link">{{ collection.title }}</a>
+                    </h1>
+                    <h2>{{ collection.description | split: "<!-- split -->" | first }}</h2>
+                </div>
+                <div class="col-4 text-end my-auto">
+                    <div class="countdown">
+                        <div class="title">Time Left:</div>
+                        <div class="time my-auto">
+                            <i class="lni lni-clock-alt-1"></i>
+                            {% if soldout %}
+                            <span>Sold Out!</span>
+                            {% else %}
+                            {%- include 'tim' -%}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

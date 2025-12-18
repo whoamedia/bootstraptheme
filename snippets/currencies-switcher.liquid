@@ -1,0 +1,14 @@
+{% form 'currency' %}
+    <label for="currencies" class="currencies-label"><img src="{{ cart.currency.iso_code | append: '.png' | asset_url }}" width="35px"></label>
+  <select id="currencies" name="currency">
+    {% for currency in shop.enabled_currencies %}
+      {% if currency == cart.currency %}
+        <option selected="true" data-bg="{{ cart.currency.iso_code | append: '.png' | asset_url }}" value="{{cart.currency.iso_code}}">{{cart.currency.iso_code}}</option>
+        {% else %}
+        <option data-bg="{{ currency.iso_code | append: '.png' | asset_url }}"><img src="{{ currency.iso_code | append: '.png' | asset_url }}">{{currency.iso_code}}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+{% endform %}
+
+

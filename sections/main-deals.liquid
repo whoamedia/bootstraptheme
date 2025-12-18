@@ -1,0 +1,22 @@
+{{ 'section-main-deals.css' | asset_url | stylesheet_tag }}
+<div class="row">
+    <div class="col-12 mt-5 mb-3">
+        <div class="fancy-title">
+            <div class="timebk">
+                <span><i class="lni lni-thunderbolt"></i> Todays Deals <i class="lni lni-thunderbolt"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 gutter-10">
+    <div class="col-12 col-md-6 mb-3 teaser">
+        {% assign collection = collections[shop.metafields.dailydeal.test_primary_m] %}
+        {% assign deal = 'primary' %}
+        {% include 'dealbox' %}
+    </div>
+    <div class="col-12 col-md-6 mb-3 teaser">
+        {% assign collection = collections[shop.metafields.dailydeal.test_primary_f] %}
+        {% assign deal = 'primary' %}
+        {% include 'dealbox' %}
+    </div>
+</div>

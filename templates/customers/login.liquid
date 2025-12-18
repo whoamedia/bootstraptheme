@@ -1,0 +1,291 @@
+<style>
+.customer:not(.account):not(.order) {
+  margin: 6rem auto 9rem;
+  max-width: 33.4rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+.customer .field {
+  margin: 2rem 0 0 0;
+}
+  /* Login */
+.login a {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.login a[href='#recover'] {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.login .field + a {
+  margin-top: 1rem;
+}
+
+.login p {
+  margin: 1.5rem 0;
+}
+
+.login h3 {
+  margin-top: 1.5rem;
+  text-align: left;
+  font-size: calc(var(--font-heading-scale) * 1.6rem);
+}
+
+#customer_login_guest button {
+  margin-top: 0;
+}
+
+#recover,
+#recover + div {
+  display: none;
+}
+
+#recover:target {
+  display: block;
+}
+
+#recover:target + div {
+  display: block;
+}
+
+#recover:target ~ #login,
+#recover:target ~ #login + div {
+  display: none;
+}
+
+#recover,
+#login {
+  scroll-margin-top: 20rem;
+}
+
+#recover {
+  margin-bottom: 0;
+}
+
+.button-3d a {
+    text-decoration: none !important;
+}
+
+.button-3d a:hover {
+    color: #222;
+}
+
+.button {
+    display: inline-block;
+    font-family: $headerfont;
+    font-weight: $medium;
+    position: relative;
+    cursor: pointer;
+    outline: 0;
+    white-space: nowrap;
+    margin: 0px;
+    padding: 0 22px;
+    font-size: 16px;
+    height: 44px;
+    line-height: 44px;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+body:not(.device-touch) .button {
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.button:hover {
+    background-color: #444;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+.button i {
+    position: relative;
+    top: 1px;
+    line-height: 1;
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+}
+
+.button.button-rounded {
+    border-radius: 3px;
+}
+
+.button.button-3d {
+    min-width: 100%;
+    border-radius: 3px;
+    border-bottom: 3px solid rgba(0, 0, 0, .15);
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.button.button-3d:hover {
+    background-color: var(--dark);
+    opacity: .9;
+}
+
+.button-red {
+    background-color: var(--dark);
+}
+
+.button-3d.button-red:hover {
+    background-color: var(--dark);
+}
+
+
+span.icon-cart:before {
+  content: "";
+}
+.errors ul {
+list-style: none;
+    padding-left: 0;
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 0;
+
+}
+
+    .login h1 {
+        text-align: left;
+         font-size: 1.8rem;
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+      margin-bottom: 15px;
+    }
+    .login p {
+      text-align: left;
+    }
+    label {
+    margin-bottom: 0;
+    color: #000000;
+    font-size: 1.2rem;
+    }
+    .login h1:before {
+       content: "";
+    position: absolute;
+    height: 1px;
+    width: 50px;
+    background: var(--red);
+    margin-top: 28px;
+    }
+
+.form-control {
+    background-color: var(--light);
+}
+.customer button {
+    margin: 2rem 0 1.5rem;
+}
+.form__message {
+      color: #cc0000;
+    font-size: 1.4rem;
+}
+</style>
+<div class="row justify-content-center">
+    <div class="col-12 padding-0">
+        <header class="section__head">
+            <img src="{{ 'header11.png' | asset_url }}" data-was-processed="true" width="1200" height="400">
+            <div class="section__head-inner">
+                <div class="textwrap align-bottom">
+                    <h1 class="section__title">Login</h1>
+                </div>
+            </div><!-- /.section__head-inner -->
+        </header>
+    </div>
+    <div class="col-12 col-md-5">
+        <div class="customer login">
+            <h1 id="recover" tabindex="-1">
+                Reset Your Password
+            </h1>
+            <div>
+                <p>
+                    {{ 'customer.recover_password.subtext' | t }}
+                </p>
+                {%- form 'recover_customer_password' -%}
+                {% assign recover_success = form.posted_successfully? %}
+                <div class="field">
+                    <input type="email" value="" name="email" class="form-control" id="RecoverEmail" autocorrect="off" autocapitalize="off" autocomplete="email" {% if form.errors %} aria-invalid="true" aria-describedby="RecoverEmail-email-error" autofocus {% endif %} placeholder="{{ 'customer.login_page.email' | t }}">
+                </div>
+                {%- if form.errors -%}
+              <h3 class="form__message" tabindex="-1" autofocus>
+              We've sent you an email with a link to update your password.
+                  </h3>
+              {% comment %}
+                <small id="RecoverEmail-email-error" class="form__message">
+                    <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 13 13">
+                        <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2" />
+                        <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7" />
+                        <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white" />
+                        <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+                    </svg>
+                    {{ form.errors.messages['form'] }}
+                </small>
+                  {% endcomment %}
+                {%- endif -%}
+                <button class="button button-3d button-rounded button-red">
+                    {{ 'customer.login_page.submit' | t }}
+                </button>
+                <a href="#login">
+                    {{ 'customer.login_page.cancel' | t }}
+                </a>
+                {%- endform -%}
+            </div>
+            <h1 id="login" tabindex="-1">
+                {{ 'customer.login_page.title' | t }}
+            </h1>
+            <div>
+                <p>
+                    If you already have a CheapUndies account you can login below.
+                </p>
+                {%- if recover_success == true -%}
+                <h3 class="form__message" tabindex="-1" autofocus>
+                    {{ 'customer.recover_password.success' | t }}
+                </h3>
+                {%- endif -%}
+                {%- form 'customer_login', novalidate: 'novalidate' -%}
+                {%- if form.errors -%}
+                <h2 class="form__message" tabindex="-1" autofocus>
+                    <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
+                    {{ 'templates.contact.form.error_heading' | t }}
+                </h2>
+                {{ form.errors | default_errors }}
+                {%- endif -%}
+                <div class="field">
+                    <input type="email" class="form-control" name="customer[email]" id="CustomerEmail" autocomplete="email" autocorrect="off" autocapitalize="off" {% if form.errors contains 'form' %} aria-invalid="true" {% endif %} placeholder="{{ 'customer.login_page.email' | t }}">
+                </div>
+                {%- if form.password_needed -%}
+                <div class="field">
+                    <input type="password" value="" class="form-control" name="customer[password]" id="CustomerPassword" autocomplete="current-password" {% if form.errors contains 'form' %} aria-invalid="true" {% endif %} placeholder="{{ 'customer.login_page.password' | t }}">
+                </div>
+                <a href="#recover">
+                    {{ 'customer.login_page.forgot_password' | t }}
+                </a>
+                {%- endif -%}
+                <button class="button button-3d button-rounded button-red">
+                    {{ 'customer.login_page.sign_in' | t }}
+                </button>
+                <a href="{{ routes.account_register_url }}">
+                    {{ 'customer.login_page.create_account' | t }}
+                </a>
+                {%- endform -%}
+            </div>
+            {%- if shop.checkout.guest_login -%}
+            <div>
+                <hr>
+                <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+                {%- form 'guest_login' -%}
+                <button class="button button-3d button-rounded button-red">
+                    {{ 'customer.login_page.guest_continue' | t }}
+                </button>
+                {%- endform -%}
+            </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>

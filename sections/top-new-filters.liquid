@@ -1,0 +1,105 @@
+{% capture active_filters %}{% for filter in collection.filters %}{%- for filter_value in filter.values -%}{% if filter_value.active == true and filter.label == 'Size' %}{{ filter_value.value }}{% endif %}{% if forloop.last == false %},{% endif %}{% endfor %}{% endfor %}{% endcapture %}
+{% assign activeFiltersArray = active_filters | split: "," | compact %}
+<form class="noselect filters-form" action="{{ collection.url }}">
+    <div class="row controls">
+        {% capture availableFiltersJS %}[
+        {%- for product in collection.products -%}
+        {%- for variant in product.variants -%}
+        {%- if variant.available == true -%},{title: '{{ variant.title }}', inventory_count: 1}{%- endif -%}
+        {%- endfor -%}
+        {%- endfor -%}
+        ]
+        {% endcapture %}
+        {% capture availableFilters %}
+        {%- for product in collection.products -%}
+        {%- for variant in product.variants -%}
+        {%- if variant.available == true -%},{{ variant.title }}{%- endif -%}
+        {%- endfor -%}
+        {%- endfor -%}
+        {% endcapture %}
+        {% assign availableFiltersArray = availableFilters | strip_newlines | remove_first: "," | split: "," | uniq %}
+        {% assign availableFiltersJS = availableFiltersJS | strip_newlines | remove_first: "," %}
+        <script>
+            availableFilters = {{ availableFiltersJS }};
+            var hideDisabled = '{{ section.settings.hide_disabled }}'
+        </script>
+        <div class="col-12">
+            <hr>
+        </div>
+        {% for filter in collection.filters %}
+        <div class="col-12 col-md-3">
+            <div class=" side_menu_title mb-3 mb-md-0" id="click{{ filter.label | replace: " ", "-" | downcase }}s">
+                {{ filter.label }} (<span data-{{ filter.label | replace: " " , "-" | downcase }}-count>0</span>) <span class="icon-chevron-down"></span>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="col-12 col-md-2 my-auto">
+            <div class="mt-3 mt-md-0">
+                <a class="btn btn-danger mr-2 reset-filters{% if activeFiltersArray.size == 0 %} d-none{% endif %}" href="{{ collection.url }}">Reset</a>
+                <span class="count"></span>
+            </div>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% for filter in collection.filters %}
+            <fieldset class="checkbox-group size-sort">
+                <div class="drop-panel" id="{{ filter.label | replace: " ", "-" | downcase }}s" style="display: none">
+                    <div class="filter-menu mb-3">
+                        <ul class="list-unstyled row ps-4 mt-2 " id="{{ filter.label | replace: " ", "-" | downcase }}boxes">
+                            {%- for filter_value in filter.values -%}
+                               {% if filter.label == 'Size' %}
+                            <li class="list-item col-6 col-md-3 py-2 my-auto">
+                                <div class="custom-control form-check me-sm-2 my-auto">
+                                 
+                                    <input class="sizes form-check-input" id="Filter-{{ filter.label }}-{{ forloop.index }}" name="{{ filter_value.param_name }}" type="checkbox" data-count-target="{{ filter.label | replace: " ", "-" | downcase }}" data-count="{{ filter_value.count }}" {% unless availableFiltersArray contains filter_value.value -%}disabled{%- endunless %} {% if filter_value.active -%}checked{%- endif %} value="{{ filter_value.value }}">
+                                 <label class="form-check-label" for="Filter-{{ filter.label }}-{{ forloop.index }}">  {{ filter_value.value }} (<span data-item-count="{{ filter_value.count }}">{{ filter_value.count }}</span>)</label>
+                                   </div>
+                            </li>
+                                    {% endif %}
+                                    {% if filter.label != 'Size' %}
+                                        <li class="list-item col-6 col-md-4 py-2 my-auto">
+                                <div class="custom-control form-check me-sm-2 my-auto">
+                                    <input class="sizes form-check-input" id="Filter-{{ filter.label }}-{{ forloop.index }}" name="{{ filter_value.param_name }}" type="checkbox" data-count-target="{{ filter.label | replace: " ", "-" | downcase }}" data-count="{{ filter_value.count }}" {% if filter_value.count==0 and filter_value.active==false -%}disabled{%- endif %} {% if filter_value.active -%}checked{%- endif %} value="{{ filter_value.value }}">
+                                    <label class="form-check-label" for="Filter-{{ filter.label }}-{{ forloop.index }}">{{ filter_value.value }} ({{ filter_value.count }})</label>
+                               
+                                </div>
+                            </li>
+                                 {% endif %}
+                            {%- endfor -%}
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+            {% endfor %}
+        </div>
+    </div>
+    <input type="hidden" name="filter.v.availability" value="1">
+    <input type="hidden" name="filter.filter_scope" value="v">
+</form>
+{% schema %}
+{
+"name": "Filters",
+"settings": [
+{
+"type": "radio",
+"id": "hide_disabled",
+"label": "Hide Disabled Filters",
+"options": [
+{
+"value": "no",
+"label": "NO"
+},
+{
+"value": "yes",
+"label": "YES"
+}
+],
+"default": "no"
+}
+]
+}
+{% endschema %}

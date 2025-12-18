@@ -1,0 +1,44 @@
+{% capture cole %}{{ product.metafields.collection.related | handle}} {% endcapture %}
+{% capture deal %}{{ collections[cole].metafields.dailydeal.dailydeal }} {% endcapture %}
+{% capture end %}{{ collections[cole].metafields.dailydeal.switched_at |  date: "%Y/%m"  }}/{{ collections[cole].metafields.dailydeal.switched_at |  date: "%d" | plus: 7  }}{% endcapture %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var endParts = '{{ end }}'.split('/');
+  var endDate = new Date(endParts[0], endParts[1] - 1, endParts[2]);
+  endDate.setHours(12, 0, 0, 0);
+
+  var hideTimeLeft = function() {
+    document.querySelectorAll('.time-left').forEach(function(el){ el.style.display = 'none'; });
+  };
+  var showTimeLeft = function() {
+    document.querySelectorAll('.time-left').forEach(function(el){ el.style.display = ''; });
+  };
+
+  if (window.startCountdown) {
+    startCountdown('{{ deal | strip }}', endDate, '%-D days %-H:%M:%S', {
+      onFinish: hideTimeLeft,
+      onUpdate: showTimeLeft,
+      expiredText: 'This offer has expired!'
+    });
+    var clockEl = document.getElementById('clock');
+    if (clockEl) {
+      startCountdown(clockEl, endDate, '%-D days %-H:%M:%S', {
+        onFinish: hideTimeLeft,
+        onUpdate: showTimeLeft,
+        expiredText: 'This offer has expired!'
+      });
+    }
+  }
+});
+</script>
+<span id="{{ deal }}"></span>
+<div class="countdown">
+  <span id="clock"></span>
+</div>
+
+
+
+
+
+

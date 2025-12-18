@@ -1,0 +1,38 @@
+{%- capture collection_title -%}{{- collection.title  | escape | strip_newlines -}}{%- endcapture -%}
+{%- assign collection_sold_out = true -%}
+        {%- for product in collection.products -%}
+        {%- if product.available -%}
+        {%- assign collection_sold_out = false -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {% if collection.image %}
+        <article class="maindeal">
+            <div class="holder">
+                {% if collection_sold_out %}
+                <div class="status-tag-coll"><span>Sold Out</span></div>
+                {% endif %}
+                <div class="deal-mens">
+                    <a href="/collections/{{ collection.handle }}">
+                        <img alt="{{ collection.title }}" src="{{ collection.image | img_url: '600x' }}">
+                    </a>
+                </div>
+                <div class="des">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="deal-title">
+                                <a href="/collections/{{ collection.handle }}">{{ collection.title }}</a>
+                            </div>
+                           {{ collection.description | split: '<!-- split -->' | first | truncate: 37 }}
+                        </div>
+                        <div class="col-4">
+                            <div class="countdown">
+                                <i class="icon-clock3"></i>
+                                <span class="title">Time Left:</span>
+                                {% if collection_sold_out %} <span id="">Sold Out!</span>{% else %}<span id="">Almost Over</span>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endif %}

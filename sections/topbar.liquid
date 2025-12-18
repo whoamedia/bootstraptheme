@@ -1,0 +1,62 @@
+<style>
+.topBar {
+    background-color: var(--black);
+    border-top: 2px solid var(--red);
+    height: 40px;
+    color: var(--white);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-family: var(--headerfont);
+}
+
+.topBar a {
+    color: var(--white);
+    font-weight: var(--medium);
+}
+
+.toplinks .toplinka:not(:first-child):before {
+    content: "|";
+    font-size: 15px;
+    color: var(--white);
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.toplinks {
+    display: inline-block
+}
+</style>
+<div class="container topBar">
+    <div class="row h-100">
+        <div class="col-4 my-auto">
+            <div class="currency">
+
+            </div>
+        </div>
+        <div class="col-8 my-auto text-end ">
+            <div class="toplinks">
+                {%- if customer -%}
+                {%- if customer.first_name != blank -%}
+                {%- capture first_name -%}
+                <a href="/account" title="My Account Link" class="toplinka">
+                    {{ customer.first_name }}</a>
+                {%- endcapture -%}
+                <a href="/account" title="My Account" class="toplinka">
+                    <span> My Account </span>
+                </a>
+                <a href="/account/logout" title="Logout" class="toplinka">
+                    <span> Logout </span>
+                </a>
+                {%- else -%}
+                <a href="/account" title="My Account" class="toplinka">
+                    {{ 'layout.customer.account' | t }}</a>
+                {%- endif -%}
+                {%- else -%}
+                <a href="/account" title="My Account" class="toplinka">
+                    My Account
+                </a>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>

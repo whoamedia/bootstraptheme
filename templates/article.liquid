@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-12 padding-0">
+        <header class="section__head">
+            {% if article.image %}
+            <img src="{{ article.image | image_url: width: 1000 }}" alt="{{ article.title | escape }}" width="{{ article.image.width }}" height="{{ article.image.height }}" loading="lazy" data-was-processed="true">
+            {% endif %}
+            <div class="section__head-inner">
+                <div class="textwrap align-bottom">
+                    <h1 class="section__title">{{ article.title }}</h1><!-- /.section__title -->
+                </div>
+            </div><!-- /.section__head-inner -->
+        </header>
+    </div>
+</div>
+<div class="row justify-content-center blog">
+    <div class="col-12 col-md-11 mx-auto mt-5">
+        <div class="addthis_inline_share_toolbox_rd5g"></div>
+        <div class="article-images" id="art">
+            <hr/>
+            <div class="article-img">
+                <div class="mt-5 mb-5">
+                    {{ article.content }}
+                </div>
+                <div class="mt-5">
+                    {%- section 'main-deals' -%}
+                </div>
+                {%- render 'article-video' -%}
+                {%- render 'article-gallery' -%}</div>
+        </div>
+        <hr/>
+    </div>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": {{ article.content | strip_html | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ shop.url | append: page.url | json }}
+},
+  "headline": {{ article.title | json }},
+  {% if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | json }},
+  {% endif %}
+  {% if article.image %}
+    "image": [
+      {{ article.image | image_url: width: 1000 | prepend: "https:" | json }}
+    ],
+  {% endif %}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if settings.share_image %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": {{ settings.share_image.height | json }},
+        "url": {{ settings.share_image | image_url: width: settings.share_image.width | prepend: "https:" | json }},
+        "width": {{ settings.share_image.width | json }}
+      },
+    {% endif %}
+    "name": {{ shop.name | json }}
+  }
+}
+</script>

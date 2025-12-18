@@ -1,0 +1,6 @@
+{% assign grid_cols = product_list | default: 4 %}
+{% if product.available and product.images.size > 0 %}
+<div class="col-6 col-md-{{ 12 | divided_by: grid_cols }} text-center mb-3 mix {% for tag in product.tags %} {{ tag | replace: ':','-' | replace: '/','' | replace: ' ','-' | replace: 'default title','one-size' | downcase }}{% endfor %}" data-name="{{ product.title }}" data-price="{{ product.price }}">
+    {%- render 'product', product: product -%}
+</div>
+{% endif %}

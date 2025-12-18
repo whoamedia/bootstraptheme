@@ -1,0 +1,66 @@
+<div class="row collection">
+    <div class="col">
+        {% if collection.description != '' %}
+            {% if collection.image %}
+            <div class="row align-items-center gutter-10">
+                <div class="col-12 col-md-4">
+                    <img alt="{{ collection.title }}" class="img-fluid" src="{{ collection.image | image_url: width: 300, height: 300, crop: 'center' }}" title="{{ collection.title }}" width="300" height="300" loading="lazy"/>
+                </div>
+                <div class="col-12 col-md-8 mt-2">
+                    <div class="coll-back rounded">
+                        {{- collection.description | split: '<!-- split -->' | last -}}
+                        <div class="addthis_inline_share_toolbox_hd22 mt-2 d-none d-sm-block"></div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="cat-banner">
+                    <h1 class="coll-title-header">{{ collection.title }}</h1>
+                    <div>{{ collection.description | split: '<!-- split -->' | last }}</div>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+<hr/>
+<div class="row collection">
+    <div class="col-3 d-none d-md-block">
+        {%- render 'submenu' -%}</div>
+    <div class="col-12 col-md-9">
+        <div class="gutter-10 row">
+            {%- for link in linklists.mens-underwear.links -%}
+                <div class="col-6 col-md-4 mb-3 cats">
+                    <div class="card">
+                        <a href="{{ routes.collections_url }}/{{ link.object.handle }}">
+                            <img alt="{{ link.object.title }}" class="card-img-top" src="{{ link.object.image | image_url: width: 400, height: 400, crop: 'center' }}" width="400" height="400" loading="lazy"/></a>
+                        <div class="card-body text-center">
+                            <p class="card-text">
+                                <a href="{{ routes.collections_url }}/{{ link.object.handle }}" title="{{ link.title }}">{{ link.title }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="row collection">
+        <div class="col-12 mt-4">
+            <div class="cat-banner">
+                <div class="page-header mb-3">
+                    <h2>How Can We Offer Such Cheap Underwear for Men for Sale Without Sacrificing Quality?</h2>
+                </div>
+                <p class="mb-3">We acquire underwear from major brands liquidating their inventory. Our special savings are then passed on to you through our men's underwear sale prices that are simply unbeatable. It's a win-win! Whether you're a boxers or briefs man, prefer thongs, or are comfortable in something in between, you will find the perfect men's sexy underwear for the right price in our inventory. Our cheap underwear for men retails for less than most stores charge, and you'll be left with enough savings to dabble in new styles without dropping a ton of cash. With our ever-expanding and changing stock, you'll find men's sexy underwear that catches your eye every time you visit our site!</p>
+                <p class="mb-3">If you see something you like, snatch it before the deal ends: There's a new selection of special men's underwear sale offers every day! If nothing catches your eye today, come back tomorrow: We're always adding to our stock of affordable men's underwear. And if you desire something more unique, check out our exclusive CheapUndies brand, a collection of specially designed underwear just for you!</p>
+                <p class="mb-3">Whatever it is you're looking for, we've got you covered. We have the hottest
+                    <a href="https://theunmentionablesglobal.org/blog/2017/5/7/a-brief-history-of-underwear">trends</a>
+                    in underwear as well as the newest styles from our very own designers. And we know that men's underwear is meant to be comfortable, so we add the perfect blend of cotton and elastic to each pair. You don't have to worry about our undies riding up, getting stuck, or getting in the way.</p>
+                <p class="mb-3">See why we're the best men's underwear store when you place your order with us today. Whether you're looking for comfy drawers for yourself or something pretty for a special
+                    <a href="https://www.cheapundies.com/collections/womens">woman</a>
+                    in your life, you can count on CheapUndies for a great deal!</p>
+            </div>
+        </div>
+</div>

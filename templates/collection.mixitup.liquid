@@ -1,0 +1,127 @@
+  
+
+ 
+
+ <!-- cd-main-content -->
+
+<div class="row">
+  <div class="col">
+  
+ 
+    {% if collection.description != '' %}
+    {% if template == 'collection' %}
+      <div class="row align-items-center gutter-10">
+    {% if collection.image %}
+  
+     
+      <div class="col-md-5 col-sm-12">
+        <img
+             src="{{ collection.image | image_url: width: 600, height: 600, crop: 'center' }}"
+             class="img-fluid rounded" width="600" height="600" loading="lazy">
+      </div>
+      <div class="col-md-7 col-sm-12">
+        <div class="coll-back rounded">
+          <header class="coll-title-header">{{ collection.title }}
+          </header>
+          <div class="">{{ collection.description | split: '
+            <!-- split -->' | last }}
+          </div>    <div class="mt-2 mb-2 addthis_inline_share_toolbox_hd22"></div>
+    {% if collection.metafields.dailydeal.dailydeal contains "primary" or collection.metafields.dailydeal.dailydeal contains "deal" %}
+      {% unless showing_timer %}
+        {% assign showing_timer = true %}
+        <div class="time-left">
+          <span class="time-title"><i class="fa fa-clock"></i> Time Left</span>
+          <!-- countdown removed (timeleft snippet missing) -->
+        </div>
+      {% endunless %}
+    {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="col-12">
+        <div class="cat-banner">
+          <header class="coll-title-header">{{ collection.title }}
+          </header>
+          <div class="">{{ collection.description | split: '
+            <!-- split -->' | last }}
+          </div>
+         <div class="mt-2 mb-2 addthis_inline_share_toolbox_hd22"></div>
+         {% if collection.metafields.dailydeal.dailydeal contains "primary" or collection.metafields.dailydeal.dailydeal contains "deal" %}
+           {% unless showing_timer %}
+             {% assign showing_timer = true %}
+             <div class="time-left">
+               <span class="time-title"><i class="fa fa-clock"></i> Time Left</span>
+               <!-- countdown removed (timeleft snippet missing) -->
+             </div>
+           {% endunless %}
+         {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  
+    {% endif %}
+    {% else %}
+    
+    
+    
+        <div class="row align-items-center gutter-10">
+  <div class="col-md-5 col-sm-12">
+        <img
+             src="{{ collection.image | image_url: width: 420, height: 420, crop: 'center' }}"
+             class="img-fluid rounded" width="420" height="420" loading="lazy">
+      </div>
+      <div class="col-md-7 col-sm-12">
+        <div class="coll-back rounded">
+          <header class="coll-title-header">{{ collection.title }}
+          </header>
+
+        </div>
+      </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% paginate collection.products by 60 %}
+
+
+<div class="row gutter-10">
+<div class="col-12">
+
+
+
+{% render 'mixfilter' %}
+<hr class="mb-3">
+
+<div class="row gutter-10 sorter">
+
+
+
+  {% for product in collection.products %}
+  {% assign total = 0 %}
+  {% for variant in product.variants %}
+  {% unless variant.inventory_management == '' %}        
+  {% capture temp %}{{ total | plus: variant.inventory_quantity }}{% endcapture %}
+  {% assign total = temp %}
+  {% endunless %}        
+  {% endfor %}
+  {% assign fulltotal = total | plus:0 %} 
+  
+ 
+
+  
+  {% render 'product-list', product_list: 4, product: product %}
+
+  
+  
+{% endfor %}
+  {% unless  collection.handle == 'mens-underwear' or collection.handle == 'find' or collection.handle == 'cheapundies-brand' or collection.handle == 'womens'  %}
+  {% for product in collection.products %}
+  {% render 'product-list-soldout', product_list_soldout: 4, product: product %}
+  {% endfor %}
+  {% endunless %}
+  </div>
+</div>
+</div>   
+
+{% endpaginate %}

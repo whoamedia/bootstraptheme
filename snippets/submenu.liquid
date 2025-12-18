@@ -1,0 +1,39 @@
+{% assign menu = linklists.main-menu %}
+{%- for link in menu.links -%}
+    {% if sub_link.active or link.child_active %}
+        <div class="side_menu_title">
+            <span class="icon-menu pr-1"></span>Menu</div>
+        <div class="leftmenu">
+            {% assign menu = linklists.main-menu %}
+            <ul class="justify-content-center"></ul>
+            <ul class="justify-content-center">
+                {%- for link in menu.links -%}
+                    {% if link.active or link.child_active %}
+                        {%- for sub_link in link.links -%}
+                            {% if sub_link.object.products_count != 0%}
+                                <li class="{%- if sub_link.active or sub_link.child_active -%} leftmenu-nav-item--active{%- endif -%}">
+                                    <a class="mb-5 leftmenu-nav-link{%- if sub_link.active or sub_link.child_active -%}--active{%- endif -%}" href="{{ sub_link.url }}">{{ sub_link.title }}
+                                        {% if sub_link.links != blank %}
+                                            <span class="icon-chevron-down pr-1"></span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <ul class="justify-content-center">
+                                {% if sub_link.active or sub_link.child_active %}
+                                    {%- for sub_sub_link in sub_link.links -%}
+                                        {% if sub_sub_link.object.products_count != 0%}
+                                            <li class="{%- if sub_sub_link.active -%} leftmenu-nav-sublink--active{%- endif -%}">
+                                                <a class="leftmenu-nav-sublink{%- if sub_sub_link.active -%}--active{%- endif -%}" href="{{ sub_sub_link.url }}">s{{ sub_sub_link.title }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {%- endfor -%}
+                                {% endif %}
+                            </ul>
+                        {%- endfor -%}
+                    {% endif %}
+                {%- endfor -%}
+        </ul>
+    </div>
+{% endif %}
+{%- endfor -%}

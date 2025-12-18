@@ -1,0 +1,14 @@
+#er {
+  font-size: 2rem;
+  color: var(--red);
+}
+
+.timebk {
+  background: white;
+  margin: 0 auto;
+  align-self: center;
+  width: 240px;
+  height: 41px;
+  line-height: 1.1;
+}
+

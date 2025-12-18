@@ -1,0 +1,13 @@
+<div class="gutter-10 row">
+    {% for link in linklists.brand-collections.links %}
+        <div class="col-6 col-md-4 mb-3 cats">
+            <div class="card">
+                <a href="/collections/{{ link.object.handle }}">
+                    <img alt="{{ link.object.title }}" class="card-img-top" src="{{ link.object.image | img_url: 'grande' }}"></a>
+                <div class="card-body text-center">
+                        <a href="/collections/{{ link.object.handle }}">{{ link.title }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,158 @@
+{% assign tags = '' %}
+{% for tag in collection.all_tags %}
+    {% unless tags contains tag %}
+        {% capture tags %}{{tags}},{{tag}}{%endcapture%}
+        {% endunless %}
+    {% endfor %}
+    {% assign tags = tags | downcase | split : ',' %}
+    {% assign c = current_tags | join ',' %}
+    <form class="controls">
+        <div class="row mt-4 mb-4">
+            <div class="col-12 col-md-9">
+            
+            
+            
+           
+                <div class="dropdown">
+                    <div class="dropdown-label size">Size
+                        <span class="icon-chevron-down"></span>
+                    </div>
+                    <div class="dropdown-content size">
+                        <fieldset class="checkbox-group" data-filter-group="data-filter-group" id="siz" >
+                            {% for c in tags %}
+                                {% if c contains 'size:' %}
+                                    <div class="custom-control custom-checkbox sizefilter mr-sm-2" data-sort-val="{% if c contains 'size:one' %}1{% elsif c contains 'size:xs' %}2{% elsif c contains 'size:sm' %}3{% elsif c contains 'size:m' %}4{% elsif c contains 'size:la' %}5{% elsif c == 'size:xl' %}6{% elsif c == 'size:2x' %}7{% else %}8{%endif%}">
+                                        <input class="custom-control-input" id="{{ c  | remove: '.'  | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}" type="checkbox" value="{{ c  | remove: '.' | prepend: '.' | replace: ':','-' | replace: '/','' | downcase }}"/>
+                                        <label class="custom-control-label" for="{{ c  | remove: '.' | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}">{{ c | remove: 'size:' | downcase | replace: 'xsmall','XS'  | replace: 'xlarge','XL'  | replace: 'large','LG'  | replace: 'small','SM'  | replace: 'medium','MD'  | replace: 'one size','OS'}}</label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <div class="dropdown-label brand">Brand
+                        <span class="icon-chevron-down"></span>
+                    </div>
+                    <div class="dropdown-content brand">
+                        <fieldset class="checkbox-group2" data-filter-group="data-filter-group2">
+                            {% for c in tags %}
+                                {% if c contains 'vendor:' %}
+                                    <div class="custom-control fill-control-indicator mr-sm-2">
+                                        <input class="custom-control-input" id="{{ c  | remove: '.'  | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}" type="checkbox" value="{{ c | remove: '.'| prepend: '.' | replace: ':','-' | downcase }}"/>
+                                        <label class="custom-control-label" for="{{ c  | remove: '.' | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}">{{ c | remove: 'vendor:' | replace: '-',' ' | downcase }}</label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </fieldset>
+                    </div>
+                </div>
+             
+                <span class="d-none">
+                    <button class="btn btn-outline-danger clear-filters" type="reset">Clear Filters
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                   
+                </span>
+              <!--   <div class="">  Filters: <span class="edward"></span></div> -->
+                   <div class="ml-3 item-count d-sm-inline">
+                    <span id="count"></span>
+                    
+                </div>
+            </div>
+            <div class="d-none d-md-block col-3 text-right">
+                <div class="dropdown dropdown-right">
+                    <div class="dropdown-label sort">Sort By
+                        <span class="icon-chevron-down"></span>
+                    </div>
+                    <div class="dropdown-content sort text-left">
+                        <div class="control-group">
+                            <div class="control-group">
+                                <div class="dropdown-sort">
+                                    <a class="control control-sort" data-sort="default:asc">Product A - Z</a>
+                                </div>
+                                <div class="dropdown-sort">
+                                    <a class="control control-sort" data-sort="default:desc">Product Z - A</a>
+                                </div>
+                                <div class="dropdown-sort">
+                                    <a class="control control-sort" data-sort="price:asc">Price Low to High</a>
+                                </div>
+                                <div class="dropdown-sort">
+                                    <a class="control control-sort" data-sort="price:desc">Price High to Low</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $('.clear-filters')
+                .parent()
+                .removeClass('d-none')
+                .find('.clear-filters')
+                .hide();
+            var containerEl = document.querySelector('.sorter');
+            var mixer = mixitup(containerEl, {
+             controls: {
+        toggleLogic: 'and'
+    },
+                multifilter: {
+                    enable: true
+                },
+                animation: {
+                    enable: false
+                },
+                callbacks: {
+                    onMixEnd: function (state) {
+                        $('.clear-filters, .edward').show();
+                        $('.filter-error').hide();
+                        if (state.activeFilter.selector === '.mix') {
+                            $('.clear-filters, .edward').hide();
+                            $('.edward').html('')
+                        }
+                        $('.edward span:not(' + state.activeFilter.selector + ')').remove();
+                        $('#count').html("<strong>" + state.totalShow + " Items Filtered</strong>");
+                        var area = state
+                            .activeFilter
+                            .selector
+                            .replace(/size\-/g, '')
+                            .replace(/vendor\-/g, '')
+                            .split('.');
+                        var sizes = area.filter(function (item, pos) {
+                            return area.indexOf(item) == pos && item.length > 0
+                        });
+                        for (var sizeIndex in sizes) {
+                            var size = sizes[sizeIndex].replace(/,/g, '');
+                            var sizeCSSClass = size.replace(/\s/g, '');
+                            if ($('.edward .' + sizeCSSClass).length === 0) {
+                                var html = $('.edward').html() + '<span class="' + sizeCSSClass + '">' + size;
+                                if (sizeIndex != sizes.length - 1) {
+                                    html += ', '
+                                }
+                                $('.edward').html(html + "</span>")
+                            }
+                        }
+                    },
+                    onMixFail: function (state) {
+                        $('.filter-error').show()
+                    }
+                }
+            })
+        });
+        $.fn.whoaSelectSort = function (elements, attr) {
+            return $(this).each(function (i, container) {
+                var items = $(container).find(elements);
+                items.sort(function (a, b) {
+                    return + $(a).attr(attr) - + $(b).attr(attr)
+                });
+                items.appendTo(container)
+            })
+        };
+        $('#siz').whoaSelectSort('div', 'data-sort-val');
+        $('#siz')
+            .removeAttr('selected')
+            .attr('selected', true);
+    </script>

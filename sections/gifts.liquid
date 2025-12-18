@@ -1,0 +1,12 @@
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="fancy-title mb-4">
+            <h2 class="">New from LowTee</h2>
+        </div>
+    </div>
+</div>
+<div class="row gutter-10 sorter collection mt-2">
+    {% for product in collections.lowtee.products limit : 4 %}
+        {%- include 'product-list' with '4' -%}
+    {% endfor %}
+</div>

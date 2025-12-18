@@ -1,0 +1,115 @@
+<div class="qadd mt-1">
+    <style>
+        .styled-select {
+            border: 1px solid #fff;
+            box-sizing: border-box;
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .styled-select,
+        .styled-select select {
+            width: 100%;
+        }
+        select:focus {
+            outline: none;
+        }
+        .styled-select select {
+            height: 34px;
+            padding: 5px 0 5px 10px;
+            background: #333;
+            border: none;
+            color: #ffffff;
+            /*hide default down arrow in webkit */
+            -webkit-appearance: none;
+        }
+        @-moz-document url-prefix() {
+            .styled-select select {
+                width: 110%;
+            }
+        }
+        .styled-select .icon-chevron-down {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+        select::-ms-expand {
+            display: none;
+        }
+        /* hide default down arrow in IE10*/
+        /* hack to fall back in opera */
+        .selector,
+        _:-o-prefocus {
+            .styled-select {
+                background: none;
+            }
+        }
+        .highlight {
+            background: #08a2ef;
+            padding: 3px;
+            color: #fff;
+        }
+        .singleopt {
+         height: 34px;
+            padding: 5px 0 5px 10px;
+            background: #333;
+            border: none;
+            color: #ffffff;
+             width: 100%;
+        
+        }
+           .singlebtn {
+            border: 1px solid #fff;
+            box-sizing: border-box;
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+        }
+         .icon-chevron-right {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+    </style>
+    <form data-cart-submit="data-cart-submit" id="{{ product.id }}">
+    {% for variant in product.variants %}
+    {% assign single = variant.title | downcase %}
+    {% endfor %}
+    
+    {% if single contains 'one size' %}
+        {% for variant in product.variants %}
+        <div class="singlebtn">
+    <button class="singleopt text-left" data-cart-add="{{ variant.id }}">ADD TO CART
+     <span class="icon-chevron-right my-auto"></span>
+     </button>
+     </div>
+{% endfor %}
+    {% else %}
+        <div class="styled-select my-auto rounded-0">
+            <select class="rounded-0" name="id">
+                <option defaultselected="" selected="" value="0">ADD TO CART</option>
+                {% for variant in product.variants %}
+                    {% if variant.available %}
+                        <option value="{{ variant.id }}">{{ variant.title }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <span class="icon-chevron-down my-auto"></span>
+        </div>
+        {% endif %}
+        
+    </form>
+
+    <script>
+        $('#{{ product.id }} select')
+            .on('change', function () {
+                $(this)
+                    .closest('form')
+                    .submit();
+            });
+    </script>
+</div>

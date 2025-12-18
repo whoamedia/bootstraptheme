@@ -1,0 +1,30 @@
+<div class="row justify-content-center">
+<div class="col-12 mt-3">
+<header class="page-header mb-3">
+ <h1> {{ page.title }} <!-- <small class="text-muted"><em>{{ page.metafields.global.description_tag }}</em></small> --></h1>
+</header>
+
+
+ <div class="col-12">
+        <div class="gutter-10 row">
+             {% for collection in collections %}
+             {% if collection.image %}
+                <div class="col-6 col-md-3 mb-3 cats">
+                    <div class="card">
+                        <a href="/collections/{{ collection.handle }}">
+                            <img alt=" {{ collection.title }}" class="card-img-top" src="{{ collection.image | image_url: width: 400, height: 400, crop: 'center' }}" width="400" height="400" loading="lazy"/></a>
+                        <div class="card-body text-center">
+                            <p class="card-text">
+                                <a href="/collections/{{ collection.handle }}" title="{{ collection.title }}">{{ collection.title }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {%- endfor -%}
+        </div>
+    </div>
+
+
+</div>
+</div>

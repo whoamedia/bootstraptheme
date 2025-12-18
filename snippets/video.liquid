@@ -1,0 +1,17 @@
+{% if product.metafields.product.video != 'null' or product.metafields.product.video != '' %}
+    <div class="row mainprod p-md-4 align-items-top ">
+        <div class="col-12">
+            <div class="gallerytitle">Product Video</div>
+        </div>
+        <div class="col-12 mt-3 mb-3 mx-auto ">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe allowfullscreen="allowfullscreen" class="embed-responsive-item" src="{{ product.metafields.product.video }}?rel=0&showinfo=0"></iframe>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <div class="gallerytitle">Share the Video</div>
+            <div class="addthis_inline_share_toolbox_ybif"></div>
+        </div>
+        <hr/>
+    </div>
+{% endif %}

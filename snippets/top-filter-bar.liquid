@@ -1,0 +1,90 @@
+{% assign listOfPartials = 'bags,hats,socks,laces,wallets,watches,ties,towels,sunglasses,jewelry' | split :',' %}
+{% assign partialFound = false %}
+{% for partial in listOfPartials %}
+{% if collection.handle contains partial %}
+{% assign partialFound = true %}
+{% break %}
+{% endif %}
+{% endfor %}
+{% if partialFound %}
+{% assign hidesizes = true %}
+{% else %}
+{% assign hidesizes = false %}
+{% endif %}
+<form class="noselect">
+    <div class="row controls">
+        <div class="col-12">
+            <hr>
+        </div>
+        <div class="d-none col-12 col-md-4">
+            <div class=" side_menu_title mb-3 mb-md-0" data-mixitup-control="data-mixitup-control" id="clickme">
+                <span class="icon-chevron-down"></span>
+                Browse Categories
+            </div>
+        </div>
+        {% if hidesizes != true %}
+        <div class="col-12 col-md-3">
+            <div class=" side_menu_title mb-3 mb-md-0" data-mixitup-control="data-mixitup-control" id="clicksizes">
+                <span class="icon-chevron-down"></span>
+                Shop by Size
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-12 col-md-3">
+            <div class=" side_menu_title" data-mixitup-control="data-mixitup-control" id="clickbrands">
+                <span class="icon-chevron-down"></span>
+                Shop by Brand
+            </div>
+        </div>
+        <div class="col-12 col-md-2 my-auto">
+            <div class="mt-3 mt-md-0 d-none">
+                <button class="btn btn-danger control control-text clear-filters mr-2" data-mixitup-control="data-mixitup-control" type="reset">Reset</button>
+                <span class="count"></span>
+            </div>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <fieldset class="checkbox-group size-sort" data-filter-group="sizes">
+                <div class="drop-panel" id="sizes">
+                    <div class="leftmenu mb-3">
+                        <ul class="list-unstyled row " id="sizeboxes">
+                            {% for c in tags %}
+                            {% if c contains 'size:'%}
+                            {% assign tg = c | downcase %}
+                            <li class="list-item col-6 col-md-3 my-auto" data-sort-val="{% if tg contains 'size-one' %}1{% elsif tg contains 'size:xs' %}2{% elsif tg contains 'size:sm' %}3{% elsif tg contains 'size:me' %}4{% elsif tg contains 'size:la' %}5{% elsif tg contains 'size:xl' %}6{% elsif tg contains 'size:xxl' %}7{% elsif tg contains 'size:3x' %}8{% else %}9{%endif%}">
+                                <div class="custom-control custom-checkbox sizefilter mr-sm-2">
+                                    <input class="sizes custom-control-input" id="{{ c  | remove: '.'  | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}" type="checkbox" value="{{ c  | remove: '.' | prepend: '.' | replace: ':','-' | replace: '/','' | downcase }}" />
+                                    <label class="custom-control-label" for="{{ c  | remove: '.' | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}">{{ c | remove: 'size:' | downcase | replace: 'xsmall','XS' | replace: 'xlarge','XL' | replace: 'large','LG' | replace: 'small','SM' | replace: 'medium','MD' | replace: 'one size','OS'}}</label>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="checkbox-group brand-sort" data-filter-group="brands">
+                <div class="drop-panel" id="brands">
+                    <div class="leftmenu mb-3">
+                        <ul class="list-unstyled row">
+                            {% for c in tags %}
+                            {% if c contains 'vendor:' %}
+                            <li class="list-item col-6 col-md-3 my-auto">
+                                <div class="custom-control fill-control-indicator mr-sm-2">
+                                    <input class="brands custom-control-input" id="{{ c  | remove: '.'  | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}" type="checkbox" value="{{ c | remove: '.'| prepend: '.' | replace: ':','-' | downcase }}" />
+                                    <label class="custom-control-label" for="{{ c  | remove: '.' | remove: ' '  | replace: ':','-' | replace: '/','' | downcase }}">{{ c | remove: 'vendor:' | replace: '-',' ' | downcase }}</label>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>

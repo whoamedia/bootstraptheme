@@ -1,0 +1,17 @@
+{%if settings.enableCloudinary and settings.cloudinaryUrl != blank %}
+     {% assign baseUrl = settings.cloudinaryUrl %}
+     {%if img contains "?" %}
+          {% assign imgUrl = img | split: "?" %}
+          {% assign fetchQuery = "?" | append: imgUrl.last | url_encode %}
+          {% assign fetchUrl = imgUrl.first | append: fetchQuery %}
+     {% else %}
+          {% assign fetchUrl = img %} 
+     {% endif %}
+     {%if transformation and transformation !=blank %}
+          {% assign baseUrl = baseUrl | append: '/|' | append: transformation | replace:'fetch//', 'fetch/' %}
+     {% endif %}
+     {% assign cloudinaryURL = baseUrl | append: '/https:' | append: fetchUrl | replace: 'https:http','http' | replace:'/|/','/' | replace:'//|','/' |
+    replace:'/|','/' %}
+{% else %}
+     {% assign cloudinaryURL = img %}
+{% endif %}

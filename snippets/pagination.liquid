@@ -1,0 +1,77 @@
+{% comment %}This snippet renders a pagination widget using the current 'paginate'
+context, including a message indicating the range of items displayed
+and the total number of items.
+
+You can add a text argument to this snippet when including it and the
+message will be set accordingly, eg:
+
+{% include 'pagination' with 'comment' %}
+renders as "Showing 1-10 of 19 comments".
+
+For more information, see:
+- http://docs.shopify.com/themes/liquid-variables/paginate
+- http://getbootstrap.com/components/#pagination{% endcomment %}
+{% assign showing_from = paginate.current_offset | plus: 1 %}
+{% assign showing_to = paginate.current_offset | plus: paginate.page_size %}
+{% if showing_to > paginate.items %}
+  {% assign showing_to = paginate.items %}
+{% endif %}
+
+<nav class="pagination-block" aria-label="{{ 'general.pagination.label' | t }}">
+  <div class="pagination-block__header">
+    <span class="pagination-block__label">{{ 'general.pagination.page' | t: number: paginate.current_page }} / {{ paginate.pages }}</span>
+    <span class="pagination-block__meta">Showing {{ showing_from }}-{{ showing_to }} of {{ paginate.items }}</span>
+  </div>
+
+  <ul class="pagination pagination-modern justify-content-center" role="list">
+    <li class="page-item pagination-prev{% unless paginate.previous %} disabled{% endunless %}">
+      {% if paginate.previous %}
+        <a class="page-link" id="PreviousPaginationLink" href="{{ paginate.previous.url }}" rel="prev" aria-label="{{ 'general.pagination.previous' | t }}">
+          <span class="pagination-modern__icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="pagination-modern__text">Prev</span>
+        </a>
+      {% else %}
+        <span class="page-link" aria-disabled="true">
+          <span class="pagination-modern__icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="pagination-modern__text">Prev</span>
+        </span>
+      {% endif %}
+    </li>
+
+    {% for part in paginate.parts %}
+      {% if part.is_link %}
+        <li class="page-item">
+          <a class="page-link" href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+        </li>
+      {% else %}
+        {% if part.title == paginate.current_page %}
+          <li class="page-item active" aria-current="page"><span class="page-link">{{ part.title }}</span></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">{{ part.title }}</span></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    <li class="page-item pagination-next{% unless paginate.next %} disabled{% endunless %}">
+      {% if paginate.next %}
+        <a class="page-link" id="NextPaginationLink" href="{{ paginate.next.url }}" rel="next" aria-label="{{ 'general.pagination.next' | t }}">
+          <span class="pagination-modern__text">Next</span>
+          <span class="pagination-modern__icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true"><path d="m6.5 3.5 4.5 4.5L6.5 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      {% else %}
+        <span class="page-link" aria-disabled="true">
+          <span class="pagination-modern__text">Next</span>
+          <span class="pagination-modern__icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true"><path d="m6.5 3.5 4.5 4.5L6.5 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      {% endif %}
+    </li>
+  </ul>
+</nav>

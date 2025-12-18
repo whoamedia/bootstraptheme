@@ -1,0 +1,285 @@
+<style>
+    .shipping-page .accordion-button {
+    font-size: 1.4rem;
+    padding: 1.5rem 1.25rem;
+        font-family: var(--headerfont);
+    font-weight: var(--medium);
+    text-transform: uppercase;
+      
+}
+   input:focus, textarea:focus, select:focus{
+        outline: none;
+    }
+.shipping-page .accordion-button:not(.collapsed)  {
+color: var(--dark);
+
+    background-color: #e5e5e4;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+.shipping-page .accordion {
+          margin: 0rem auto 9rem;
+}
+
+.shipping-page .accordion-collapse {
+
+/*    background: #f8f9fa;*/
+}
+.shipping-page  .accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+    opacity: 1;
+}
+.accordion-button-active-color {
+color: var(--red);
+}
+.red-link {
+    color: var(--red);
+}
+/*============================
+  Section Title Seven CSS
+==============================*/
+.section-title-seven {
+  text-align: center;
+  margin: auto;
+  position: relative;
+  z-index: 5;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .section-title-seven {
+    margin-bottom: 45px;
+  }
+}
+@media (max-width: 767px) {
+  .section-title-seven {
+    margin-bottom: 35px;
+  }
+}
+.section-title-seven span {
+  text-transform: uppercase;
+  color: var(--dark-3);
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+.section-title-seven h5 {
+  margin-bottom: 7px;
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: 1rem;
+      font-weight: var(--medium);
+}
+
+.section-title-seven h2 {
+  margin-bottom: 18px;
+  position: relative;
+  padding-bottom: 15px;
+}
+.section-title-seven h2::before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 0;
+  height: 3px;
+  width: 50px;
+  background-color: var(--red);
+}
+
+@media (max-width: 767px) {
+  .section-title-seven p{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+.section-title-seven p {
+  color: var(--dark-1);
+}
+.page-margin {
+        margin: 3rem auto 3rem;
+}
+.accordion .list-group-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.shipping-page .accordion-body p {
+    margin-top:20px;
+}
+</style>
+<div class="row">
+    <div class="col-12 padding-0">
+        <header class="section__head">
+            <img src="{{ 'header7.png' | asset_url }}" data-was-processed="true">
+            <div class="section__head-inner">
+                <div class="textwrap align-bottom">
+                    <h1 class="section__title">{{ page.title }}</h1><!-- /.section__title -->
+                </div>
+            </div><!-- /.section__head-inner -->
+        </header>
+    </div>
+</div>
+<!--======  Start Section Title Seven ======-->
+<section class="features-area features-thirteen mb-5">
+    <div class="section-title-four">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content">
+                        <div class="redbar">
+                            <div class="headline"> We're Here To Help!</div>
+                        </div>
+                        <h3 class="gray-bg"> Shipping</h3>
+                        <p>
+                            Here you will find answers to most genral shipping questions. If you still need futher assistance or have additional questions that are not covered below please feel free to contact us using the <a href="/pages/contact" class="red-link">form here</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="row justify-content-center shipping-page">
+    <div class="col-12 col-md-8">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne"><button class="accordion-button accordion-button-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"><span class="fab fa-leanpub me-2"></span> What does shipping cost?</button></h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item pb-4">
+                                <span>Standard Shipping</span>
+                                | Standard delivery to US addresses (including APO/FPO/DPO addresses and PO boxes) for most items ranges from $5.99 to $10.99 per order. We calculate the total based on the type and number of items you order. The shipping and handling fee includes labor and material costs, packaging and processing fees, and it may exceed the actual cost paid by CheapUndies to its carrier to send the item(s) to you.
+                            </li>
+                            <li class="list-group-item text-center shipfast">
+                                If you need your undies fast what have good news for you!
+                                <br>We have several upgraded shipping options available and they will display during your checkout.
+                            </li>
+                            <li class="list-group-item mt-3">
+                                <span>Rushed Shipping - $9.99 and up</span>
+                                | Takes 2 days for delivery (not including weekends or holidays) & will move your order to the front of the CheapUndies shipping Queue so your order is processed, packed and shipped in a hurry. Rush orders placed by 3:00 EST will ship same business day.</li>
+                            <li class="list-group-item">Certain types of products, multiple items or large items may increase the shipping & handling rate. Shipping & handling to Alaska or Hawaii, US territories or international destinations may incur additional charges. The fee is listed in your order summary for review before you complete checkout.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo"><span class="fas fa-question-circle me-2"></span> What countries do you ship to?</button></h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class="countries text-center mt-3 mb-2">
+                            Canada, Australia, France, Germany, United Kingdom, Czech Republic, Austria
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <span>Standard international - Starts at $5.99</span><br>
+                                Standard international ships via UPS world wide economy mail and takes 10 - 15 days for delivery. The shipping fee does not include any taxes, duties, or customs fees that may be charged by your local government </li>
+                            <li class="list-group-item">
+                                <span>UPS Expedited international - Starts at $14.99</span><br>
+                                UPS Expedited international takes 2 - 4 days for delivery. The shipping fee does not include any taxes, duties, or customs fees that may be charged by your local government
+                            </li>
+                            <li class="list-group-item shipfast">
+                                These rates do not include and taxes or duties. Important: We do not calculate or charge you for local duties or taxes on non-US shipments. You are responsible for paying any taxes, duties, or customs fees charged by your local government. Please check with your local post office for more information. CheapUndies is required by law to declare an accurate monetary value on all non-US shipments. In the event that an order shipped by Air Mail is lost en route, we must wait for the claim to be processed. This can take up to 2 months.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree"><span class="fas fa-microphone-alt me-2"></span> What is rushed shipping?</button></h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            Haven't done laundry in a while? Do you have a hot date and nothing to make you stand out? Have no fear rush shipping is here! If you need a fresh pair in a hurry "rush shipping" is an option that you will see for U.S. customers during checkout. Rush shipping takes 2 days for delivery (not including weekends or holidays) & will move your order to the front of the CheapUndies shipping Queue so your order is processed, packed and shipped in a hurry. Rush orders placed by 3:00 EST will ship same business day.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading35">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse35" aria-expanded="false" aria-controls="flush-collapse35"><span class="fas fa-microphone-alt me-2"></span>
+                        How fast do items ship from your warehouse?
+                    </button>
+                </h2>
+                <div id="flush-collapse35" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            All items generally ship within 24 hours of being placed excluding weekends and holidays but can take up to 48 hours in some cases. If your item does not ship within 48 hours its not our fault, its more than likely due to a natural disaster like a tornado, flood or hurricane in which case we will then deliver your package by drone, camel or owl depending on where you are located (drone if you are in California, Camel if your in Egypt or staying at that cute Egyptian themed hotel in Vegas or Owl if you are in England, London or anywhere where there is a king, queen or a golden snitch)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4"><span class="fas fa-microphone-alt me-2"></span>
+                        How do I ship to an address other than my billing address?
+                    </button>
+                </h2>
+                <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            So your attempting to send some undies to your high school teacher, that sexy dancing dentist from youtube? If you'd like to use a ship to address that is different from you billing address just choose it when you checkout. Underwear makes the perfect gift!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading5">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5"><span class="fas fa-microphone-alt me-2"></span>
+                        Can I combine orders to save on shipping?
+                    </button>
+                </h2>
+                <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            No, we charge a shipping fee for each order. It's all part of our master plan so we can offer you the best price possible and get your orders out as soon as possible.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading6">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse6" aria-expanded="false" aria-controls="flush-collapse6"><span class="fas fa-microphone-alt me-2"></span>
+                        What is your order packaging like?
+                    </button>
+                </h2>
+                <div id="flush-collapse6" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            Shhhh.. Your secrets safe with us. We ship all orders in plain mail bags. They do not contain any markings or advertisements for CheapUndies. The shipping label does have our name on it but it's rather discreet and printed only in small text.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading7">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse7" aria-expanded="false" aria-controls="flush-collapse7"><span class="fas fa-microphone-alt me-2"></span>
+                        How do I track my package?
+                    </button>
+                </h2>
+                <div id="flush-collapse7" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            We ship all orders by Usps or Ups and once the order ships you will recieve a tracking number by email or you can log in to your account and click the order number and the tracking number will be displayed. Note sometimes it can take up to 24 hours for the tracking information to become active. If you do not receive a tracking number you should see a rainbow in the sky. your package will be at the end of that rainbow.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading8">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse8" aria-expanded="false" aria-controls="flush-collapse8"><span class="fas fa-microphone-alt me-2"></span>
+                        Missing Package?
+                    </button>
+                </h2>
+                <div id="flush-collapse8" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <p>
+                            If for any reason you think your order may have gone missing please contact us immediately so we can help you solve this terrible crime! All missing packages must be reported within 7 days. Unfortunately if you do not report your missing package within 7 days of your order being placed, we will be unable to assist you in any way. We take this matter very seriously and its a crime to make false claims.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

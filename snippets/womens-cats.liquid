@@ -1,0 +1,15 @@
+<div class="gutter-10 row">
+    {% for link in linklists.womens-store.links %}
+        <div class="col-6 col-md-3 mb-3 cats">
+            <div class="card">
+                <a href="/collections/{{ link.object.handle }}">
+                    <img alt="{{ link.object.title }}" class="card-img-top" src="{{ link.object.products.first.featured_image | product_img_url: 'large' }}"></a>
+                <div class="card-body text-center">
+                    <p class="card-text">
+                        <a href="/collections/{{ link.object.handle }}">{{ link.title }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

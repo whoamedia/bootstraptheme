@@ -1,0 +1,4 @@
+{% assign grid_cols = product_list_soldout | default: 4 %}
+{%- if product.available == false -%}
+<div class="col-6 col-md-{{ 12 | divided_by: grid_cols }} text-center mb-3">
+    {%- render 'product-soldout', product: product -%}</div>{%- endif -%}

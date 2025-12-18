@@ -1,0 +1,101 @@
+<meta content="1454381034869481" property="fb:app_id"/>
+<meta content="{{ shop.name }}" property="og:site_name"/>
+{%- if template == 'index' -%}
+    <meta content="website" property="og:type">
+    <meta content="{{- page_title -}}" property="og:title"/>
+    <meta content="{{- page_description -}}" property="og:description"/>
+        <meta content="http:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image"/>
+    <meta content="https:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image:secure_url"/>
+    {%- elsif template.name == 'product' -%}
+    <meta content="product" property="og:type"/>
+    <meta content="{{ product.title | strip_html | escape }}" property="og:title"/>
+    {%- for image in product.images -%}
+        <meta content="http:{{ image | img_url: 'master' }}" property="og:image"/>
+        <meta content="https:{{ image | img_url: 'master' }}" property="og:image:secure_url"/>
+        <meta content="{{ image.width }}" property="og:image:width"/>
+        <meta content="{{ image.height }}" property="og:image:height"/>
+    {%- endfor -%}
+    <meta content="{{ product.title | strip_html | escape }}" property="og:image:alt"/>
+    <meta name="og:description" content="Get this {{ product.title | strip_html | escape }} for {% if product.compare_at_price > product.price %}{{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% Off Retail{% else %} up to 80% off the retail price{% endif %} - {{ product.type  | remove: "W"| replace: "M" | strip | escape }}" />
+    <meta content="{{ product.vendor }}" property="product:brand"/>
+    <meta content="{{ product.type }}" property="product:category"/>
+    {% if product.compare_at_price > product.price %}<meta content="{{ product.compare_at_price | money_without_currency | strip_html | escape }}" property="product:original_price:amount"/>
+        <meta content="{{ shop.currency }}" property="product:original_price:currency"/>
+    {% endif %}<meta content="{{ product.price | money_without_currency | strip_html | escape }}" property="product:price:amount"/>
+    <meta content="{{ shop.currency }}" property="product:price:currency"/>
+    {%- if product.metafields.product.fabric -%}<meta content="{{ product.metafields.product.fabric }}" property="product:material"/>
+    {%- endif -%}
+    {%- if product.metafields.product.gender -%}<meta content="{{ product.metafields.product.gender | downcase }}" property="product:target_gender"/>
+    {%- endif -%}
+    {% if product.available %}
+    <meta content="instock" property="product:availability"/>
+    {% endif %}
+    <meta content="{{ canonical_url }}" property="product:product_link"/>
+    
+    <meta name="twitter:card" content="product" />
+    <meta name="twitter:title" content="{{ product.title | strip_html | escape }}" />
+    {%- if product.description == '<p>.</p>' -%}
+		<meta name="twitter:description" content="Get this {{ product.title | strip_html | escape }} for {% if product.compare_at_price > product.price %}{{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% Off Retail{% else %} up to 80% off the retail price{% endif %} - {{ product.type  | remove: "W"| replace: "M" | strip | escape }} - Fast Shipping" />
+{% else %}
+	<meta name="twitter:description" content="{{ product.description | strip_html | strip_newlines | escape  | remove: '•' | remove: '”'  }}" />
+	{% endif %}
+  <meta name="twitter:image" content="https:{{ product.featured_image.src | img_url: 'master', format: 'pjpg'}}" />
+  <meta name="twitter:label1" content="Price" />
+  <meta name="twitter:data1" content="{{ product.price | money}} {{ shop.currency }}" />
+  
+  <meta name="twitter:label2" content="Brand" />
+  <meta name="twitter:data2" content="{{ product.vendor }}" />
+    
+    
+    
+    {%- elsif template.name == 'collection' -%}
+    <meta content="website" property="og:type"/>
+    <meta content="{{- collection.title | strip_html | escape -}}" property="og:title"/>
+    <meta content="{{- collection.description | strip_html | escape  | truncate: 155 -}}" property="og:description"/>
+    {%- if collection.image -%}
+    <meta content="http:{{ collection.image | img_url: 'master' }}" property="og:image"/>
+    <meta content="https:{{ collection.image | img_url: 'master'  }}" property="og:image:secure_url"/><meta content="{{ collection.image.width }}" property="og:image:width"/><meta content="{{ collection.image.height }}" property="og:image:height"/>
+    {%- endif -%}
+    {%- elsif template contains 'article' -%}
+    <meta content="article" property="og:type"/>
+    <meta content="{{- article.title | strip_html | escape -}}" property="og:title"/>
+    {%- if article.image -%}
+    <meta content="http:{{ article.image | img_url: 'master' }}" property="og:image"/>
+    <meta content="https:{{ article.image | img_url: 'master' }}" property="og:image:secure_url"/>
+    <meta content="{{ article.image.width }}" property="og:image:width"/>
+    <meta content="{{ article.image.height }}" property="og:image:height"/>
+    {% endif %}
+    <meta content="{{ article.excerpt_or_content | strip_html | strip_newlines | escape | remove: '”' | remove: '“' | truncate: 250 }}" property="og:description"/>
+    {%- elsif template contains 'page' -%}
+    <meta property="og:type" content="article" /> 
+     <meta content="{{- page.title | strip_html | escape -}}" property="og:title"/>
+     <meta content="{{- page_description | strip_html -}}" property="og:description"/>
+    {%- if page.metafields.global.feat_img -%}
+     <meta content="http://{{ page.metafields.global.feat_img }}" property="og:image"/>
+     <meta content="https://{{ page.metafields.global.feat_img }}" property="og:image:secure_url"/>
+    {% endif %}
+{%- else -%}
+    <meta property="og:type" content="website" /> 
+    <meta content="{{- page_title | escape -}}" property="og:title"/>
+        <meta content="http:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image"/>
+    <meta content="https:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image:secure_url"/>
+    <meta name="twitter:site" content="@cheapundies">
+<meta name="twitter:card" content="http:{{ 'websitelogo.png' | asset_url }}">
+<meta name="twitter:title" content="{{- page_title | escape -}}">
+<meta name="twitter:description" content="{{- page_description | strip_html | strip_newlines | escape | remove: '”' | remove: '“' -}}">
+{%- endif -%}
+<meta content="{{ canonical_url }}" property="og:url"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

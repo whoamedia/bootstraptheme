@@ -1,0 +1,62 @@
+<style>
+    #enchant_form textarea {
+    min-height: 250px;
+    font-size: 1.3rem !important;
+}
+</style>
+{{ 'enchant_wrapper.js' | asset_url | script_tag }}
+<a class="SizeChartLink text-uppercase" data-bs-toggle="modal" data-bs-target="#questionModal" href=""><img class="mr-2" src="{{ 'question.png' | asset_img_url: '14x'  }}" />
+    Questions
+</a>
+<div aria-hidden="true" aria-labelledby="questionModallabel" class="modal fade questionmodal" id="questionModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Product Question</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form action="" id="enchant_form">
+                            <input type="hidden" class="form-control" id="mailbox" value="Cheapundies">
+                            <input type="hidden" class="form-control" id="mailbox_name" value="Feedback">
+                            <input type="hidden" class="form-control" id="form_title" value="Cheapundies">
+                            <p class="text-start">Use the form below to ask us a quesiton about this product. We will respond within the hour during normal business hours.</p>
+                            <div class="col-12 text-center mb-3">
+                                <span id="enchant-success"></span>
+                                <span id="enchant-error"></span>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-12 mb-3">
+                                    <input type="text" class="form-control req" name="Name" id="name" placeholder="{{ 'templates.contact.form.name' | t }}" type="hidden" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="email" class="form-control req" name="Email" id="email" placeholder="{{ 'templates.contact.form.email' | t }}" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+                                    <span id="error-email-message" style="display:none;">Invalid email address</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><input type="hidden" class="form-control req" name="subject" id="subject" placeholder="Subject" value="Product Question"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12"><textarea class="form-control req" id="message" name="Product Question" placeholder="Product Question" required></textarea></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="button button-3d button-rounded button-red" id="enchant_submit">Submit Question</button>
+                                </div>
+                            </div>
+                        </form>
+                        <script>
+                        $("#enchant_submit")
+                            .click(function() {
+                                $("#enchant_message").val($("#enchant_message").val() + "\n\n\n\n/////////  Product Inquery  /////////\n{{product.title | escape }}\n{{ shop.url }}{{ product.url }}")
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

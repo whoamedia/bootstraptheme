@@ -1,0 +1,109 @@
+{%- paginate collection.products by 60 -%}
+{% comment %}
+    <div class="row collection">
+        <div class="col">
+
+            <div class="row align-items-center gutter-10">
+
+                <div class="col-12 col-md-4">
+                    <img alt="{{collection.title | escape }}" class="img-fluid" src="{{ collection.image | img_url: '600x'}}"/>
+                </div>
+                <div class="col-12 col-md-8 align-middle">
+                    <div class="coll-back rounded">
+                        <h1 class="coll-title-header  mt-4 mt-sm-0">{{ collection.title }}</h1>
+                        <div>{{ collection.description | split: '<!-- split -->' | last }}</div>
+                        <div class="addthis_inline_share_toolbox_hd22 mt-3"></div>
+                        {% if collection.metafields.dailydeal.dailydeal %}
+                            <div class="countdown">
+
+                                <div class="time mt-2">
+                                    Time Left:
+                                    {% if soldout %}
+                                        <span>Sold Out!</span>
+                                    {% else %}
+                                        {% assign deal = collection.metafields.dailydeal.dailydeal %}
+                                        {%- render 'simpletime' -%}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+   </div>
+   {% endcomment %}
+      
+            <div class="row mainprod p-md-4 align-items-top ">
+               
+                <div class="col-12 mt-3 mb-3 mx-auto ">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe allowfullscreen="allowfullscreen" class="embed-responsive-item" src="https://www.youtube.com/embed/IGI1V6tM7kQ?modestbranding=1&showinfo=0"></iframe>
+                    </div>
+                </div>
+                 <div class="col-12">
+                <h1 class="coll-title-header  mt-4 mt-sm-0">Are You Game?</h1>
+                   
+                  
+                </div>
+                <div class="col-12 text-center">
+                  <div class="text-left">{{ collection.description | split: '<!-- split -->' | last }}</div>
+                    <div class="gallerytitle mt-4">Share the Video</div>
+                    
+                    <div class="addthis_inline_share_toolbox_ybif"></div>
+                </div>
+                <hr/>
+            </div>
+       
+
+        <div class="row gutter-10 collection">
+            <div class="col-12 mt-3">
+
+                <div class="row gutter-10 sorter collection mt-3">
+                    {%- for product in collection.products -%}
+                        {%- assign total = 0 %}
+                        {%- for variant in product.variants -%}
+                            {%- unless variant.inventory_management == '' -%}
+                                {%- capture temp -%}{{ total | plus: variant.inventory_quantity }}
+                                {%- endcapture -%}
+                                {%- assign total = temp -%}
+                            {%- endunless -%}
+                        {%- endfor -%}
+                        {%- assign fulltotal = total | plus:0 -%}
+                        {%- if fulltotal > 0 -%}
+                            {%- render 'product-list', product_list: 4, product: product -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- for product in collection.products -%}
+                        {%- if collection.handle == 'cheapundies-exclusives' or collection.handle == 'gifts' or collection.title == product.vendor -%}
+                            {%- render 'product-list-soldout', product_list_soldout: 4, product: product  -%}
+                        {% else %}
+                            {%- render 'product-list-soldout', product_list_soldout: 4, product: product  -%}
+
+                        {%- endif -%}
+                    {%- endfor -%}
+                </div>
+            </div>
+        </div>
+    {%- endpaginate -%}
+    {%- render 'video' -%}
+    {% if collection.metafields.images.gallery and collection.metafields.images.gallery != 'null' %}
+        <div class="row justify-content-center">
+            <div class="col-12">
+
+                <div class="page-header">Gallery</div>
+                <hr>
+            </div>
+            <div class="col-md-12  mt-3 mb-3">
+                <div class="row">
+                    {% assign extra_images = collection.metafields.images.gallery | split : "," %}
+                    {% for imageURL in extra_images %}
+                        <a class="col-sm-4 mb-2" data-gallery="example-gallery-11" data-bs-toggle="lightbox" href="{{ imageURL }}">
+                            <img class="img-fluid" src="{{ imageURL }}" width="600" height="600" loading="lazy"/>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}

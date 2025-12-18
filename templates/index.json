@@ -1,0 +1,12 @@
+{
+  "name": "Home",
+  "sections": {
+    "main": {
+      "type": "main-home"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
+

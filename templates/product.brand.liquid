@@ -1,0 +1,299 @@
+{%- include 'rich-code' -%}
+<div class="product brand">
+   
+
+
+
+
+
+                <div class="row justify-content-center align-items-center pbd">
+                    <div class="col-12 col-md-6 text-center">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="easyzoom easyzoom--overlay" id="ProductPhoto">
+                                    <a href="{{ product.featured_image.src | img_url: 'master', format: 'pjpg'}}">
+                                        <img alt="{{ product.title }} Featured Image" class="img-fluid shirt lazyload" data-src="{{ product.featured_image.src | img_url: '400x', format: 'pjpg'}}" src="{{ product.featured_image.src | img_url: '1x', format: 'pjpg'}}" style=" background-image: url('{{ product.featured_image.src | img_url: '400x', format: 'pjpg'}}')" width="400" height="400" loading="lazy">
+                                    </a>
+                                </div>
+                                {% if product.available %}
+                                    {%- if product.images.size > 1 -%}
+                                 
+                                       
+                                        <div class="product-thumbs text-center ">
+                                            <ul id="lightSlider">
+                                                {%- for image in product.images -%}
+                                                    {% if product.options.first and product.options.first == "Color" %}
+                                                        <li>
+                                                            <a data-color="{%- for variant in image.variants -%}{{ variant.option1 }} {%- endfor -%}" data-image="{{ image.src | img_url: '400x', format: 'pjpg' }}" data-zoom-id="thumbs" href="{{ image.src | product_img_url: 'master' , format: 'pjpg' }}">
+                                                                <img alt="{{ product.title }} Image {{ image.position }}" class="lazyload" data-src="{{ image.src | img_url: '50x', format: 'pjpg' }}" src="{{ product.featured_image.src | img_url: '1x', format: 'pjpg'}}" width="50" height="50" loading="lazy"/>
+                                                            </a>
+                                                        </li>
+                                                    {%- else -%}
+                                                        <li>
+                                                            <a data-color="{%- for variant in image.variants -%}{{ variant.option2 }} {%- endfor -%}" data-image="{{ image.src | img_url: '400x', format: 'pjpg' }}" data-zoom-id="thumbs" href="{{ image.src | product_img_url: 'master' , format: 'pjpg' }}">
+                                                                <img alt="{{ product.title }} Image {{ image.position }}" class="lazyload" data-src="{{ image.src | img_url: '50x', format: 'pjpg' }}" src="{{ image.src | img_url: '1x', format: 'pjpg' }}" width="50" height="50" loading="lazy"/>
+                                                            </a>
+                                                        </li>
+                                                    {%- endif -%}
+                                                {%- endfor -%}
+                                            </ul>
+                                        </div>
+                                    {%- endif -%}
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 text-center">
+                        <div class="productbk">
+                            <h1 class="text-center">{{ product.title }}</h1>
+                            <div class="loox-rating" data-id="{{ product.id }}" data-raters="{{ product.metafields.loox.num_reviews }}" data-rating="{{ product.metafields.loox.avg_rating }}"></div>
+                            <div class="row mt-4">
+                                <div class="col-6 text-center text-md-left">
+
+                                    <a class="SizeChartLink align-middle" data-bs-target="#questionModal" data-bs-toggle="modal" href=""><img class="mr-2 align-middle" src="{{ 'question.png' | asset_img_url: '16x'  }}" width="16" height="16"/>
+                                        <span class="align-middle">Have a Question?</span>
+                                    </a>
+                                    {%- include 'product-question' %}
+                                </div>
+                                <div class="col-6 text-center">
+                                    {%- include 'product-size-guide' -%}</div>
+                            </div>
+                            <div class="mt-1">
+                                <hr>
+                            </div>
+                            {% if product.available %}
+                                <div class="row align-items-center">
+                                    <div class="col-12  {% if product.compare_at_price > product.price %} col-md-3 {% endif %} text-center">
+
+                                        <div class="price2">
+                                            {%- if product.price == 0.00 -%}
+                                                FREE{%- else -%}
+                                                {{ product.price | money }}
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                    {%- if product.compare_at_price > product.price -%}
+                                        <div class="col-4 col-md-3 text-center">
+                                            <div class="pricetitle">
+                                                Retail</div>
+                                            <div class="price3">
+                                                <s>{{ product.compare_at_price_max | money  }}
+                                                </s>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 col-md-3 text-center">
+                                            <div class="pricetitle">Discount</div>
+                                            <div class="price3">
+                                                {{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% OFF
+                                            </div>
+                                        </div>
+                                        <div class="col-4 col-md-3 text-center">
+                                            <div class="pricetitle">You Save</div>
+                                            <div class="price3">
+                                                {{ product.compare_at_price_max | minus:product.price | money }}
+                                            </div>
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                            {% endif %}
+                            <hr>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="options text-center text-md-left">
+                                        {%- assign total = 0 %}
+                                        {%- for variant in product.variants -%}
+                                            {%- unless variant.inventory_management == '' -%}
+                                                {%- capture temp -%}{{ total | plus: variant.inventory_quantity }}
+                                                {%- endcapture -%}
+                                                {%- assign total = temp -%}
+                                            {%- endunless -%}
+                                        {%- endfor -%}
+                                        {%- assign fulltotal = total | plus:0 -%}
+                                        {% form 'product', product, id: "oldID", class: "old-class",  data-cart-submit: "data-cart-submit"  %}
+                                            <ul class="variant_selector variant-size mt-3">
+                                                {% for variant in product.variants %}
+                                                    {% assign single = variant.title | downcase %}
+                                                    <li>
+                                                        <input id="{{variant.id}}" type="radio" data-id="{{ variant.id }}" name="id" value="{{ variant.id }}" {% if variant.inventory_quantity <= 0 %} disabled {% endif %}/>
+                                                        <label class="comman_class rounded {% if variant.inventory_quantity <= 0 %}soldout{% endif %}" for="{{ variant.id }}">
+                                                            <div class="labelname text-uppercase">{{ variant.title | downcase }}
+                                                                <div class="labelqty">
+                                                                    {% if variant.inventory_quantity >= 30 %}
+                                                                        In Stock
+                                                                        {% elsif variant.inventory_quantity <= 0 %}Sold Out
+                                                                    {% else %}
+                                                                        {{ variant.inventory_quantity }}
+                                                                        Left{% endif %}
+                                                                </div>
+                                                                {% assign qty = variant.inventory_quantity %}
+                                                                {% if qty <= 25 %}
+                                                                    {% assign status = 'bg-danger infinite flash' %}
+                                                                    {% elsif qty <= 40 %}
+                                                                    {% assign status = 'bg-warning infinite flash slower' %}
+                                                                    {% elsif qty <= 100 %}
+                                                                    {% assign status = 'bg-success' %}
+                                                                {% else %}
+                                                                    {% assign status = 'bg-success' %}
+                                                                {% endif %}
+                                                                <div class="progress" style="height: 5px;">
+                                                                    <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar {{ status }} progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ qty }}%;"></div>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                            <button class="btn button button-3d button-rounded button-red mt-4 mb-4" disabled="disabled" id="AddToCart" name="add" type="submit">
+                                                <span class="icon-cart"></span>
+                                                Add to Cart</button>
+                                        {% endform %}
+                                        <img class="img-fluid safeicon mt-3" src="{{ 'safedark.png' | asset_url }}" width="200" height="200" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-3 d-none d-md-block text-left">
+                                <hr>
+                                <h4>Share this Product</h4>
+                                <div class="mt-0 mb-2 addthis_inline_share_toolbox_hd22"></div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                 
+                
+                
+                
+                
+                
+                   <div class="row mt-5">
+     
+                <div class="col-12 col-md-7 pl-5">
+                    <div class="detail-title mb-1">
+                        Product Details
+                    </div>
+                    {{ product.description }}
+
+                </div>
+
+
+
+
+                <div class="col-12 col-md-5 pr-5 ">
+                    {% unless product.type == 'M Gifts' %}
+                        {% if product.metafields.product.fabric %}
+                            <div class="detail-title mb-1">
+                                Fabric:
+                            </div>
+                            <div class="detail-description rte mb-3 ml-3">
+                                {{ product.metafields.product.fabric }}
+                            </div>
+                        {% endif %}
+                        {% if product.metafields.product.care %}
+                            <div class="detail-title">
+                                Care:
+                            </div>
+                            <div class="detail-description rte mb-3 ml-3">{{ product.metafields.product.care }}
+                            </div>
+                        {% endif %}
+                        <div class="detail-title mb-1">
+                            Sizing:
+                        </div>
+                        <div class="detail-description rte mb-1 ml-3">
+                            <ul class="list-unstyled">
+
+                                <li>Individual brands may fit differently, so we recommend always reviewing the size chart before placing your final order!
+                                </li>
+                            </ul>
+                            <a class="SizeChartLink" data-bs-target="#sizeModal" data-bs-toggle="modal" href="">
+                                Click here for the Size Guide
+                            </a>
+                            <div aria-hidden="true" aria-labelledby="sizeModalLabel" class="modal fade" id="sizeModal" role="dialog" tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="sizeModalLabel">Size Chart
+                                            </h5>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% capture sizechartpage %}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}
+                                            {% endcapture %}
+                                            {% if pages[sizechartpage].content != '' %}
+                                                {% capture sizechartpage %}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}
+                                                {% endcapture %}
+                                                {{ pages[sizechartpage].content }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endunless %}
+                   </div>
+           </div>
+            
+          
+
+
+
+
+            
+            
+   <div class="row justify-content-center mt-3">
+      <div class="col-12">
+                    <div class="fancy-title mt-2 mb-4">
+            <span>Video</span>
+        </div>
+            </div>
+  <div class="col-12 mt-3 mb-3 mx-auto ">
+             
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="{{ product.metafields.product.video }}"></iframe>
+                </div>
+
+            </div>
+</div>
+
+
+            {%- include 'gallery' -%}
+
+         
+
+          
+
+  </div>
+ 
+
+{% comment %}
+
+    {% if single contains "one size" %}
+    <script>
+        $('input:radio[name="id"]')
+            .filter('[value="one size"]')
+            .attr('checked', true);
+        $(document).ready(function () {
+            $('input:radio[name="id"]')
+                .prop("checked", true)
+                .trigger("click");
+            $('input:radio[name="id"]').filter('[value="one size"]')
+            $('#AddToCart').removeAttr("disabled");
+
+        });
+    </script>
+    <style>
+        .variant_selector {
+            display: none;
+        }
+        .optionsrow {
+            margin-top: 0;
+        }
+    </style>
+{% endif %}
+{% endcomment %}

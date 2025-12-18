@@ -1,0 +1,434 @@
+{% comment %} https://help.shopify.com/themes/customization/showcase-products/add-color-swatches {% endcomment %}
+
+
+{% assign has_group_tag = false %}
+{% for tag in product.tags %}
+	{% assign group_tag = tag | downcase %}
+	{% if group_tag contains 'group-' %}
+		<input id="color_group_tag" value="{{ group_tag }}" data-url="{{ shop.url }}/collections/all/{{ group_tag }}?view=color-group" type="hidden" />
+		{% assign has_group_tag = true %}
+		{% break %}
+	{% endif %}
+{% endfor %}
+
+
+
+{% assign file_extension = 'png' %}
+
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+	{% assign option_index = forloop.index0 %}
+  {% if option == swatch %}
+    {% assign found_option = true %}
+    <style>
+      label[for="product-select-option-*"] { display: none; }
+      [id=product-select-option-*] { display: none; }
+      [id=product-select-option-*] + .custom-style-select-box { display: none !important; }
+    </style>
+    <script>$(window).load(function() { $('.selector-wrapper:eq({{ option_index }})').hide(); });</script>
+    {% assign downcased_option = swatch | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+<div class="swatch clearfix {% if has_group_tag == true %} has-group-tag{% endif %}" data-option-index="{{ option_index }}">
+<div class="row">
+  <div class="select-title col-6">Size:</div> <div class="size-chart col-6 text-right">{% capture sizechartpage %}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}{% endcapture %}
+                   {% if pages[sizechartpage].content != '' %}<a class="SizeChartLink" data-bs-toggle="modal" data-bs-target="#sizeModal" href="">Size Chart</a>{% endif %}</div>
+  </div>
+  <div class="clearfix"></div>
+	{% assign values = '' %}
+
+	{% for v in product.variants %}
+		{% if v.options.size > 1 %}
+			{% assign _sizes = _sizes | append: v.options[1] | downcase %}
+		{% endif %}
+	{% endfor %}
+
+
+  	{% assign _colors = product.variants %}
+	{% assign _variants = product.variants %}
+ 	<ul id="size_selector" class="variant_selector variant-size">
+	{% for variant in product.variants %}
+
+	    {% unless values contains value %}
+		{% assign values = values | join: ',' %}
+		{% assign values = values | append: ',' | append: value %}
+		{% assign values = values | split: ',' %}
+		{% assign option_index = forloop.index0 %}
+		{% assign value = variant.options[0] %}
+
+		{% assign alt_opts = "" %}
+
+		{% if variant.options.size > 1 %}
+			{% assign sep = "," %}
+			{% for o in variant.options %}
+				{% if forloop.index0 > 0 %}
+					{% if forloop.index == (variant.options.size - 1) %}
+						{% assign sep = "" %}
+					{% endif %}
+					{% assign alt_opts = alt_opts | append: o | append: sep %}
+				{% endif %}
+			{% endfor %}
+		{% else %}
+
+		{% endif %}
+        <li class="mx-auto mb-0">
+          	<input data-size="{{ value | escape | handleize }}" class="size-radio {{ value | escape | handleize }}" id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" data-alt-ops="{{ alt_opts }}" data-id="{{ variant.id }}" name="option-size" value="{{ value | escape }}" {% unless variant.available %}disabled{% endunless %} />
+        {%comment%}	<label for="swatch-{{ option_index }}-{{ value | handle }}" {% if variant.available %}available{% else %}class="soldout" data-toggle="tooltip" data-placement="top" title="Sold Out"{% endif %} >
+          		{{ value }}
+        	</label>
+        	{% endcomment %}
+        	
+        	        <label for="swatch-{{ option_index }}-{{ value | handle }}" class="size-label-{{ value | escape | handleize }} {{ product.metafields.product.gender }} {% if variant.available %}available"{% else %}soldout" data-bs-toggle="tooltip" data-bs-placement="top" title="Sold Out"{% endif %}">
+         <div class="labelname"> {{ value }}</div>
+                      {% if variant.available == false %} <div class="soldout-label">Sold Out!{% else %}<div class="soldout-label">{% if variant.inventory_quantity <= 100 %}{{ variant.inventory_quantity }} Left {% else%} In Stock {% endif %}</div> {% endif %}
+        </label>
+        </li>
+
+    {% endunless %}
+
+	    {% if variant.available %}
+	    <script>
+	      jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+	    </script>
+	    {% endif %}
+	{% endfor %}
+  </ul>
+
+</div>
+
+
+{% if product.options contains "Color" or has_group_tag == true %}
+<div class="swatch clearfix">
+<div class="row">
+  <div class="select-title col-6">Color:</div>
+ </div>
+  <div class="clearfix"></div>
+  {% assign values = '' %}
+  <ul id="color_selector" class="variant_selector variant-color">
+  {% if has_group_tag == false %}
+  {% for variant in product.variants %}
+
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}
+      {% assign values = values | append: ',' | append: value %}
+      {% assign values = values | split: ',' %}
+      {% assign option_index = forloop.index %}
+      {% assign value = variant.options[1] %}
+
+        <li class="mx-auto">
+          	<input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" data-id="{{ variant.id }}" data-productid="{{ product.id }}" name="option-color" value="{{ value | escape }}" class="{{ value | handle }} disabled" disabled />
+        	<label for="swatch-{{ option_index }}-{{ value | handle }}" style="background-color: {{ value | downcase }}" >
+
+        	</label>
+        </li>
+
+    {% endunless %}
+
+    {% if variant.available %}
+    <script>
+      jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+    </script>
+    {% endif %}
+  {% endfor %}
+  {% endif %}
+  </ul>
+</div>
+
+{% endif %}
+{% assign p_handle = product.handle %}
+
+<script>
+
+  $(document).ready(function() {
+    /* this function gets the variant id number
+    ex: '...?variant=36220245326' from the URL, this
+    gets 36220245326 */
+    function getParameterByName(name, url) {
+      if (!url) {
+        url = window.location.href;
+      }
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    var i = '{{ option_index }}';
+    var product_handle = '{{ p_handle }}';
+    $('#AddToCart').html('<i class="fa fa-arrow-up" aria-hidden="true"></i> Select');
+	var allow_atc_btn = function($current_swatch_option,data) {
+		$('#AddToCart').attr('disabled',false).text('ADD TO CART');
+		//alert('allow_atc_btn');
+		var combinedVariant = Number(getParameterByName('variant')); // this is the variant id of the selected variant combo
+		for (var x = 0; x < data.product.variants.length; x++) {
+			if (data.product.variants[x].id == combinedVariant) {
+			  var iq = data.product.variants[x].inventory_quantity;
+			  if (iq < 10 && iq > 0) {
+				$('#variant_quantity').css('display', 'block');
+				$('#variant_quantity span').text(iq);
+			  } else {
+				$('#variant_quantity').css('display', 'none');
+			  }
+			  break;
+			}
+		}
+	};
+    $('[name^=option-size]').click(function() {
+      
+       $('.alert-success').remove();
+      var $current_swatch_option = $(this);
+
+      $.ajax({
+        method: 'GET',
+        url: product_handle + ".json",
+        dataType: 'json',
+        success: function(data) {
+          if($('#color_group_tag').length){
+            var current_product_id = '{{ product.id }}';
+           // alert(current_product_id);
+            if($('[name^=option-color-grouped]:checked').length){
+              current_product_id = $('[name^=option-color-grouped]:checked').attr('data-productid');
+              //alert(current_product_id);
+            }
+          	//setColorsFromSize($('#AddToCartForm'));
+              $('#AddToCart').attr('disabled',true).text('Choose a color');
+              var theurl = $('#color_group_tag').attr('data-url');
+              //alert('getting-data');
+              $.get( theurl, function( data ) {
+                  if ( data.indexOf("labelimage") > -1 ) {
+                    $( "#color_selector" ).html( data );
+                    $( "#color_selector .variant-color-item" ).hide();
+                    	
+                    setColorsFromSize($('#AddToCartForm'),current_product_id);
+                   
+                  }
+              });
+            
+            
+            
+          }
+          else {
+            
+              $('.active-swatch').removeClass('active-swatch');
+              $current_swatch_option.addClass('active-swatch');
+              $('.soldout-label').addClass('soldoutselected');
+              $('.active-color-swatch').removeClass('active-color-swatch');
+
+              var alt_ops = $current_swatch_option.attr('data-alt-ops');
+              var block_btn = false;
+
+              // Undisabled allowed extra opts where applicable
+              if(alt_ops != "" && $('.active-color-swatch').length == 0) {
+                  block_btn = true;
+
+                  $('#AddToCart').attr('disabled',true).text('Choose a color');
+                  $('.variant-color input[id^="swatch-"]').addClass('disabled').attr('disabled',true);
+
+                  $.each(alt_ops.split(','), function(a,b) {
+                      $('.variant-color input[id*="'+b.toLowerCase()+'"]').removeAttr('disabled').removeClass('disabled');
+                  });
+              }
+
+              if(block_btn == false) {
+                  allow_atc_btn($current_swatch_option,data);
+              }
+          }
+      	}
+      })
+    });
+
+	$('[name^=option-color]').click(function() {
+      //alert('option-color');
+      var $current_swatch_option = $(this);
+      $.ajax({
+        method: 'GET',
+        url: product_handle + ".json",
+        dataType: 'json',
+        success: function(data) {
+          $('#AddToCart').attr('disabled',false).text('Add to Cart');
+          $('.active-color-swatch').removeClass('active-color-swatch');
+          $current_swatch_option.addClass('active-color-swatch');
+          var combinedVariant = Number(getParameterByName('variant')); // this is the variant id of the selected variant combo
+          for (var x = 0; x < data.product.variants.length; x++) {
+            if (data.product.variants[x].id == combinedVariant) {
+              var iq = data.product.variants[x].inventory_quantity;
+              if (iq < 10 && iq > 0) {
+                $('#variant_quantity').css('display', 'block');
+                $('#variant_quantity span').text(iq);
+              } else {
+                $('#variant_quantity').css('display', 'none');
+              }
+              break;
+            }
+          }
+      	}
+      })
+    });
+    
+    
+	$( "body" ).on( "click", "[name^=option-color-grouped]", function() {
+      console.log('option-color-grouped clicked');
+      $('.alert-success').remove();
+      product_handle = $(this).attr('data-handle');
+      var productid = $(this).attr('data-productid');
+      var stock = $(this).attr('data-stock');
+      update_sizes_count($(this));
+      //alert(product_handle);
+      //setColorsFromSize($('#AddToCartForm'))
+      var $current_swatch_option = $(this);
+      replace_imag_gallery(productid);
+      product_left(stock);
+      $.ajax({
+        method: 'GET',
+        url: product_handle + ".json",
+        dataType: 'json',
+        success: function(data) {
+          $('#AddToCart').attr('disabled',false).text('Add to Cart');
+          $('.active-swatch').removeClass('active-swatch');
+          $current_swatch_option.addClass('active-swatch');
+          	//alert(Number($current_swatch_option.attr('data-id')));
+          var combinedVariant = Number($current_swatch_option.attr('data-id')); // this is the variant id of the selected variant combo
+
+          
+          for (var x = 0; x < data.product.variants.length; x++) {
+            if (data.product.variants[x].id == combinedVariant) {
+              var iq = data.product.variants[x].inventory_quantity;
+              if (iq < 10 && iq > 0) {
+                $('#variant_quantity').css('display', 'block');
+                $('#variant_quantity span').text(iq);
+              } else {
+                $('#variant_quantity').css('display', 'none');
+              }
+              if(iq < 1){
+                $('#AddToCart').attr('disabled',true).text('Out of Stock');
+                
+              }
+              break;
+            }
+          }
+      	}
+      })
+    });
+    
+    function replace_imag_gallery(productid){
+      	//alert(productid);
+      	var thegallerySelector = '#product_images-'+productid;
+      	//alert(thegallerySelector);
+        if($('#ajax_product_photos').find(thegallerySelector).length){
+          	//alert('found in ajax_product_photos');
+        	var theHTML = $('#ajax_product_photos').find(thegallerySelector).clone();
+          	//alert(theHTML);
+          	$('#other-color-images-wrap').html(theHTML);
+            $('.product-images-wrap').addClass('hide');
+          	$('#other-color-images-wrap').find(thegallerySelector).removeClass('hide');
+          	magicZoomInit();
+      	}
+            
+    }
+    
+    function update_sizes_count(thisObj){
+      	$('#size_selector .size-radio').each(function() {
+          	
+          	$(this).attr('disabled', false);
+        	var mysize = $(this).attr('data-size');
+          	var mycount = thisObj.attr(mysize);
+            if (mycount > 0){
+				$(this).removeClass('soldout').removeClass('available').addClass('available');
+              	$('.size-label-'+mysize).removeClass('soldout').removeClass('available').addClass('available');
+              $('.size-label-'+mysize).removeAttr('data-bs-toggle').removeAttr('data-bs-placement').removeAttr('title').removeAttr('data-original-title');
+              	
+            }
+          else{
+          	$(this).removeClass('available').removeClass('soldout').addClass('soldout');
+            $('.size-label-'+mysize).removeClass('available').removeClass('soldout').addClass('soldout');
+            $('.size-label-'+mysize).attr('title','Sold Out').attr('data-bs-toggle','tooltip').attr('data-bs-placement','top').attr('data-original-title','Sold Out');
+            
+          }
+          product_left(mycount);
+        });
+                  if (window.bootstrap && bootstrap.Tooltip) {
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                    tooltipTriggerList.map(function (tooltipTriggerEl) { return new bootstrap.Tooltip(tooltipTriggerEl); });
+                  }
+            
+    }
+    
+    
+    function product_left(fulltotal){
+      if($('.progress .progress-bar').length){
+        if (fulltotal > 100){
+        	$('#product-left-wrap').addClass('hide');
+        }
+        else if (fulltotal < 1){
+          	$('#product-left-wrap').addClass('hide');
+        }
+        else{
+            var barObj = $('#progress_bar');
+          	barObj.attr('class','progress-bar');
+          	$('#product-left-wrap').removeClass('hide');
+          	$('#product-left-wrap').find('.progress-title span').text(fulltotal);
+            if (fulltotal > 50){
+                barObj.addClass('bg-success');
+            } 
+            else if ( fulltotal <= 50 && fulltotal >= 20 ){
+              barObj.addClass('progress-bar-striped').addClass('bg-warning');
+            }
+            else if ( fulltotal <= 20 ){
+				barObj.addClass('progress-bar-striped').addClass('bg-danger');
+            }
+          	barObj.addClass('progress-bar-animated');
+          	barObj.css('width',fulltotal+'%');
+        }
+      }
+    }
+    
+    
+    
+    // ---------------------------------------------------------------------------------------------------------------------------->
+    // Swatch
+    // ---------------------------------------------------------------------------------------------------------------------------->
+  
+    function setColorsFromSize(formObj,current_product_id){
+      if($('input[name=option-size]:checked', '#AddToCartForm').length){
+      	var choice =  $('input[name=option-size]:checked', '#AddToCartForm').val();
+        //alert(choice);
+ 
+        var matchfound = 0; 
+        $( "#color_selector .variant-color-item" ).hide();
+        $( "#color_selector .variant-color-item" ).each(function() {
+       		         
+        	if($(this).hasClass(choice)){
+              $( this ).show();
+              if ($( this ).find('input[data-productid="'+current_product_id+'"]').length) {
+                  console.log('current_product_id #found# = '+current_product_id+" -- "+$(this).prop('tagName'));
+					matchfound = 1;
+                      $( this ).find('input[data-productid="'+current_product_id+'"]').prop("checked", true);
+                      $( this ).find('input[data-productid="'+current_product_id+'"]').attr("checked", "checked");
+                      $( this ).find('input[data-productid="'+current_product_id+'"]').trigger("click");
+                      $( this ).find('input[data-productid="'+current_product_id+'"]').change();
+                		var mysize = choice.toLowerCase(); 
+                		var mycount = $( this ).find('input[data-productid="'+current_product_id+'"]').attr(mysize);
+                	 	product_left(mycount);
+                }
+            } 
+        });
+        if (matchfound == 0) {
+          console.log('current_product_id #UNFOUND# = '+current_product_id+" -- "+$(this).prop('tagName')+"");
+        }        
+      }
+    }
+    
+    
+    
+  });
+</script>
+

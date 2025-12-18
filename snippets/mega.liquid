@@ -1,0 +1,179 @@
+
+<style>
+     .leftmenu {
+        padding-left: 5px;
+        color: var(--black);
+        padding-top: 10px;
+        padding-bottom: 5px;
+        letter-spacing: -.5px;
+        border-left: 1px solid #e5e5e4;
+        border-right: 1px solid #e5e5e4;
+        border-bottom: 1px solid #e5e5e4;
+        border-top: 1px solid #e5e5e4;
+    }
+    .leftmenu ul {
+        list-style: none;
+        padding-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    .leftmenu ul li {
+        padding-top: 2px;
+        padding-bottom: 4px;
+        font-size: 1.4rem;
+    }
+    .leftmenu-nav-item--active {
+        font-weight: 600;
+        color: var(--dark);
+    }
+    .leftmenu-nav-link--active {
+        font-weight: 600;
+        color: var(--red);
+    }
+    .leftmenu-nav-sublink--active {
+        color: var(--red);
+        font-weight: 600;
+    }
+    ul.parent:before {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 50px;
+        background: #d3232b;
+        margin-top: 24px;
+    }
+    .parent-link {
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+</style>
+<div class="dropdown-menu megamenu" role="menu">
+    <div class="row">
+        <div class="col-12">
+            <div class="drop-panel">
+                <div class="leftmenu mb-3 ">
+                    <div class="row">
+                        <div class="col">
+                            <ul class="parent">
+                                {% for link in linklists.underwear.links %}
+                                    <li {% if link.active %} class="active {% if link.child_active %}child-active{% endif %}" {% endif %}>
+                                        <a class="parent-link" href="{{ link.url }}">{{ link.title }}</a>
+                                        {% if link.links != blank %}
+                                            <ul class="child mt-5">
+                                                {% for child_link in link.links %}
+                                                    <li {% if child_link.active %} class="active {% if child_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                        <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                                                        {% if child_link.links != blank %}
+                                                            <ul class="grandchild">
+                                                                {% for grandchild_link in child_link.links %}
+                                                                    <li {% if grandchild_link.active %} class="active {% if grandchild_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                                        <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul class="parent">
+                                {% for link in linklists.swimwear.links %}
+                                    <li {% if link.active %} class="active {% if link.child_active %}child-active{% endif %}" {% endif %}>
+                                        <a class="parent-link" href="{{ link.url }}">{{ link.title }}</a>
+                                        {% if link.links != blank %}
+                                            <ul class="child mt-5">
+                                                {% for child_link in link.links %}
+                                                    <li {% if child_link.active %} class="active {% if child_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                        <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                                                        {% if child_link.links != blank %}
+                                                            <ul class="grandchild">
+                                                                {% for grandchild_link in child_link.links %}
+                                                                    <li {% if grandchild_link.active %} class="active {% if grandchild_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                                        <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul class="parent">
+                                {% for link in linklists.clothing.links %}
+                                    <li {% if link.active %} class="active {% if link.child_active %}child-active{% endif %}" {% endif %}>
+                                        <a class="parent-link" href="{{ link.url }}">{{ link.title }}</a>
+                                        {% if link.links != blank %}
+                                            <ul class="child mt-5">
+                                                {% for child_link in link.links %}
+                                                    <li {% if child_link.active %} class="active {% if child_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                        <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                                                        {% if child_link.links != blank %}
+                                                            <ul class="grandchild">
+                                                                {% for grandchild_link in child_link.links %}
+                                                                    <li {% if grandchild_link.active %} class="active {% if grandchild_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                                        <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul class="parent">
+                                {% for link in linklists.accessories.links %}
+                                    <li {% if link.active %} class="active {% if link.child_active %}child-active{% endif %}" {% endif %}>
+                                        <a class="parent-link" href="{{ link.url }}">{{ link.title }}</a>
+                                        {% if link.links != blank %}
+                                            <ul class="child mt-5">
+                                                {% for child_link in link.links %}
+                                                    <li {% if child_link.active %} class="active {% if child_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                        <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                                                        {% if child_link.links != blank %}
+                                                            <ul class="grandchild">
+                                                                {% for grandchild_link in child_link.links %}
+                                                                    <li {% if grandchild_link.active %} class="active {% if grandchild_link.child_active %}child-active{% endif %}" {% endif %}>
+                                                                        <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul>
+                                {% for link in linklists.misc.links %}
+                                    <li class="mb-3">
+                                        <a class="parent-link" href="{{ link.url }}">{{ link.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

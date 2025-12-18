@@ -1,0 +1,33 @@
+<div class="row ">
+    <div class="col ">
+        {% if collection.description != '' %}
+            {% if collection.image %}
+            <div class="row align-items-center">
+                <div class="col-12 col-md-4">
+                    <img class="img-fluid" src="{{ collection.image | image_url: width: 400, height: 400, crop: 'center' }}" width="400" height="400" loading="lazy">
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="coll-back rounded">
+                        <header class="coll-title-header  mt-4 mt-sm-0 ">{{ collection.title }}
+                        </header>
+                        <div class="">{{ collection.description | split: '<!-- split -->' | last }}
+                        </div>
+                        <div class="addthis_inline_share_toolbox_hd22 mt-2"></div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="cat-banner">
+                    <header class="coll-title-header">{{ collection.title }}
+                    </header>
+                    <div class="">{{ collection.description | split: '<!-- split -->' | last }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+<hr>
+{% render 'brand-collections' %}

@@ -1,0 +1,56 @@
+<div class="d-none {% unless template contains 'index' %}d-md-block{% endunless %} container breadcrumb">
+    <div class="d-none d-md-block">
+        <div class="row h-100">
+            <div class="col-8 my-auto">
+                <div class="d-none {%- unless template contains 'index' -%}d-md-block{%- endunless -%}">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            {%- unless template contains 'index' -%}
+                                <li class="breadcrumb-item">
+                                    <a href="/">Home</a>
+                                </li>
+                            {%- endunless -%}
+                            {%- if template contains 'page' -%}
+                                <li class="breadcrumb-item active">{{ page.title }}</li>
+                                {%- elsif template contains 'product' -%}
+                                {%- if collection.url -%}
+                                    <li class="breadcrumb-item">{{ collection.title | link_to: collection.url }}</li>
+                                {%- endif -%}
+                                <li class="breadcrumb-item active">{{ product.title }}</li>
+                                {%- elsif template contains 'collection' and collection.handle -%}
+                                {%- if current_tags -%}
+                                    {%- capture url -%}/collections/{{ collection.handle }}
+                                    {%- endcapture -%}
+                                    <li class="breadcrumb-item">{{ collection.title | link_to: url }}</li>
+                                    <li class="breadcrumb-item active">{{ current_tags | join: " + " }}</li>
+                                {%- else -%}
+                                    <li class="breadcrumb-item active">{{ collection.title }}</li>
+                                {%- endif -%}
+                                {%- elsif template == 'blog' -%}
+                                <li class="breadcrumb-item">
+                                    <a href="/blog">Blog</a>
+                                </li>
+                                {%- if current_tags -%}
+                                    <li class="breadcrumb-item">{{ blog.title | link_to: blog.url }}</li>
+                                    <li class="breadcrumb-item active">{{ current_tags | join: " + " }}</li>
+                                {%- else -%}
+                                    <li class="breadcrumb-item active">{{ blog.title }}</li>
+                                {%- endif -%}
+                                {%- elsif template == 'article' -%}
+                                <li class="breadcrumb-item">{{ blog.title | link_to: blog.url }}</li>
+                                <li class="breadcrumb-item active">{{ article.title }}</li>
+                                {%- elsif template contains 'account' -%}
+                                <li class="breadcrumb-item active">Account</li>
+                                {%- elsif template contains 'cart' -%}
+                                <li class="breadcrumb-item active">Cart</li>
+                            {%- else -%}
+                                <li class="breadcrumb-item active">{{ page.title }}</li>
+                            {%- endif -%}
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-4 my-auto text-right "></div>
+        </div>
+    </div>
+</div>

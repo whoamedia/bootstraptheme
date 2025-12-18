@@ -1,0 +1,11 @@
+{
+  "name": "Customers Addresses",
+  "sections": {
+    "main": {
+      "type": "main-customer-addresses"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,15 @@
+{%- assign related = product.metafields.collection.related -%}
+<div class="row mt-5 gutter-10">
+   <div class="col-12">
+    <div class="dealheader text-center text-uppercase mb-5">
+            <h2 class="mb-0">Shop More From </h2> <br>
+             <p>{{ collection.title }}</p>
+        </div>
+</div>
+        {% for product in collections[related].products limit: 4%}
+        {% if product.available == true  %}
+        {% assign product_count = product_count | plus : 1 %}
+        {% include 'product-list' with '4' %}
+        {% endif %}
+        {% endfor %}
+</div>

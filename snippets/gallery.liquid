@@ -1,0 +1,78 @@
+{% unless collections[product.metafields.collection.related].metafields.images.gallery != '' or collections[product.metafields.collection.related].metafields.images.gallery != 'null' or collection.metafields.images.gallery != 'null' %}
+        <div class="row justify-content-center mt-3">
+            <div class="col-12">
+                <hr>
+                <div class="page-header">Gallery.</div>
+            </div>
+            <div class="col-md-12  mt-3 mb-3">
+                <div class="row">
+                    {% assign extraImages = collections[product.metafields.collection.related].metafields.images.gallery | split : "," %}
+                    {% for imageURL in extraImages %}
+                        <a class="col-sm-4 mb-2 lightbox" data-bs-toggle="modal" data-bs-target="#modalIMG"  href="{{ imageURL }}">
+                            <img class="img-fluid lazyload" data-src="{{ imageURL }}"/>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        
+    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="modalIMG" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-body mb-0 p-0">
+				<img src="https://i3.ytimg.com/vi/vr0qNXmkUJ8/maxresdefault.jpg" alt="" style="width:100%">
+			</div>
+			<div class="modal-footer">
+				<div><a href="https://i3.ytimg.com/vi/vr0qNXmkUJ8/maxresdefault.jpg" target="_blank">Download</a></div>
+				<button class="btn btn-outline-primary btn-rounded btn-md ms-4 text-center" data-bs-dismiss="modal" type="button">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+    {% endunless %}
+
+
+ {% if product.metafields.product.images and product.metafields.product.images != 'null' %}
+        <div class="row justify-content-center mt-3">
+            <div class="col-12">
+                    <div class="fancy-title mt-2 mb-4">
+            <span>Gallery</span>
+        </div>
+            </div>
+            <div class="col-md-12  mt-3 mb-3">
+                <div class="row">
+                    {% assign extraImages = product.metafields.product.images | split : "," %}
+                    {% for imageURL in extraImages %}
+                        <a class="col-sm-4 mb-2" data-gallery="example-gallery-11" data-bs-toggle="lightbox" href="{{ imageURL }}">
+                            <img class="img-fluid" src="{{ imageURL }}"/>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% if collection.metafields.images.gallery and collection.metafields.images.gallery != 'null' %}
+  
+  
+    <div class="row justify-content-center mt-3">
+        <div class="col-12">
+      <div class="fancy-title mt-2 mb-4">
+            <span>Gallery</span>
+        </div>
+        </div>
+        <div class="col-md-12  mt-3 mb-3">
+            <div class="row">
+                {% assign extraImages = collection.metafields.images.gallery | split : "," %}
+                {% for imageURL in extraImages %}
+                    <a class="col-sm-4 mb-2" data-gallery="example-gallery-11" data-bs-toggle="lightbox" href="{{ imageURL }}">
+                        <img class="img-fluid lazyload" data-src="{{ imageURL }}"/>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

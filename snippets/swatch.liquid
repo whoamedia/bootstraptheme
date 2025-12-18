@@ -1,0 +1,201 @@
+{%- comment -%} https://help.shopify.com/themes/customization/showcase-products/add-color-swatches {%- endcomment -%}
+{%- assign file_extension = 'png' -%}
+{%- assign found_option = false -%}
+{%- assign is_color = false -%}
+{%- assign option_index = 0 -%}
+{%- for option in product.options -%}
+{%- assign option_index = forloop.index0 -%}
+  {%- if option == swatch -%}
+    {%- assign found_option = true -%}
+    <style>
+      label[for="product-select-option-*"] { display: none; }
+      [id=product-select-option-*] { display: none; }
+      [id=product-select-option-*] + .custom-style-select-box { display: none !important; }
+    </style>
+    <script>$(window).load(function() { $('.selector-wrapper:eq({{ option_index }})').hide(); });</script>
+    {%- assign downcased_option = swatch | downcase -%}
+    {%- if downcased_option contains 'color' or downcased_option contains 'colour' -%}
+      {%- assign is_color = true -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+<div class="swatch clearfix {% for variant in product.variants %}{% assign value = variant.options[option_index] %} {{ value | handle }}{% endfor %}" data-option-index="{{ option_index }}">
+<div class="row">
+ <!--  <div class="select-title col-6">Size:</div> --> <div class="size-chart col-12 text-right">{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}{%- endcapture -%}
+ {%- if pages[sizechartpage].content != '' -%}<a class="SizeChartLink" data-bs-toggle="modal" data-bs-target="#sizeModal" href="">Size Chart</a>{%- endif -%}</div>
+  </div>
+  <div class="clearfix"></div>
+    {%- assign values = '' -%}
+    {%- for v in product.variants -%}
+        {%- if v.options.size > 1 -%}
+            {%- assign _sizes = _sizes | append: v.options[1] | downcase -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {%- assign _colors = product.variants -%}
+    {%- assign _variants = product.variants -%}
+    <ul class="variant_selector variant-size">
+    {%- for variant in product.variants -%}
+        {%- unless values contains value -%}
+        {%- assign values = values | join: ',' -%}
+        {%- assign values = values | append: ',' | append: value -%}
+        {%- assign values = values | split: ',' -%}
+        {%- assign option_index = forloop.index0 -%}
+        {%- assign value = variant.id -%}
+        {%- assign alt_opts = "" -%}
+        {%- if variant.options.size > 1 -%}
+            {%- assign sep = "," -%}
+            {%- for o in variant.options -%}
+                {%- if forloop.index0 > 0 -%}
+                    {%- if forloop.last == true -%}
+                        {%- assign sep = "" -%}
+                    {%- endif -%}
+                    {%- assign alt_opts = alt_opts | append: o | append: sep -%}
+                {%- endif -%}
+            {%- endfor -%}
+        {%- else -%}
+        {%- endif -%}
+        <li class="mx-auto">
+            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" data-alt-ops="{{ alt_opts }}" data-id="{{ variant.id }}" name="id" value="{{ value | escape }}" {%- unless variant.available -%}disabled{%- endunless -%} />
+                    <label for="swatch-{{ option_index }}-{{ value | handle }}" class="comman_class {{ product.metafields.product.gender }} {%- if variant.available -%}available"{%- else -%}soldout" data-bs-toggle="tooltip" data-bs-placement="top" title="Sold Out"{%- endif -%}>
+         <div class="labelname"> {{ variant.title}}</div> <div class="soldout-label">{%- if variant.available == false -%}Sold Out!{%- else -%}{%- if variant.inventory_quantity <= 25 -%}{{ variant.inventory_quantity }} Left {%- else%} In Stock {%- endif -%}</div> {%- endif -%}
+        </label>
+        </li>
+    {%- endunless -%}
+        {%- if variant.available -%}
+        <script>
+          jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+        </script>
+        {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>
+{%- if product.options contains "Color" -%}
+<div class="row">
+  <div class="select-title col-6">Color:</div>
+ </div>
+  <div class="clearfix"></div>
+  {%- assign values = '' -%}
+  <ul class="variant_selector variant-color">
+  {%- for variant in product.variants -%}
+    {%- unless values contains value -%}
+      {%- assign values = values | join: ',' -%}
+      {%- assign values = values | append: ',' | append: value -%}
+      {%- assign values = values | split: ',' -%}
+      {%- assign option_index = forloop.index -%}
+      {%- assign value = variant.options[1] -%}
+        <li class="mx-auto">
+            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" data-id="{{ variant.id }}" name="option-color-0" value="{{ value | escape }}" class="disabled" disabled />
+            <label for="swatch-{{ option_index }}-{{ value | handle }}" style="background-color: {{ value | downcase }}" >
+            </label>
+        </li>
+    {%- endunless -%}
+    {%- if variant.available -%}
+    <script>
+      jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+    </script>
+    {%- endif -%}
+  {%- endfor -%}
+  </ul>
+{%- endif -%}
+{%- assign p_handle = product.handle -%}
+<script>
+  $(document).ready(function() {
+    /* this function gets the variant id number
+    ex: '...?variant=36220245326' from the URL, this
+    gets 36220245326 */
+    function getParameterByName(name, url) {
+      if (!url) {
+        url = window.location.href;
+      }
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    var i = '{{ option_index }}';
+    var product_handle = '{{ p_handle }}';
+    $('#AddToCart').html('Select Option');
+    var allow_atc_btn = function($current_swatch_option,data) {
+        $('#AddToCart').attr('disabled',false).text('Add to Cart');
+
+        var combinedVariant = Number(getParameterByName('variant')); // this is the variant id of the selected variant combo
+        for (var x = 0; x < data.product.variants.length; x++) {
+            if (data.product.variants[x].id == combinedVariant) {
+              var iq = data.product.variants[x].inventory_quantity;
+              if (iq < 10 && iq > 0) {
+                $('#variant_quantity').css('display', 'block');
+                $('#variant_quantity span').text(iq);
+              } else {
+                $('#variant_quantity').css('display', 'none');
+              }
+              break;
+            }
+        }
+    };
+
+    $('[name^=id]').click(function() {
+      var $current_swatch_option = $(this);
+
+      $.ajax({
+        method: 'GET',
+        url: product_handle + ".json",
+        dataType: 'json',
+        success: function(data) {
+            $('.active-swatch').removeClass('active-swatch');
+            $current_swatch_option.addClass('active-swatch');
+            $('.soldout-label').addClass('soldoutselected');
+            $('.active-color-swatch').removeClass('active-color-swatch');
+
+            var alt_ops = $current_swatch_option.attr('data-alt-ops');
+            var block_btn = false;
+
+            // Undisabled allowed extra opts where applicable
+            if(alt_ops != "" && $('.active-color-swatch').length == 0) {
+                block_btn = true;
+
+                $('#AddToCart').text('Choose a color');
+                $('.variant-color input[id^="swatch-"]').addClass('disabled').attr('disabled',true);
+
+                $.each(alt_ops.split(','), function(a,b) {
+                    $('.variant-color input[id*="'+b.toLowerCase()+'"]').removeAttr('disabled').removeClass('disabled');
+                });
+            }
+
+            if(block_btn == false) {
+                allow_atc_btn($current_swatch_option,data);
+            }
+        }
+      })
+    });
+
+    $('[name^=option-color]').click(function() {
+      var $current_swatch_option = $(this);
+      $.ajax({
+        method: 'GET',
+        url: product_handle + ".json",
+        dataType: 'json',
+        success: function(data) {
+          $('#AddToCart').attr('disabled',false).text('Add to Cart d');
+          $('.active-color-swatch').removeClass('active-color-swatch');
+          $current_swatch_option.addClass('active-color-swatch');
+          var combinedVariant = Number(getParameterByName('variant')); // this is the variant id of the selected variant combo
+          for (var x = 0; x < data.product.variants.length; x++) {
+            if (data.product.variants[x].id == combinedVariant) {
+              var iq = data.product.variants[x].inventory_quantity;
+              if (iq < 10 && iq > 0) {
+                $('#variant_quantity').css('display', 'block');
+                $('#variant_quantity span').text(iq);
+              } else {
+                $('#variant_quantity').css('display', 'none');
+              }
+              break;
+            }
+          }
+        }
+      })
+    });
+  });
+</script>

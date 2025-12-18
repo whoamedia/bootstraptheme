@@ -1,0 +1,87 @@
+<div class="card rounded mb-3 product-card h-100">
+    <a href="{{ product.url }}" title="{{ product.title }}">
+        {% render 'responsive-image',
+          image: product.featured_image.src,
+          image_class: "image",
+          wrapper_class: "image-wrapper",
+          max_width: 235,
+          max_height: 400 %}
+    </a>
+    {%- assign sold_out = true -%}
+    {%- if product.available -%}
+    {%- assign sold_out = false -%}
+    {%- endif -%}
+    {%- assign total = 0 -%}
+    {%- for variant in product.variants -%}
+    {% unless variant.inventory_management == '' -%}
+    {% capture temp -%}
+    {{ total | plus: variant.inventory_quantity }}
+    {% endcapture -%}
+    {% assign total = temp -%}
+    {% endunless -%}
+    {%- endfor -%}
+    {%- assign fulltotal = total | plus : 0 -%}
+    {%- if fulltotal <= 0 -%} <div class="status-tag rounded">
+        <span>
+            <img src="{{ "sad-face.png" | asset_url }}" alt="THE DEAL SELLS OUT FAST AND PROCRASTINATORS ARE LEFT NAKED" class="mb-3 rounded-circle" style="width: 40px; height: 40px;" />
+            <br>Sold Out
+        </span>
+</div>
+{%- endif -%}
+{% if collection.handle == 'freebies' or product.price == 0.00 -%}
+{% if cart.total_price < 2500 %} <div class="freebie-status-tag rounded">
+    {% if cart.total_price == 0 %}
+    <span>
+        <strong>Spend $25
+        </strong><br />To Unlock This Freebie</span>
+    {% elsif cart.total_price < 2500 %} <span>
+        <strong>Add
+            <strong>{{ 2500 | minus: cart.total_price | money }}</strong>
+            More to Cart
+        </strong><br />To Unlock This Freebie</span>
+        {% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="row g-1">
+                        <div class="col-12 h-100 d-table mb-2">
+                            <span class="title d-table-cell align-middle">
+                                <a href="{{ product.url }}" title="{{ product.title }}">
+                                    {{ product.title | truncate: 60 }}</a>
+                            </span>
+                        </div>
+                        <div class="col-12 mb-0 mt-2">
+                            <div class="review">
+                                <span>
+                                    <div class="loox-rating" data-id="{{ product.id }}" data-raters="{{ product.metafields.loox.num_reviews }}" data-rating="{{ product.metafields.loox.avg_rating }}"></div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="product-col-price">
+                                <span class="price-color">
+                                    {%- if product.price == 0.00 -%}
+                                    FREE
+                                    {%- else -%}
+                                    {{ product.price | money | remove: '.00' }}
+                                    {%- endif -%}
+                                    {% if product.compare_at_price > product.price %}{% endif %}
+                                </span>
+                                {%- if product.compare_at_price_max > product.price -%}
+                                <span class="d-none d-md-inline-block was-color">
+                                    <del>{{ product.compare_at_price_max | money | remove: '.00' }}</del>
+                                </span>
+                                <span class="save-color">
+                                    {{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% OFF
+                                </span>
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>

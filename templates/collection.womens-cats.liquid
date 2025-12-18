@@ -1,0 +1,45 @@
+<div class="row ">
+  <div class="col ">
+    {% if collection.description != '' %}
+      {% if collection.image %}
+      <div class="row align-items-center gutter-10">
+        <div class="col-12 col-md-5">
+          <img src="{{ collection.image | image_url: width: 600, height: 600, crop: 'center' }}" class="img-fluid" alt="{{ collection.image }}" title="{{ collection.image }}" width="600" height="600" loading="lazy">
+        </div>
+        <div class="col-12 col-md-7">
+          <div class="coll-back rounded">
+            <div class="">{{ collection.description | split: '<!-- split -->' | last }}</div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-12">
+        <div class="cat-banner">
+          <header class="coll-title-header">{{ collection.title }}</header>
+          <div>{{ collection.description | split: '<!-- split -->' | last }}</div>
+        </div>
+      </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+<hr>
+{% render 'womens-cats' %}
+<hr>
+<div class="row">
+  <div class="col-12">
+    <div class="cat-banner">
+      <div class="page-header mb-3">
+        <h2>How Can We Afford to Offer Such Cute Cheap Panties and Still Cover Our Bottoms?</h2>
+      </div>
+      <p class="mb-3">We offer our cheap panties online by negotiating deals with name-brand designers. Buying in bulk means we pay less and you save more. Our selection of women's brief, panties, undies, and intimates changes regularly, ensuring that we always have the sexiest trends, and if that alone doesn't keep you coming back to buy panties online, our daily deals and freebies will!</p>
+      <div class="page-header mb-3">
+        <h2>Shop Womens Undies on All Styles, Fits, Fabrics, and Colors</h2>
+      </div>
+      <p class="mb-3">Shopping for cute women's underwear can be frustrating. Finding the perfect size, color, and fit at just the right price isn't easy ... unless you shop CheapUndies. We have you covered, no matter how much coverage you want! When you buy panties online, you should be able to have fun doing it. Our affordable range of panties, thongs, accessories, and <a href="https://www.cheapundies.com/collections/womens-bras">bras</a> means that you're sure to find something hot at cool prices.</p>
+      <p class="mb-3">The designer women's underpants we carry are so cheap that you can finally build the <a href="https://www.cheapundies.com/collections/womens-lingerie">lingerie collection</a> you've always wanted. Build entire <a href="https://www.cleo.com.sg/fashion/underwear-dresses-jeans-pants/">outfits</a> around your favorite sets, find the right panties to suit that sleek dress you've been dying to wear, and challenge yourself to be a little bolder every day. When you buy cheap sexy panties, you can add some spice to your love life without breaking the bank. Or if you prefer, you can just stock up on cute panties that go with your oversized T-shirt collection for lazy Saturday lounging. If you find a style you love, stock up on our cheap panties, since our deals change and you may not find the same item in stock again. Whether you're stepping out or staying in, your comfort and confidence matters. We cater to every side of your personality and every event on your schedule, including both date night and self-care time.</p>
+      <p class="mb-3">Whether you want cheap women's panties, bras, or <a href="https://www.cheapundies.com/collections/womens-shirts">shirts</a>, we always have what you need. Consider this your one-stop shop for the very best inexpensive women's undies for sale. We have everything you need for the man in your life, too, so make sure to check out our men's selection before you go. Remember to browse our deals regularly to score on the items you love every day!</p>
+    </div>
+  </div>
+</div>
+

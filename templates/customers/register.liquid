@@ -1,0 +1,273 @@
+<style>
+    .customer:not(.account):not(.order) {
+  margin: 6rem auto 9rem;
+  max-width: 33.4rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+.customer .field {
+  margin: 2rem 0 0 0;
+}
+  /* Login */
+.login a {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.login a[href='#recover'] {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.login .field + a {
+  margin-top: 1rem;
+}
+
+.login p {
+  margin: 1.5rem 0;
+}
+
+.login h3 {
+  margin-top: 1.5rem;
+  text-align: left;
+  font-size: calc(var(--font-heading-scale) * 1.6rem);
+}
+
+#customer_login_guest button {
+  margin-top: 0;
+}
+
+#recover,
+#recover + div {
+  display: none;
+}
+
+#recover:target {
+  display: block;
+}
+
+#recover:target + div {
+  display: block;
+}
+
+#recover:target ~ #login,
+#recover:target ~ #login + div {
+  display: none;
+}
+
+#recover,
+#login {
+  scroll-margin-top: 20rem;
+}
+
+#recover {
+  margin-bottom: 0;
+}
+
+.button-3d a {
+    text-decoration: none !important;
+}
+
+.button-3d a:hover {
+    color: #222;
+}
+
+.button {
+    display: inline-block;
+    font-family: $headerfont;
+    font-weight: $medium;
+    position: relative;
+    cursor: pointer;
+    outline: 0;
+    white-space: nowrap;
+    margin: 0px;
+    padding: 0 22px;
+    font-size: 16px;
+    height: 44px;
+    line-height: 44px;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+body:not(.device-touch) .button {
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.button:hover {
+    background-color: #444;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+.button i {
+    position: relative;
+    top: 1px;
+    line-height: 1;
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+}
+
+.button.button-rounded {
+    border-radius: 3px;
+}
+
+.button.button-3d {
+    min-width: 100%;
+    border-radius: 3px;
+    border-bottom: 3px solid rgba(0, 0, 0, .15);
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.button.button-3d:hover {
+    background-color: var(--dark);
+    opacity: .9;
+}
+
+.button-red {
+    background-color: var(--dark);
+}
+
+.button-3d.button-red:hover {
+    background-color: var(--dark);
+}
+
+
+span.icon-cart:before {
+  content: "";
+}
+.errors ul, .form__message ul {
+list-style: none;
+    padding-left: 0;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 0;
+
+}
+.register ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 0;
+
+}
+
+.icon-error {
+    width: 20px;
+}
+    .login h1, .register h1 {
+        text-align: left;
+         font-size: 1.8rem;
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+      margin-bottom: 15px;  
+    }
+    .login p {
+      text-align: left;
+    }
+    label {
+        margin-bottom: 0;
+            color: #000000;
+    
+    font-size: 1.2rem;
+    }
+    .login h1:before {
+       content: "";
+    position: absolute;
+    height: 1px;
+    width: 50px;
+    background: var(--red);
+    margin-top: 28px;
+    }
+
+.form-control {
+    background-color: var(--light);
+}
+.customer button {
+    margin: 2rem 0 1.5rem;
+}
+.form__message {
+      color: #cc0000;
+    font-size: 1.3rem;
+}
+h2.form__message {
+      color: #cc0000;
+    font-size: 1.4rem;
+}
+</style>
+<div class="row justify-content-center">
+    <div class="col-12 padding-0">
+        <header class="section__head">
+            <img src="{{ 'header11.png' | asset_url }}" data-was-processed="true" width="1200" height="400">
+            <div class="section__head-inner">
+                <div class="textwrap align-bottom">
+                    <h1 class="section__title">Register</h1>
+                </div>
+            </div><!-- /.section__head-inner -->
+        </header>
+    </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-5">
+            <div class="customer register">
+                <h1>
+                    {{ 'customer.register.title' | t }}
+                </h1>
+                <p>Registering makes checkout fast and easy and saves your order information in your account.</p>
+                {%- form 'create_customer', novalidate: 'novalidate' -%}
+                {%- if form.errors -%}
+                <h2 class="form__message" tabindex="-1" autofocus>
+                    {{ 'templates.contact.form.error_heading' | t }}
+                </h2>
+                <ul>
+                    {%- for field in form.errors -%}
+                    <li>
+                        {%- if field == 'form' -%}
+                        {{ form.errors.messages[field] }}
+                        {%- else -%}
+                        <a href="#RegisterForm-{{ field }}">
+                            {{ form.errors.translated_fields[field] | capitalize }}
+                            {{ form.errors.messages[field] }}
+                        </a>
+                        {%- endif -%}
+                    </li>
+                    {%- endfor -%}
+                </ul>
+                {%- endif -%}
+                <div class="field">
+                    <input type="text" class="form-control" name="customer[first_name]" id="RegisterForm-FirstName" {% if form.first_name %}value="{{ form.first_name }}" {% endif %} autocomplete="given-name" placeholder="{{ 'customer.register.first_name' | t }}">
+                </div>
+                <div class="field">
+                    <input type="text" class="form-control" name="customer[last_name]" id="RegisterForm-LastName" {% if form.last_name %}value="{{ form.last_name }}" {% endif %} autocomplete="family-name" placeholder="{{ 'customer.register.last_name' | t }}">
+                </div>
+                <div class="field">
+                    <input type="email" class="form-control" name="customer[email]" id="RegisterForm-email" {% if form.email %} value="{{ form.email }}" {% endif %} spellcheck="false" autocapitalize="off" autocomplete="email" aria-required="true" {% if form.errors contains 'email' %} aria-invalid="true" aria-describedby="RegisterForm-email-error" {% endif %} placeholder="{{ 'customer.register.email' | t }}">
+                </div>
+                {%- if form.errors contains 'email' -%}
+                <div id="RegisterForm-email-error" class="form__message text-start">
+                    {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.
+                </div>
+                {%- endif -%}
+                <div class="field">
+                    <input type="password" class="form-control" name="customer[password]" id="RegisterForm-password" aria-required="true" {% if form.errors contains 'password' %} aria-invalid="true" aria-describedby="RegisterForm-password-error" {% endif %} placeholder="{{ 'customer.register.password' | t }}">
+                </div>
+                {%- if form.errors contains 'password' -%}
+                <div id="RegisterForm-password-error" class="form__message text-start">
+                    {{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}.
+                </div>
+                {%- endif -%}
+                <button class="button button-3d button-rounded button-red">
+                    Register
+                </button>
+                {%- endform -%}
+            </div>
+        </div>
+    </div>

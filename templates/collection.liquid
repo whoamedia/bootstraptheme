@@ -1,0 +1,71 @@
+<div class="row collection h-100">
+    <div class="col">
+        <div class="row align-items-center mt-3">
+            {%- if collection.image -%}
+            <div class="col-12 col-md-5"> {% render 'responsive-image' with
+                image: collection.image
+                image_class: "image",
+                wrapper_class: "image-wrapper",
+                max_width: 600,
+                max_height: 400 %}
+            </div>
+            {% endif %}
+            <div class="col-12 {% if collection.image %}col-md-7{% endif %} align-middle">
+                <h1 class="mt-4 mt-sm-0">{{ collection.title }}</h1>
+                <div>{{ collection.description | split: "<!-- split -->" | last }}</div>
+                <div class="addthis_inline_share_toolbox_hd22 mt-3 "></div>
+                {% if collection.metafields.dailydeal.dailydeal %}
+                <div class="countdown">
+                    <div class="time mt-2">
+                        Time Left: <i class="lni lni-clock-alt-1"></i>
+                        {%- render 'tim' -%}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{%- paginate collection.products by 60 -%}
+<div class="row g-2 collection collection-inner">
+    <div class="col-12 mt-3">
+        {%- section 'top-new-filters' -%}
+        {%- for filter in collection.filters -%}
+        {%- if filter.active_values.size > 0 -%}
+        {% for active_value in filter.active_values %}
+        <a href="{{ filter.url_to_remove }}" class="filter-group-display__header-reset remove-one-filter"><span class="filter-value">{{ active_value.value }}</span> <span class="remove-ico">x</span></a>
+        {% endfor %}
+        {%- endif -%}
+        {%- endfor -%}
+        <div class="row g-2 sorter collection mt-3">
+            <div class="overlay" style="display: none;"></div>
+            {% if collection.products.size > 0 %}
+            {% assign filtered_total = 0 %}
+            {%- for product in collection.products -%}
+            {%- if product.available -%}
+            {%- render 'product-list', product_list: 4, product: product -%}
+            {% assign filtered_total = filtered_total | plus: 1 %}
+            {%- endif -%}
+            {%- endfor -%}
+            {%- for product in collection.products -%}
+            {%- unless product.available -%}
+            {%- render 'product-list-soldout', product_list_soldout: 4, product: product -%}
+            {%- endunless -%}
+            {%- endfor -%}
+            {% if filtered_total == 0 %}
+            <div class="col-12">
+                <h4 style="padding: 50px 0;">No items found.</h4>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="col-12">
+                <h4 style="padding: 50px 0;">No items found.</h4>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if filtered_total != 0 %}
+    {% render 'pagination' %}
+    {% endif %}
+</div>
+{%- endpaginate -%}
+{% render 'gallery' %}

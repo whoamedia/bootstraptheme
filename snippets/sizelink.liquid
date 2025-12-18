@@ -1,0 +1,24 @@
+ <div class="row mb-5 mt-2">
+<!--  <div class="select-title col-6">Select:</div>  --> <div class="size-chart col-12 text-left">{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}{%- endcapture -%}
+                   {%- if pages[sizechartpage].content != '' -%}<a class="SizeChartLink" data-bs-toggle="modal" data-bs-target="#sizeModal" href="">Size Guide</a>{%- endif -%}</div>
+              </div>
+          <div aria-hidden="true" aria-labelledby="sizeModalLabel" class="modal fade" id="sizeModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="sizeModalLabel">
+                        Size Guide
+                    </h3>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">
+                        <span aria-hidden="true">x
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}{%- endcapture -%}
+                    {%- if pages[sizechartpage].content != '' -%}{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: "'", '' }}{%- endcapture -%}{{ pages[sizechartpage].content }}{%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+    

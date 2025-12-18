@@ -1,0 +1,247 @@
+{% assign product = all_products['marco-marco-blue-hot-pink-nautical-panel-swim-brief'] %}
+
+<div data-enable-history-state="true" id="ProductSection" itemscope="itemscope" itemtype="http://schema.org/Product">
+    <meta content="{{ shop.url }}{{ product.url }}" itemprop="url">
+    <meta content="{{ product.featured_image.src | image_url: width: 800, height: 800, crop: 'center' }}" itemprop="image">
+    <div class="product ">
+        <div class="row">
+            <div class="col-12">
+            </div>
+            <div class="col-12 col-md-6 justify-content-center">
+                <div class="product-single__photos mb-1 img-thumbnail text-center" id="ProductPhoto">
+                    <a class="MagicZoom " data-mobile-options="zoomOn: click" href="{{ product.featured_image.src | image_url: width: 800, height: 800, crop: 'center' }}" id="zoom" title="{{ product.title | escape }}">
+                        {%- if product.images.size > 1 -%}
+                            <img alt="{{product.title | escape }} - CheapUndies.com" src="{{ product.featured_image.src | image_url: width: 500, height: 500, crop: 'center' }}" width="500" height="500" loading="lazy">
+                        {%- else -%}<img alt="{{product.title | escape }} - CheapUndies.com" src="{{ product.featured_image.src | image_url: width: 500, height: 500, crop: 'center' }}" width="500" height="500" loading="lazy">{%- endif -%}
+                    </a>
+                </div>
+                {%- if product.images.size > 1 -%}
+                    <div class="product-thumbs text-center">
+                        <ul class="product-single__thumbnails list-unstyled list-inline" id="ProductThumbs">
+                            {%- for image in product.images -%}
+                                <li class="list-inline-item">
+                                    <a href="{{ image.src | image_url: width: 800, height: 800, crop: 'center' }}" rel="zoom-id:zoom" rev="{{ image.src | image_url: width: 500, height: 500, crop: 'center' }}">
+                                        <img alt="{{product.title | escape }}" class="img-thumbnail" src="{{ image.src |  image_url: width: 60, height: 60, crop: 'center'  }}" width="60" height="60"/>
+                                    </a>
+                                </li>
+                            {%- endfor -%}
+                        </ul>
+                    </div>
+                {%- endif -%}
+                <div class="d-none d-md-block">
+                    <hr class="small-top">
+                    <div class="share-title">Share this product:</div>
+                    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    <div class="addthis_inline_share_toolbox_ybif"></div>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-12 col-md-6  mt-md-2">
+                <div class="mb-1">
+                    <h1 class="name mt-3 mt-md-0 mb-3" itemprop="name">{{ product.title }}</h1>
+                    
+                 
+                    <hr>
+                    <div class="row align-items-center">
+                        <div class="col-12  {% if product.compare_at_price > product.price %} col-md-3 {% endif %} mb-2 mb-md-0 text-center">
+                            <div class="ourprice">
+                                Our Price</div>
+                            <div class="price2 mb-1">
+                                {%- if product.price == 0.00 -%}
+                                    FREE{%- else -%}
+                                    {{ product.price | money }}
+                                {%- endif -%}
+                            </div>
+                        </div>
+                        {%- if product.compare_at_price > product.price -%}
+                            <div class="col-4 col-md-3 text-center">
+                                <div>
+                                    Retail</div>
+                                <div class="price3">
+                                    <s>{{ product.compare_at_price_max | money  }}
+                                    </s>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-3 text-center">
+                                <div>Discount</div>
+                                <div class="price3">
+                                    {{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% OFF
+                                </div>
+                              
+                            </div>
+                            <div class="col-4 col-md-3 text-center">
+                                <div>You Save</div>
+                                <div class="price3">
+                                    {{ product.compare_at_price_max | minus:product.price | money }}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                    </div>
+                    <hr>
+                    <div class="options">
+                        <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                            <meta content="{{ shop.currency }}" itemprop="priceCurrency">
+                            <link href="https://schema.org/{%- if product.available -%}InStock{%- else -%}OutOfStock{%- endif -%}" itemprop="availability">
+                            {%- form 'product', product, id: "oldID", class: "old-class form-vertical" -%}
+                                {%- if product.available and product.variants.size > 0 -%}
+                                    {%- render 'swatch' with option -%}
+                                {%- endif -%} 
+                                <div class="col-12  mx-auto text-center mt-3">
+                                    {%- if product.available and product.variants.size > 0 -%}
+                                        <button class="btn btn-danger btn-block btn-red" disabled="true" id="AddToCart" name="add" type="submit"></button>
+                                    {%- else -%}
+                                        <button class="btn btn-danger btn-product" disabled="true" id="" name="add" type="submit">
+                                            SOLD OUT
+                                        </button>
+                                    {%- endif -%}
+                                    {{ form | payment_button }}
+                                    </div>
+
+                                {%- endform -%}
+                            </div>
+                        </div>
+                        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    </div>
+                    {%- render 'product-left' -%}
+                    {%- if collection.metafields.dailydeal.dailydeal contains "primary" or collection.metafields.dailydeal.dailydeal contains "deal" -%}
+                        <div class="time-left text-uppercase">
+                            <i class="icon-clock3"></i>
+                            <span class="time-title">
+                                This deal ends in
+                            </span>
+                            {% comment %} countdown removed - snippet missing {% endcomment %}
+                        </div>
+                        <hr>
+                    {%- endif -%}
+                    {%- if product.price == 0.00 -%}
+                        <div class="detail-title" itemprop="name">
+                            Notice:
+                        </div>
+                        <div class="detail-description rte mb-3 ml-3" itemprop="description">
+                            Limit 1 Freebie Per Order
+                        </div>
+                    {% endif %}
+                    <div class="detail-title" itemprop="name">
+                        Brand:
+                    </div>
+                    <div class="detail-description rte mb-3 ml-3" itemprop="description">
+                        {{ product.vendor }}
+                    </div>
+                  {%- unless product.description == '<p>.</p>' -%}
+                        <div class="detail-title" itemprop="name">
+                            Product Details:</div>
+                        <div class="detail-description rte mb-3 ml-3" itemprop="description">
+                            {{ product.description }}
+                        </div>
+                   {%- endunless - %}
+                    {%- unless product.type == 'M Gifts' -%}
+                        {%- if product.metafields.product.fabric -%}
+                            <div class="detail-title" itemprop="name">
+                                Fabric:
+                            </div>
+                            <div class="detail-description rte mb-3 ml-3" itemprop="description">
+                                {{ product.metafields.product.fabric }}
+                            </div>
+                        {%- endif -%}
+                        {%- if product.metafields.product.care -%}
+                            <div class="detail-title" itemprop="name">
+                                Care:
+                            </div>
+                            <div class="detail-description rte mb-3 ml-3" itemprop="description">
+                                {{ product.metafields.product.care }}
+                            </div>
+                        {%- endif -%}
+                        {% render 'product-size' %}
+                    {%- endunless -%}
+                    <div class="detail-title mt-3" itemprop="name">
+                        Shipping & Returns:
+                    </div>
+                    <div class="detail-description rte" itemprop="description">
+                        <ul class="list-unstyled">
+                            <li class="ml-3 mt-2">In-Stock Ready to Ship</li>
+                            {%- if collection.id == 449942159 -%}
+                            <li class="ml-3 mt-0">
+                                <strong>Non Returnable: Final Sale</strong>
+                            </li>
+                            {%- endif -%}
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if collection.handle == 'cheapundies-exclusives' %}
+ <div class="row review-background  mt-5  align-items-top ">
+         <div class="col-12">
+      <div id="looxReviews" data-product-id="{{ product.id }}"></div>
+      </div>
+      </div> 
+      {% endif %}
+{% render 'video' %}
+{% render 'gallery' %}
+{%- render 'related' -%}
+<script>
+    var mzOptions = {
+        zoomMode: "magnifier",
+        expandZoomMode: "magnifier",
+        expandCaption: false
+    };
+</script>
+{%if product.variants.size <= 1 and product.type == 'M Gifts' or product.type == 'M Accessories' -%}
+    <script>
+        $('input:radio[name="id"]')
+            .filter('[value="default title"]')
+            .attr('checked', true);
+        $(document).ready(function () {
+            $('input:radio[name="id"]')
+                .prop("checked", true)
+                .trigger("click");
+            $('input:radio[name="id"]')
+                .filter('[value="default title"]')
+                .addClass('active-swatch');
+            $('.swatch-0-default-title .soldout-label').addClass('soldoutselected');
+        });
+    </script>
+    <style>
+        .swatch {
+            display: none;
+        }
+    </style>
+{%- endif -%}
+{%- unless product == empty -%}
+    <script id="ProductJson-{{ section.id }}" type="application/json">
+        {{ product | json }}
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org/",
+            "@type": "Product",
+            "name": "{{ product.title }}",
+            "image": ["{{ product.featured_image.src | image_url: width: 1200, height: 1200, crop: 'center' }}"],
+            "description": "{{ product.description | strip_html }}",
+            "sku": "{{ product.sku }}",
+            "brand": {
+                "@type": "Thing",
+                "name": "{{ product.vendor }}"
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "{{ product.metafields.loox.avg_rating }}",
+                "reviewCount": "{{ product.metafields.loox.num_reviews }}"
+            },
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "USD",
+                "price": " {{ product.price | money_without_currency }}",
+                "priceValidUntil": "2020-11-05",
+                "itemCondition": "http://schema.org/NewCondition",
+                "availability": "http://schema.org/InStock",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "CheapUndies.com"
+                }
+            }
+        }
+    </script>
+{%- endunless -%}
+

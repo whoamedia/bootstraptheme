@@ -1,0 +1,49 @@
+<div class="product-list product-instogck card rounded mt-3 ">
+    <a class="" href="{{ product.url | within: collection }}" title="{{ product.title }}">
+        {% assign extraImages = product.metafields.product.images %}
+        {% for imageURL in extraImages %}
+            <img alt="{{ product.title }}" class="img-fluid" src="{{ imageURL }}"/>
+        {% endfor %}
+        <!--     <img class="img-fluid" alt="{{ product.title }}" src="{{ product.featured_image.src | img_url: '600x'}}"/> -->
+        <!--    <img class="img-fluid" alt="{{ product.title }}" src="{{ product.images.last | img_url: '600x' }}"/> -->
+    </a>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-body ">
+                <div class="row gutter-10">
+                    <div class="col-12 h-100 d-table">
+                        <span class="product-col-title d-table-cell align-middle">
+                            <a href="{{ product.url | within: collection }}" title="{{ product.title }}">
+                                <!--      <span class="brand"> {{ product.vendor }}</span><br> -->
+                                <span class="title">{{ product.title | truncate: 60 }}</span>
+                            </a>
+                        </span>
+                    </div>
+                    <!--   <div class="col-12 text-center mb-2">
+   <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+  </div> -->
+                    <div class="col-12">
+                        <div class="product-col-price mt-1">
+                            <span>
+                                {%- if product.price == 0.00 -%}
+                                    FREE{%- else -%}
+                                    {{ product.price | money }}
+                                {%- endif -%}
+                            </span>
+                            {%- if product.compare_at_price_max > product.price -%}
+                                <span class="d-none d-md-inline-block">
+                                    <del>
+                                        {{ product.compare_at_price_max | money  }}</del>
+                                </span>
+                                <span>
+                                    {{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% OFF</span>
+                            {%- endif -%}
+                            {%- if product.price_varies -%}from
+                            {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

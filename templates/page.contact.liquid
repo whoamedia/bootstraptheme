@@ -1,0 +1,302 @@
+<style>
+    /* ===== Buttons Css ===== */
+.contact-us .form-main .form-group .primary-btn {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: var(--shadow-2);
+   letter-spacing: -.1px;
+}
+.contact-us .form-main .form-group .active.primary-btn, .contact-us .form-main .form-group .primary-btn:hover, .contact-us .form-main .form-group .primary-btn:focus {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: var(--shadow-4);
+}
+.contact-us .form-main .form-group .deactive.primary-btn {
+  background: var(--gray-4);
+  color: var(--white);
+  pointer-events: none;
+}
+
+/*===========================
+    CONTACT css 
+===========================*/
+.contact-us {
+  position: relative;
+  background-color: var(--white);
+  padding: 50px 0;
+}
+.contact-us .section-title {
+  text-align: center;
+  margin: 0px auto;
+  margin-bottom: 50px;
+  max-width: 550px;
+  position: relative;
+  z-index: 5;
+}
+.contact-us .section-title span {
+  text-transform: capitalize;
+  color: var(--white);
+  background: var(--grey2Font);
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  padding: 5px 15px;
+  border-radius: 4px;
+}
+.contact-us .section-title h2 {
+  margin-bottom: 18px;
+  text-transform: capitalize;
+  position: relative;
+  font-weight: 700;
+}
+.contact-us .section-title p {
+  color: var(--dark);
+}
+.contact-us .inner-content {
+  border-radius: 5px;
+  overflow: hidden;
+}
+.contact-us .title {
+  margin-bottom: 30px;
+}
+.contact-us .contact-inner-title {
+  margin-bottom: 45px;
+}
+.contact-us .single-head {
+  position: relative;
+  z-index: 5;
+}
+.contact-us .single-info {
+  text-align: left;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  position: relative;
+}
+.contact-us .single-info i {
+  display: inline-block;
+  margin-right: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+/*  height: 40px;
+  width: 40px;*/
+  display: block;
+  text-align: center;
+/*  background: var(--grey2Font);*/
+  color: var(--dark);
+  line-height: 20px;
+  border-radius: 5px;
+}
+.contact-us .single-info ul {
+  display: inline-block;
+}
+.contact-us .single-info ul li {
+  display: inline-block;
+
+  color: var(--black);
+  display: block;
+  margin-bottom: 4px;
+}
+.contact-us .single-info ul li a {
+  display: inline-block;
+  color: var(--black);
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+.contact-us .single-info ul li a:hover {
+  color: var(--primary);
+}
+.contact-us .single-info ul li span {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 600;
+      font-size: 1.5rem;
+  text-transform: capitalize;
+  color: var(--black);
+}
+.contact-us .single-info ul li:last-child {
+  margin-bottom: 0;
+}
+.contact-us .single-info .title {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: var(--white);
+}
+.contact-us .single-info .title span {
+  display: block;
+  margin-top: 8px;
+  font-weight: 500;
+}
+.contact-us .form-main {
+  padding-right: 40px;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .contact-us .form-main {
+    padding: 0;
+    margin-bottom: 30px;
+  }
+}
+.contact-us .form-main .form-group {
+  margin-bottom: 15px;
+  display: block;
+  position: relative;
+}
+.contact-us .form-main .form-group textarea,
+.contact-us .form-main .form-group input {
+  height: 55px;
+  line-height: 55px;
+  width: 100%;
+  border: 2px solid var(--gray-4);
+  padding: 0px 20px;
+  color: var(--black);
+  border-radius: 0px;
+  font-weight: 400;
+  border-radius: 5px;
+}
+.contact-us .form-main .form-group textarea:focus,
+.contact-us .form-main .form-group input:focus {
+  border-color: var(--primary);
+}
+.contact-us .form-main .form-group textarea {
+  height: 180px;
+  resize: none;
+}
+contact-us .form-main .form-group textarea.is-invalid, .contact-us .form-main .form-group input.is-invalid {
+    border: 2px solid var(--red);
+
+}
+
+</style>
+<script src="{{ 'enchant_wrapper.js' | asset_url }}" defer></script>
+<div class="row">
+    <div class="col-12 padding-0">
+        <header class="section__head">
+            <img src="{{ 'header7.png' | asset_url }}" data-was-processed="true" width="1200" height="400">
+            <div class="section__head-inner">
+                <div class="textwrap align-bottom">
+                    <h1 class="section__title">{{ page.title }}</h1><!-- /.section__title -->
+                </div>
+            </div><!-- /.section__head-inner -->
+        </header>
+    </div>
+</div>
+<section class="features-area features-thirteen mb-5">
+    <div class="section-title-four">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content">
+                        <div class="redbar">
+                            <div class="headline"> We're Here To Help!</div>
+                        </div>
+                        <h3 class="gray-bg"> Contact Us</h3>
+                        <p>
+                            We believe that having a positive shopping experience should be fun and easy. If you have any questions or concerns about your account, please contact us so one our team members can help resolve the problem as quickly as possible!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Start Contact Area -->
+<section id="contact" class="contact-us">
+    <div class="row  justify-content-center">
+        <!-- <div class="col-11 mb-4">
+    <img src="{{ 'aboutbanner.jpg' | asset_url }}" class="img-fluid rounded">
+</div> -->
+        <div class="col-11">
+            <div id="enchant-success" class="alert alert-success" style="display:none"></div>
+            <div id="enchant-error" class="alert alert-error " style="display: none;"></div>
+        </div>
+        <div class="col-11">
+            <div class="contact-head">
+                <div class="inner-content">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8">
+                            <div class="form-main">
+                                <form class="form" method="post" action="#" id="enchant_form">
+                                    <input type="hidden" class="form-control" id="mailbox" value="Cheapundies">
+                                    <input type="hidden" class="form-control" id="mailbox_name" value="Feedback">
+                                    <input type="hidden" class="form-control" id="form_title" value="Cheapundies">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="form-group">
+                                                <input name="Name" type="text" id="name" class="form-control req" placeholder="Your Name" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="form-group">
+                                                <input name="Subject" type="text" id="subject" class="form-control req" placeholder="Your Subject" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="form-group">
+                                                <input name="Email" type="email" id="email" class="form-control req" placeholder="Your Email" required="required" />
+                                                <span id="error-email-message" style="display:none;">Invalid email address</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="form-group">
+                                                <input name="Phone" type="text" id="phone" class="form-control req" placeholder="Your Phone" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group message">
+                                                <textarea name="Message" id="message" class="form-control req" placeholder="Your Message"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group light-rounded-buttons">
+                                                <button type="submit" class="button button-3d button-rounded button-red" id="enchant_submit">
+                                                    Send Message
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                       <!--  <div class="col-lg-4 col-12">
+                            <div class="contact-info">
+                                <div class="single-head">
+                                    <div class="single-info">
+                                        <i class="lni lni-map-marker"></i>
+                                        <ul>
+                                            <li><span>Location</span></li>
+                                            <li> 9845 Atlee Commons Drive 302 <br /> Ashland Va 23005<br />United State</li>
+                                        </ul>
+                                    </div>
+                                    <div class="single-info">
+                                        <i class="lni lni-phone"></i>
+                                        <ul>
+                                            <li><span>Call Us</span></li>
+                                            <li>
+                                                <a href="javascript:void(0)">+1 877.443.0266</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="single-info">
+                                        <i class="lni lni-envelope"></i>
+                                        <ul>
+                                            <li><span>Mail Us</span></li>
+                                            <li>
+                                                <a href="javascript:void(0)">
+                                                    help@cheapundies.com
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ End Contact Area -->

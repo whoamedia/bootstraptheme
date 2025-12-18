@@ -1,0 +1,524 @@
+<style>
+.product .freebie-status-tag {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 0;
+    z-index: 5;
+    right: 0;
+    color: var(--white);
+    min-height: 100%;
+    background: rgba(0, 0, 0, .5);
+    text-align: center;
+    padding-top: 35%;
+}
+
+.product .freebie-status-tag span {
+    display: block;
+    line-height: 1;
+    font-size: 1.4rem;
+    background: #d3232b;
+    padding: 10px;
+}
+
+.product h1 {
+    font-size: 2rem;
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+}
+
+.product .price2 {
+    font-weight: var(--medium);
+    font-size: 2rem;
+    color: var(--red);
+}
+
+.product .productbk {
+    background: var(--light);
+    padding: 20px;
+    border: 1px solid #e1e1e3;
+}
+
+@media (max-width: 575px) {
+    .product .productbk {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+}
+
+.product .ourprice {
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+}
+
+.product .detail-title,
+.product .share-title,
+.product .select-title {
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+    color: var(--headertext);
+    font-size: 1.5rem;
+}
+
+.product .safeicon {
+    opacity: 0.7;
+}
+
+.product .pricetitle {
+    line-height: 1.4rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.product .product-thumbs ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.product .product-thumbs ul li {
+    padding: 5px;
+    /*     display: inline-block;*/
+}
+
+.product .pbd {
+    background: #f6f6f6;
+}
+
+.product .pbd .productbk {
+    background: #fff;
+}
+
+.product .SizeChartLink {
+    color: var(--black);
+    font-weight: var(--medium);
+    font-size: 1.3rem;
+}
+
+.product .SizeChartLink img {
+    margin-bottom: 2px;
+    margin-top: 0px;
+}
+
+.product .modal-header img {
+
+    margin-top: -2px;
+    margin-bottom: 0;
+}
+
+.product hr {
+    border-top: 1px solid #000;
+}
+
+@media (max-width: 575px) {
+    .product .pbd {
+        padding-top: 0px;
+    }
+}
+
+.product .col-3:not(:first-child) {
+    border-left: 1px solid var(--greyline);
+    content: ".";
+    padding-left: .5rem !important;
+}
+
+.button-3d a {
+    text-decoration: none !important;
+}
+
+.button-3d a:hover {
+    color: #222;
+}
+
+.button {
+    display: inline-block;
+    font-family: $headerfont;
+    font-weight: $medium;
+    position: relative;
+    cursor: pointer;
+    outline: 0;
+    white-space: nowrap;
+    margin: 0px;
+    padding: 0 22px;
+    font-size: 16px;
+    height: 44px;
+    line-height: 44px;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+body:not(.device-touch) .button {
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.button:hover {
+    background-color: #444;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+.button i {
+    position: relative;
+    top: 1px;
+    line-height: 1;
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+}
+
+
+.button.button-3d {
+    min-width: 100%;
+    border-radius: 0;
+    border-bottom: 3px solid rgba(0, 0, 0, .15);
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.button.button-3d:hover {
+    background-color: var(--red);
+    opacity: .9;
+}
+
+.button-red {
+    background-color: var(--red);
+}
+
+.button-3d.button-red:hover {
+    background-color: var(--red);
+}
+
+
+.loox-rating,
+.reviews {
+    font-size: 1.3rem;
+    color: var(--dark-2);
+}
+
+.loox-rating a,
+.reviews a {
+
+    color: var(--dark-2);
+}
+
+
+.formqty {
+    color: #000;
+    font-size: 1.3rem;
+
+}
+
+.animate {
+
+    --animate-repeat: 3;
+}
+</style>
+<style>
+input#Quantity.product-form__input {
+    -webkit-font-smoothing: antialiased;
+    appearance: none;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(36, 32, 33, 0.85);
+    border-radius: 0;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: text;
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
+
+    line-height: 1.2;
+    list-style: none;
+    margin: 0;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 8px 15px;
+    text-size-adjust: 100%;
+    touch-action: manipulation;
+    width: 100%;
+}
+
+input#Quantity.product-form__input:disabled,
+input#Quantity.product-form__input[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+input#Quantity.product-form__input:focus {
+    border-color: rgba(9, 8, 8, 0.85);
+}
+
+@media only screen and (max-width: 989px) {
+    input#Quantity.product-form__input {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    input#Quantity.product-form__input {
+        padding: 10px 18px;
+    }
+}
+
+.tab-content {
+    min-height: 300px;
+}
+
+.labelname .progress {
+    height: 5px;
+}
+
+#stock-level .progress {
+
+    background-color: #c7c7c7;
+    height: 8px;
+    /*border-left: 5px solid #fff;
+    border-right: 5px solid #fff;
+    border-bottom: 5px solid #fff;*/
+}
+
+.stocky .stockyqty {
+    font-size: 1.1rem;
+    color: #000000;
+    /*    padding: 5px;
+    background: #ffffff;*/
+    /* margin: 2px; */
+    /*  line-height: 1rem;
+    margin-left: px;*/
+}
+
+#stock-level {
+    min-height: 40px;
+    /*        border: 1px solid #c5c5c5;*/
+}
+
+.accordion-button:not(.collapsed) {
+    color: #000000;
+    background-color: #f8f9fa;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.sizelabel {
+    font-weight: var(--regular);
+    font-family: var(--headerfont);
+
+    color: #000000;
+    cursor: default;
+    display: inline-block;
+    line-height: 1.3rem;
+    font-size: 1.3rem;
+    -webkit-font-smoothing: antialiased;
+
+    margin-bottom: 0;
+
+}
+</style>
+<style type="text/css">
+#tabs .nav .nav-item {
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+    color: var(--headertext);
+
+
+}
+
+
+
+#tabs .nav .nav-link {
+    padding: .5rem 2rem;
+    color: var(--black);
+    font-family: var(--headerfont);
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+#tabs .nav-tabs {
+    border-bottom: 1px solid var(--dark);
+
+}
+
+#tabs .nav .nav-link a:not(:last-child) {
+    margin-right: 1rem;
+}
+
+#tabs a.nav-link:focus,
+a.nav-link:hover {
+    color: var(--red);
+    text-decoration: none;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 1px;
+}
+
+#tabs .nav-tabs .nav-link {
+    margin-bottom: -1px;
+    background: 0 0;
+    border: 1px solid var(--dark);
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.accordion-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1.25rem 1.25rem;
+    font-size: 1.4rem;
+
+    text-align: left;
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+    color: var(--headertext);
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, border-radius .15s ease;
+}
+
+.accordion-flush .accordion-item:first-child {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+
+}
+
+/* Make the submit button visually disabled */
+form.js-ajax-cart-form-in-progress [type="submit"] {
+    opacity: .7;
+}
+
+/* Show a loading indicator */
+form.js-ajax-cart-form-in-progress:after {
+    content: 'Adding to cart…'
+        display: block;
+}
+
+.brand {
+    font-size: 1.3rem;
+    font-weight: var(--medium);
+    font-family: var(--headerfont);
+    /*    text-align: center;*/
+    color: #333;
+
+}
+
+.accordion .sizingTable th,
+td {
+    padding: 2px;
+}
+
+
+.product .sizingTable tbody td:nth-of-type(1) {
+    padding-left: 8px;
+}
+
+.product .sizingTable .colSubHead td {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.product .sizingTable .colSubHead td:nth-of-type(1) {
+    text-align: left !important;
+}
+
+.sizingTable .colSubHead td {
+    background: var(--dark-2) !important;
+}
+
+.modal-header .modal-title {
+    text-align: left;
+    margin-top: -0.5rem;
+    letter-spacing: -1px;
+
+}
+
+.size-modal-vendor {
+    color: var(--dark-2);
+}
+</style>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach(function(radio) {
+    radio.addEventListener('click', function() {
+      const inputValue = radio.value;
+      const targetBox = document.querySelector('.' + CSS.escape(inputValue));
+      document.querySelectorAll('.stocky').forEach(function(el) {
+        if (el === targetBox) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+      if (targetBox) targetBox.style.display = '';
+    });
+  });
+});
+</script>
+{% assign itemtitle = product.title | downcase %}
+{% assign itemvendor = product.vendor | downcase %}
+{% assign cleaned = itemtitle | remove: itemvendor %}
+<div class="product pt-3">
+    <div class="row">
+        <div class="col-12 col-md-7">
+            {% include 'product-images' %}
+        </div>
+        <div class="col-12 col-md-5  mt-3 mt-md-4 text-center text-md-start ">
+            <div class="">
+                <div class="text-uppercase brand mt-2">{{ product.vendor }}</div>
+                <h1 class="text-capitalize">{{ cleaned }}</h1>
+                <div class="">
+                    {% if product.metafields.loox.reviews %}
+                    <span class="loox-rating" data-id="{{ product.id }}" data-raters="{{ product.metafields.loox.num_reviews }}" data-rating="{{ product.metafields.loox.avg_rating }}"></span> <span class="reviews">Reviews</span>
+                    {% else %}
+                    <span class="loox-rating"><a href="?ref=review">Review This Product</a></span>
+                    {% endif %}
+                </div>
+                {% include 'product-prices' %}
+                {% include 'product-select' %}
+            
+            </div>
+            <div class="col-12 mb-4 text-start">
+                {% include 'product-details' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if product.metafields.loox.reviews %}
+<div class="row justify-content-center mt-3">
+    <section class="features-area features-thirteen mb-5">
+        <div class="section-title-four">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content">
+                            <div class="redbar">
+                                <div class="headline"><i class="lni lni-user-star"></i> Real Customer Reviews</div>
+                            </div>
+                            <h3 class="gray-bg">Reviews</h3>
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="col-12 mt-3 mb-3 mx-auto ">
+        <div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+    </div>
+</div>
+{% endif %}
+ 

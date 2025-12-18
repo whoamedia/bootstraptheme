@@ -1,0 +1,12 @@
+{% if product.metafields.collection.related %}
+    <div class="row gutter-10 mt-5">
+        <div class="col-12  mb-5 ">
+              <div class="fancy-title mt-2 mb-4">
+            <span>Shop More</span>
+        </div>
+        </div>
+        {% for product in collections[product.metafields.collection.related].products %}
+            {%- include 'product-list' with '4' -%}
+        {% endfor %}
+    </div>
+{% endif %} 

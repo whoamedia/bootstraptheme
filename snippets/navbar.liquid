@@ -1,0 +1,210 @@
+<style>
+.header {
+    height: 100px;
+    background: var(--white)
+}
+
+.header .logo img {
+    max-width: 175px;
+
+}
+
+@media (max-width: 575px) {
+    .header .logo img {
+        max-width: 150px;
+    }
+}
+
+.header .topdealtext {
+    color: #252525;
+    line-height: 1.4rem;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+}
+
+.header .topdealtext span {
+    color: var(--red);
+    font-style: italic;
+}
+
+.header .cartbg {
+    background: url('{{ "css_sprites.png" | asset_url }}') -130px -10px;
+    background-repeat: no-repeat;
+    width: 33px;
+    height: 42px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: var(--headerfont);
+    font-weight: var(--medium);
+    cursor: pointer;
+}
+
+.header .cartbg a {
+    margin-top: 8px;
+}
+
+.header .show-mobile-menu {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+@media (max-width: 575px) {
+    .header .show-mobile-menu {
+        display: block;
+    }
+}
+
+#header .nav .navbar {
+    height: 50px;
+    border-top: 1px solid var(--greyline);
+    border-bottom: 1px solid var(--greyline);
+}
+
+#header .nav .nav-link {
+    padding: .5rem 2rem;
+    color: var(--dark-color);
+    font-family: var(--headerfont);
+    font-weight: 500;
+    text-transform: uppercase;
+
+}
+
+#header .nav .nav-link a:not(:last-child):after {
+    border-right: 1px solid var(--greyline);
+    content: ".";
+    padding-left: .5rem !important;
+    color: var(--white);
+}
+
+#header .nav .nav-link a:not(:last-child) {
+    margin-right: 1rem;
+}
+#header .navbar li.parent:not(:first-child):before {
+content: "|";
+position: absolute;
+font-size: 15px;
+color: var(--greyline);
+display: block;
+padding: .2rem 0rem;
+}
+#header  a.nav-link:focus,a.nav-link:hover {
+    color: var(--red);
+    text-decoration: none;
+}
+#header .nav .nav-link--active,
+#header .nav .nav-link--active {
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 1px;
+}
+
+
+
+
+</style>
+<style>
+    .navbar .megamenu{ padding: 1rem; }
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+
+  .navbar .has-megamenu{position:static!important;}
+  .navbar .megamenu{left:0; right:0; width:100%; margin-top:0;  }
+
+}   
+/* ============ desktop view .end// ============ */
+
+/* ============ mobile view ============ */
+@media(max-width: 991px){
+  .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+    overflow-y: auto;
+      max-height: 90vh;
+      margin-top:10px;
+  }
+}
+/* ============ mobile view .end// ============ */
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: transparent;
+    background-clip: unset;
+  border: 0px;
+    border-radius: 0;
+}
+.mens .lni {
+        vertical-align: -0.2em;
+    margin-left: 3px;
+}
+
+</style>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    /////// Prevent closing from click inside dropdown
+    document.querySelectorAll('.dropdown-menu').forEach(function(element) {
+        element.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    })
+});
+// DOMContentLoaded  end
+</script>
+<!-- ============= COMPONENT END// ============== -->
+</div><!-- container //  -->
+<div class="container">
+    <div class="row header align-items-center text-center">
+        <div class="col cartclose">
+            <div class="d-none d-md-block topdealtext">Everyday we launch<br />
+                a new
+                <span class="heavy">underwear</span><br />daily deal!
+            </div>
+            <div class="show-mobile-menu">
+                <a href="#my-menu">
+                    <svg class="bi bi-list" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.5 13.5A.5.5 0 015 13h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-4A.5.5 0 015 9h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-4A.5.5 0 015 5h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="col cartclose">
+            <div class="logo mx-auto">
+                <a href="{{ shop.url }}">
+                    <img alt="{{ shop.name }}" class="" src="{{ 'culogo@2x.png' | asset_url }}" itemprop="logo" width="175" height="67">
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="cartbg mx-auto" id="carticon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <a class="mx-auto" id="counter" title="Shopping Cart Link" data-ajax-cart-bind-state="cart.item_count"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container bg-white d-none d-md-block cartclose" id="header">
+    <div class="row align-items-center nav">
+        <div class="col-12">
+            <div class="d-flex navbar">
+                {% assign menu = linklists.main-menu %}
+                <ul class="nav my-auto mx-auto">
+                    {% for link in menu.links %}
+                    <li class="{%- if link.active or link.child_active -%} nav-item--active{%- endif -%} mens parent">
+                        <a class="nav-link mens" {%- if link.title =='Mens' -%} id="mens" data-bs-toggle="dropdown" {%- endif -%} href="{%if link.title == 'Mens' %}#{% else %}{{ link.url }}{% endif %}">
+                            <span class="{%- if link.active or link.child_active  -%} nav-link--active{%- endif -%}">{{ link.title }} {%if link.title == 'Mens' %}<i class="lni lni-chevron-down"></i>{% endif %}</span>
+                        </a>
+                        {%if link.title == 'Mens' %} {% render "mega" %} {% endif %}
+                    </li>
+                    {%- endfor -%}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

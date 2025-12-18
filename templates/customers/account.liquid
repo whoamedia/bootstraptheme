@@ -1,0 +1,107 @@
+<script src="{{ 'enchant_wrapper.js' | asset_url }}" defer></script>
+<div class="row justify-content-center">
+    <div class="col-12 mx-auto mt-3">
+        <header class="page-header mb-3">
+            <h1>My Account</h1>
+        </header>
+    </div>
+</div>
+<div class="row account gutter-20">
+  <div class="col-md-4">
+    <div class="card w-100 mb-5">
+      <div class="card-header">
+        Rewards
+      </div>
+      <div class="card-body">
+        <p><strong>Current Reward Points:</strong> (<span data-lion-points="data-lion-points">0</span>)</p>
+        <p>You've earned <span data-lion-points='lifetime'>0</span> points since you joined our loyalty program!</p>
+        <button type="button" class="btn btn-danger" data-lion-account-link="data-lion-account-link">View Rewards</button>
+    
+      </div>
+    </div>
+    <div class="card w-100 mb-5">
+      <div class="card-header">
+        Feedback & Support
+      </div>
+      <div class="card-body">
+        <div class="form-vertical">
+          <form id="enchant_form">
+                   <label class="d-none hidden-label" for="CustomerHelpMessage">
+                        <input id='mailbox_name' name='mailbox' type='hidden' value='CheapUndies'>
+                        <p class='hidden' id='contact-error'></p>
+                    </label>
+            {% comment %}
+            Successful message
+            {% endcomment %}
+            <p class='hidden text-danger' id='contact-error'></p>
+            {% assign name_attr = 'name' %}
+            <input autocapitalize="words" class="input-full" id="enchant_name" name="contact[{{ name_attr }}]" placeholder="Name" type="hidden" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}"><input autocapitalize="off" autocorrect="off" class="input-full" id="enchant_email" name="contact[email]" placeholder="Email" type="hidden" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+            <input id='enchant_subject' type='hidden' value='Feedback'>
+            <p>Here at CheapUndies, we love to hear from our customers. Your feedback helps make us the best place to find great deals on name brands. If we can do something better, or if we're already doing everything perfectly, let us know!</p>
+            <textarea class="form-control req" id="enchant_message" name="enchant_Message" placeholder="Enter your message" rows="5"></textarea>
+            <button class="btn btn-danger mt-3" id='enchant_submit' title="Submit Feedback"> Send Feedback</button>
+            <span id="enchant-success"></span>
+            <span id="enchant-error"></span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Order History -->
+  <div class="col-md-8 mb-5">
+ <!--   <div class="card w-100 mb-5">
+    <div class="card-header">Enjoy these savings</div>
+    <div class="card-body">
+ SalesRack.com is like CheapUndies but for everything but undies. Go check it out at <a href='http://www.salesrack.com?=cheapundies'>www.salesrack.com</a> 
+     
+    </div>
+  </div> -->
+  <!-- Order History -->
+    <div class="card w-100">
+      <div class="card-header">Order History</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table  order-history">
+            <thead>
+              <tr class="text-center">
+                <th>Order</th>
+                <th>Date</th>
+               
+                <th>Order Status</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if customer.orders.size != 0 %}
+              {% for order in customer.orders %}
+              <tr class="{% if order.cancelled %}error{% endif %} text-center" >
+                <td>{{ order.name | link_to: order.customer_url }}</td>
+                <td>{{ order.created_at | date: "%b %d, %y" }}</td>
+             
+                <td class="text-center">
+                
+                {% if order.fulfillment_status == 'fulfilled' %}
+                {% assign statusbtn = 'success' %}
+                {% else if order.fulfillment_status == 'unfulfilled'  %}
+                 {% assign statusbtn = 'info' %}
+                {% endif %}
+                
+                  <span class="badge badge-{{ statusbtn }} p-2">
+                    {{ order.fulfillment_status | replace: 'unfulfilled', 'Not Shipped' | replace: 'fulfilled','Shipped'  }}
+                  </span>
+                </td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td colspan="5"><em>No orders placed.</em></td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

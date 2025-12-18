@@ -1,0 +1,79 @@
+<section class="sidemenu-menu menu-left" id="menu-left">
+    <div class="cart-sidebar-wrap">
+        <!-- Cart Headiing -->
+        <div class="cart-widget-heading">
+            <h4>Menu</h4>
+            <!-- Close Icon -->
+              <a href="javascript:void(0)" id="sidemenu_close_icon">
+                <button aria-label="Close" class="close close-icon-white" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </a>
+            <!-- End Close Icon -->
+        </div>
+        <!-- End Cart Headiing -->
+        <div class="cart-widget-content">
+            <div class="sidemenu">
+                <!-- Empty Cart -->
+                <!-- EndEmpty Cart -->
+                <!-- Cart Products -->
+                <ul class="mobile-nav list-unstyled">
+                    {%- for link in linklists.main-menu.links -%}
+                        {%- assign child_list_handle = link.title | handleize -%}
+                        {%- if linklists[child_list_handle].links != blank -%}
+                            <li aria-haspopup="true" class="mobile-nav__item{%- if link.active -%} mobile-nav__item--active{%- endif -%}">
+                                <div class="mobile-nav__has-sublist">
+                                    <a class="mobile-nav__link" href="{{ link.url }}">
+                                        <strong>{{ link.title }}</strong>
+                                    </a>
+                                   
+                                </div>
+                    
+                            </li>
+                        {%- else -%}
+                            <li class="mobile-nav__item{%- if link.active -%} mobile-nav__item--active{%- endif -%}">
+                                <a class="mobile-nav__link" href="{{ link.url }}">
+                                    {{ link.title }}
+                                </a>
+                            </li>
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- if shop.customer_accounts_enabled -%}
+                        {%- if customer -%}
+                            <li class="mobile-nav__item">
+                                {%- if customer.first_name != blank -%}
+                                    {%- capture first_name -%}
+                                        {{ customer.first_name }}
+                                    {%- endcapture -%}
+                                    <a href="/account">
+                                        {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
+                                    </a>
+                                {%- else -%}
+                                    <a href="/account">
+                                        {{ 'layout.customer.account' | t }}
+                                    </a>
+                                {%- endif -%}
+                            </li>
+                            <li class="mobile-nav__item">
+                                {{ 'layout.customer.log_out' | t | customer_logout_link }}
+                            </li>
+                        {%- else -%}
+                            <li class="mobile-nav__item">
+                                {{ 'layout.customer.log_in' | t | customer_login_link }}
+                            </li>
+                            <li class="mobile-nav__item">
+                                {{ 'layout.customer.create_account' | t | customer_register_link }}
+                            </li>
+                        {%- endif -%}
+                    {%- endif -%}
+                </ul>
+                <!-- //mobile-nav -->
+                <!-- End Cart Products -->
+            </div>
+        </div>
+        <!-- Cart Footer -->
+        <!-- Cart Footer -->
+    </div>
+</section>
+<!--Overlay-->
+<div class="sidemenu_overlay"></div>

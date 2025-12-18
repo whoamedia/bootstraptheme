@@ -1,0 +1,238 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js supports-no-cookies" lang="{{ shop.locale }}">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="df-verify" content="dfe7f4af6c1dd9" />
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name="viewport">
+    <meta content="CheapUndies" name="author">
+    <meta content="G21GuBHHzBqLhZB0qZldEjV10BwHbcuEfDZ38F6tMJ0" name="google-site-verification" />
+    {%- render 'head-seo' -%}
+    <meta content="index" name="robots">
+    <meta content="follow" name="robots">
+    {%- render 'head-social' -%}
+    {{ 'bootstrap5.min.css' | asset_url | stylesheet_tag }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {{ 'home.scss.css' | asset_url | stylesheet_tag }}
+    <link rel="preload" as="style" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css"></noscript>
+    {{ 'custom-css.css' | asset_url | stylesheet_tag }}
+    <link rel="preload" as="style" href="{{ 'animate.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>{{ 'animate.css' | asset_url | stylesheet_tag }}</noscript>
+    {% case template.name %}
+      {% when 'index' %}
+        {{ 'home.css' | asset_url | stylesheet_tag }}
+      {% when 'collection' %}
+        {{ 'collection.css' | asset_url | stylesheet_tag }}
+      {% when 'product' %}
+        {{ 'product.css' | asset_url | stylesheet_tag }}
+      {% when 'cart' %}
+        {{ 'cart.css' | asset_url | stylesheet_tag }}
+    {% endcase %}
+    {% if template.name == 'index' %}
+    <link rel="preload" as="image" href="{{ 'slide4.png' | asset_url }}" imagesrcset="{{ 'slide4.png' | asset_url }} 1600w" imagesizes="100vw" fetchpriority="high">
+    {% endif %}
+    {{ content_for_header }}
+    {%- render 'loyaltylion' -%}
+    <script src="{{ 'jquery.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'ls.rias.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'countdown-native.js' | asset_url }}" defer></script>
+
+    {% if template.directory == 'customers' %}
+    <script defer="defer" src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    {% endif %}
+    {{ shop.metafields.loox["global_html_head"] }}
+    <script>
+    let availableFilters = [];
+    </script>
+    <style>
+        :root {
+        --bodyfont: 'Roboto', sans-serif;
+        --headerfont: 'Roboto', sans-serif;
+        --headerfontalt: 'Roboto', sans-serif;
+        --headerfontalt_1: 'Roboto', sans-serif;
+
+        --regular: 400;
+        --medium: 500;
+        --heavy: 700;
+
+        --bodyfontsize: 1.4rem;
+
+        --bodytext: #222;
+        --headertext: #000;
+
+        --red: #d3232b;
+        --white: #fff;
+        --dark: #333;
+        --black: #000;
+        --greybackground: #f7f7f7;
+        --altback: #f6f6f6;
+
+        --accordian: #f8f9fa;
+        --lgrey: #fcfcfc;
+        --ltgreyFont: #e5e5e4;
+        --redFont: #d3232b;
+        --greyFont: #a4a4a4;
+        --mensColor: #08c;
+        --womensColor: #e404a5;
+        --whiteFont: #ffffff;
+        --blackFont: #000000;
+        --twoDark: #333;
+        --lighterGrey: #f9f9f9;
+        --grey2Font: #464646;
+        --darkgreyFont: #ccc;
+        --darkcolor: #444444;
+        --greencolor: #589c28;
+        --greyer: #333;
+        --greypanel: #eeeeef;
+        --devil: #666;
+        --blue: #007ace;
+        --greyline: #e5e5e4;
+        --greybk: #f7f7f7;
+          --primary: #155bd5;
+  --primary-dark: #1c3ab6;
+  --primary-light: #e2f1ff;
+  --accent: #00d4d7;
+  --accent-dark: #00bac1;
+  --accent-light: #dff9f8;
+  --success: #13d527;
+  --success-dark: #00ae11;
+  --success-light: #eafbe7;
+  --secondary: #8f15d5;
+  --secondary-dark: #6013c7;
+  --secondary-light: #f4e5fa;
+  --info: #15b2d5;
+  --info-dark: #0f8ca8;
+  --info-light: #e0f5fa;
+  --caution: #dbbb25;
+  --caution-dark: #d58f15;
+  --caution-light: #fbf9e4;
+  --error: #e6185e;
+  --error-dark: #bf1257;
+  --error-light: #fce4eb;
+  --black: #1d1d1d;
+  --dark-1: #2d2d2d;
+  --dark-2: #4d4d4d;
+  --dark-3: #6d6d6d;
+  --gray-1: #8d8d8d;
+  --gray-2: #adadad;
+  --gray-3: #cdcdcd;
+  --gray-4: #e0e0e0;
+  --light-1: #efefef;
+  --light-2: #f5f5f5;
+  --light-3: #fafafa;
+  --white: #ffffff;
+  --gradient-1: linear-gradient(180deg, #155bd5 0%, #1c3ab6 100%);
+  --gradient-2: linear-gradient(180deg, #155bd5 13.02%, #00d4d7 85.42%);
+  --gradient-3: linear-gradient(180deg, #155bd5 0%, #8f15d5 100%);
+  --gradient-4: linear-gradient(180deg, #155bd5 0%, #13d527 100%);
+  --gradient-5: linear-gradient(180deg, #155bd5 0%, #15bbd5 100%);
+  --gradient-6: linear-gradient(180deg, #155bd5 0%, #dbbb25 100%);
+  --gradient-7: linear-gradient(180deg, #155bd5 0%, #e6185e 100%);
+  --gradient-8: linear-gradient(180deg, #1c3ab6 0%, #00bac1 100%);
+  --gradient-9: linear-gradient(180deg, #00d4d7 13.02%, #155bd5 85.42%);
+  --shadow-1: 0px 0px 1px rgba(40, 41, 61, 0.08),
+    0px 0.5px 2px rgba(96, 97, 112, 0.16);
+  --shadow-2: 0px 0px 1px rgba(40, 41, 61, 0.04),
+    0px 2px 4px rgba(96, 97, 112, 0.16);
+  --shadow-3: 0px 0px 2px rgba(40, 41, 61, 0.04),
+    0px 4px 8px rgba(96, 97, 112, 0.16);
+  --shadow-4: 0px 2px 4px rgba(40, 41, 61, 0.04),
+    0px 8px 16px rgba(96, 97, 112, 0.16);
+  --shadow-5: 0px 2px 8px rgba(40, 41, 61, 0.04),
+    0px 16px 24px rgba(96, 97, 112, 0.16);
+  --shadow-6: 0px 2px 8px rgba(40, 41, 61, 0.08),
+    0px 20px 32px rgba(96, 97, 112, 0.24);
+    }
+
+          .shopify-payment-button__button {
+            text-transform: uppercase;
+          }
+    </style>
+
+</head>
+
+<body >
+    {%- section 'my-cart' -%}
+    {%- render 'slide-in-menu' -%}
+    <!--   {%- include "feedback-bar" -%} -->
+    {%- section "topbar" -%}
+    {%- render "navbar" -%}
+    <div class="container bg-white">
+        {{ content_for_layout }}
+    </div>
+    {%- render "footer" -%}
+    {%- if template.name == 'collection'-%}
+    <script src="{{ 'mixitup.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'mixitup-multifilter.min.js' | asset_url }}" defer></script>
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
+    {%- elsif template.name == 'blog' -%}
+    <script  src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c" async></script>
+    {%- elsif template.name == 'product' -%}
+  <script defer="defer" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f85964f6c72421c"></script>
+    {%- endif -%}
+    <script src="{{ 'mmenu-light.js' | asset_url }}" defer></script>
+    <script src="{{ 'option_selection.js' | shopify_asset_url }}" defer></script>
+    <script src="{{ 'bootstrap5.bundle.min.js' | asset_url }}" defer></script>
+
+
+
+    <script type="application/json" data-ajax-cart-initial-state>
+    {{ cart | json }}
+    </script>
+    <script type="module">
+      import { subscribeToCartAjaxRequests } from '{{ "liquid-ajax-cart-v1.10.3.js" | asset_url }}';
+
+      document.addEventListener('DOMContentLoaded', function() {
+        subscribeToCartAjaxRequests((requestState, subscribeToResult) => {
+          if (requestState.requestType === 'add') {
+            const offcanvasEl = document.getElementById('offcanvasRight');
+            if (offcanvasEl && window.bootstrap) {
+              const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+              bsOffcanvas.show();
+            }
+
+            const $ = window.jQuery || window.$;
+            const itemEl = $ ? $("#AddToCart") : null;
+            if (itemEl && itemEl.length) {
+              itemEl.data('originalText', itemEl.html());
+              itemEl.html('Added to Cart');
+            }
+
+            subscribeToResult((resultState) => {
+              if (resultState.responseData?.ok) {
+                const counterEl = document.getElementById('counter');
+                const newCount = resultState.responseData.body?.item_count;
+                if (counterEl && typeof newCount === 'number') {
+                  counterEl.textContent = newCount;
+                }
+
+                const offcanvasElInner = document.getElementById('offcanvasRight');
+                if (offcanvasElInner && window.bootstrap) {
+                  const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElInner);
+                  bsOffcanvas.show();
+                }
+
+                if (itemEl && itemEl.length) {
+                  itemEl.html('<span class="icon-cart"></span> Add to Cart');
+                }
+              }
+            });
+          }
+        });
+      });
+    </script>
+    <script src="{{ 'app.js' | asset_url }}" defer></script>
+    <script src="{{ 'lightbox-b5.js' | asset_url }}" defer></script>
+    <script src="{{ 'midapi.js' | asset_url }}" defer></script>
+
+	{{ shop.metafields.loox["global_html_body"] }}
+</body>
+
+</html>

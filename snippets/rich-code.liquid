@@ -1,0 +1,53 @@
+<script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Product",
+             "brand": {
+                "@type": "Brand",
+                "name": "{{ product.vendor | escape }}"
+            },
+             "description": "{{ product.description | strip_html | strip_newlines | escape | remove: '•' | remove: '”' | remove: '/' | remove: '\'  }} | {{ product.vendor | escape }} | {{ product.title | escape  }}",
+             "url": "{{ shop.secure_url }}{{ product.url }}",
+             "name": "{{ product.title   | strip_html | strip_newlines | escape | replace: '/', ' ' | remove: '²' }}",
+            {%- if product.metafields.product.sku -%}
+    
+             "sku": "{{ product.metafields.product.sku | escape }}",
+          
+             {% else %}
+             "sku": "{{ product.variants.first.sku | escape  }}",
+          
+             {%- endif -%}
+             "image": "https:{{ product | img_url: 'grande' }}",
+             {% if product.metafields.loox.num_reviews %} 
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "{{ product.metafields.loox.avg_rating }}",
+                "reviewCount": "{{ product.metafields.loox.num_reviews }}"
+            },
+            {% endif %}
+              "offers": [{
+               {%- for variant in product.variants -%}
+                 "@type": "Offer",
+                 "priceCurrency": "USD",
+                 "price": " {{ product.price | money_without_currency }}",
+                 {% if product.available %}"availability": "https://schema.org/InStock",{% else %}"availability":"https://schema.org/OutOfStock",{% endif %} 
+                 "priceValidUntil": "{%- assign seconds = 365 | times: 24 | times: 60 | times: 60 -%}{{ "now" | date: "%s" | plus: seconds | date: "%Y-%m-%d" }}",
+                 "itemCondition": "https://schema.org/NewCondition",
+                 "mpn": "{{ variant.barcode  | escape }}",
+                 "sku": "{{ variant.sku  | escape }}",
+                 "gtin13": "{{ variant.barcode  | escape }}",
+                 "url": "{{ shop.secure_url }}{{ variant.url }}",
+                 "image": "https:{{ product | img_url: 'grande' }}",
+                  "seller": {
+                    "@type": "Organization",
+                    "name": "CheapUndies" 
+                   {% if forloop.last == true %}
+                  }
+    {% else %}
+        }
+ },{
+    {% endif %}
+                  {% endfor %}
+              }]
+}
+    </script>

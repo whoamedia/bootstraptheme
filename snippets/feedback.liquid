@@ -1,0 +1,43 @@
+<!-- <button class="button button-3d button-rounded button-blue" data-backdrop="static" data-keyboard="false" data-bs-target="#feedbackModal" data-bs-toggle="modal" type="button">
+    Feedback
+</button> -->
+{{ 'enchant_wrapper.js' | asset_url | script_tag }}
+<div aria-hidden="true" aria-labelledby="feedbackModallabel" class="modal fade feedbackmodal" data-keyboard="false" id="feedbackModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header  d-flex align-items-center">
+                
+                   <div class="modal-header-title">
+                   FeedBack</div>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                               <form id="enchant_form">
+                            <label class="d-none hidden-label" for="CustomerHelpMessage">
+                                <input id='mailbox_name' name='mailbox_name' type='hidden' value='Feedback'/>
+                                <p class='hidden' id='contact-error'></p>
+                            </label>
+                            <p class='hidden text-danger' id='contact-error'></p>{% assign name_attr = 'contact.form.name' | t | handle %}
+                            <input autocapitalize="words" class="input-full" id="enchant_name" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }}" type="hidden" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}"/>
+                            <input id='enchant_subject' type='hidden' value='Site Feedback'/>
+                             <p>Here at CheapUndies, we love to hear from our customers. Your feedback helps make us the best place to find great deals on name brands. If we can do something better, or if we're already doing everything perfectly, let us know!</p>
+                            <input autocapitalize="off" autocorrect="off" class="form-control req mb-2" id="enchant_email" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"/>
+                            <span id="error-email-message" style="display:none;">Invalid email address</span>
+                            <textarea class="form-control req" id="enchant_message" name="enchant_Message" placeholder="Enter your message" rows="5"></textarea>
+                            <span id="enchant-success"></span>
+                            <span id="enchant-error"></span>
+                            <div class="modal-footer">
+                                <button class="button button-3d button-rounded button-red mt-3" id='enchant_submit' title="Submit Feedback">Submit Question</button>
+                            </div>
+                        </form>
+                        
+                        
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

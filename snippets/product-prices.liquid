@@ -1,0 +1,37 @@
+<hr class="mt-3">
+<div class="row align-items-center pricebox {% if product.compare_at_price > product.price %}mt-0{% else %}mt-3 mb-2{% endif %}">
+    <div class="col-3  {% if product.compare_at_price > product.price %} col-3 {% else %}col-12 {%endif %} {% if product.compare_at_price > product.price %} text-center {% else %} text-start {% endif %}">
+        <div class="price2 {% if cart.currency.iso_code == 'USD' %}{% endif %} my-auto text-center">
+            {%- if product.price == 0.00 -%}
+            FREE{%- else -%}
+            {{ product.price | money }}
+            {%- endif -%}
+        </div>
+        {% if cart.currency.iso_code != 'USD' %}
+        
+        {% endif %}
+    </div>
+    {%- if product.compare_at_price > product.price -%}
+    <div class="col-3 col-md-3 text-center">
+        <div class="pricetitle">
+            Retail</div>
+        <div class="price3">
+            <s>{{ product.compare_at_price_max | money }}
+            </s>
+        </div>
+    </div>
+    <div class="col-3 col-md-3 text-center">
+        <div class="pricetitle">Discount</div>
+        <div class="price3">
+            {{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% OFF
+        </div>
+    </div>
+    <div class="col-3 col-md-3 text-center">
+        <div class="pricetitle">You Save</div>
+        <div class="price3">
+            {{ product.compare_at_price_max | minus:product.price | money }}
+        </div>
+    </div>
+    {%- endif -%}
+</div>
+       <hr class=""> 

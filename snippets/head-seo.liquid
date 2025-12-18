@@ -1,0 +1,39 @@
+{%- if template == 'index' -%}
+<title>{{- page_title -}}</title>
+<meta name="description" content="{{ shop.description | strip_html | escape }}">
+{%- elsif template == '404' -%}
+<title>Page Not Found | {{ shop.name }}</title>
+{%- elsif template.name == 'product' -%}
+<title>{{ page_title | strip_html | escape }} | {{ shop.name }}</title>
+{%- if product.description == '<p>.</p>' -%}
+<meta name="description" content="Get this {{ product.title | strip_html | escape }} for {% if product.compare_at_price > product.price %}{{ product.compare_at_price_max | minus:product.price | times:100 | divided_by:product.compare_at_price_max }}% Off Retail{% else %} up to 80% off the retail price{% endif %} - {{ product.type  | remove: "W"| replace: "M" | strip | escape }} - Fast Shipping" />
+{% else %}
+<meta name="description" content="{{ product.description | strip_html | strip_newlines | escape  | remove: '•' | remove: '”' }}" />
+{% endif %}
+<meta name="keywords" content="{{ product.title | strip_html | escape }}, {{ product.type | remove: "W"| replace: "M"| strip | escape }}, {{ product.vendor }},  {% if product.metafields.product.gender =='MALE' %}Mens{% else if product.metafields.product.gender =='FEMALE'%}Womens{% endif %} {{ product.type |  remove: "W"| replace: "M" | strip | escape }}" />
+{% elsif template.name == 'collection' %}
+{% if collection.handle == 'womens' %}
+<title>Cute Women's Underwear at the Best Prices | Buy Cheap, Cute Panties Online and Save! | High-Quality Women's Underpants</title>
+{% elsif collection.handle == 'mens-underwear' %}
+<title>Mens Underwear Daily Deals | Briefs, Boxers, Men's Thongs and Bikini Underwear</title>
+{% else %}
+<title>{{ page_title }} | {{ shop.name }}</title>
+{% endif %}
+<meta name="description" content="{{ page_description  | strip_html | strip_newlines | truncate: 250 }}" />
+<meta name="keywords" content="{{ collection.title | strip_html | escape }}{%- for product_vendor in collection.all_vendors -%}, {{ product_vendor | strip | escape  }}{%- endfor -%}" />
+{%- elsif template.name == 'blog' -%}
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ page_description }}" />
+<meta name="keywords" content="{{ collection.title | strip_html | escape }}{%- for product_vendor in collection.all_vendors -%}, {{ product_vendor | strip | escape  }}{%- endfor -%}" />
+{%- elsif template.name == 'article' -%}
+<meta http-equiv="Cache-Control" content="public, max-age=10, must-revalidate" />
+<title>{{ article.title | escape }}</title>
+<meta name="description" content="{{ article.excerpt_or_content | strip_html | strip_newlines | escape | remove: '”' | remove: '“' | truncate: 250 }}" />
+{% for tag in article.tags %}
+<meta name="keywords" content="{{ tag }}" />
+{% endfor %}
+{%- else -%}
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ page_description  | strip_html | strip_newlines | escape | remove: '”' | remove: '“' | truncate: 250 }}" />
+{% endif %}
+<link rel="canonical" href="{{ canonical_url }}" />

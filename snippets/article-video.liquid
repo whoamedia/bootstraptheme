@@ -1,0 +1,14 @@
+{% if article.metafields.article.video %}
+    <div class="row justify-content-center">
+        <div class="col-12  text-uppercase">
+             <div class="fancy-title mt-2 mb-5 title-center">
+                <h2>Video</h2>
+            </div>
+        </div>
+        <div class="col-md-12 ">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe allowfullscreen="allowfullscreen" class="embed-responsive-item" src="{{ article.metafields.article.video }}?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0"></iframe>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,46 @@
+{{ 'swiper.css' | asset_url | stylesheet_tag }}
+<div class="row">
+<div class="col">
+<!-- Slider main container -->
+<div class="swiper-container">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Lazy image -->
+        {%- for image in product.images -%}
+            <div class="swiper-slide">
+                <img class="img-size swiper-lazy" data-src="{{ image.src | img_url: '500x', format: 'pjpg' }}">
+                <div class="swiper-lazy-preloader"></div>
+            </div>
+        {%- endfor -%}
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+</div>
+</div>
+{{ 'swiper.min.js' | asset_url | script_tag }}
+<script>
+    var Swiper = new Swiper('.swiper-container', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        grabCursor: true,
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination'
+        },
+        preventClicks: false,
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
+        // Disable preloading of all images
+        preloadImages: false,
+        // Enable lazy loading
+        lazy: true
+    })
+</script>

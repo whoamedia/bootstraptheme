@@ -1,0 +1,22 @@
+<!-- PRODUCT LEFT  -->
+
+  {% assign total = 0 %}
+  {% for variant in product.variants %}
+  {% unless variant.inventory_management == '' %}        
+  {% capture temp %}{{ total | plus: variant.inventory_quantity }}{% endcapture %}
+  {% assign total = temp %}
+  {% endunless %}        
+  {% endfor %}
+  {% assign fulltotal = total | plus:0 %} 
+  {% unless fulltotal > 200 %}
+    
+   <hr>
+<!--    <div class="progress-title mt-3 text-left">🔥 Limited Qty Left - Order Now!</div> -->
+     <div class="progress-title">{% if fulltotal <= 20 %}🔥 Only <span>{{ fulltotal }}</span> Left in Stock!{% endif %}</div>
+<div class="progress mt-2 mb-3">
+  <div class="progress-bar {% if fulltotal > 50 %}bg-success{% elsif fulltotal <= 50 and fulltotal >= 20 %}progress-bar-striped bg-warning{% elsif fulltotal <= 20 %}progress-bar-striped bg-danger{% endif %} progress-bar-animated" role="progressbar" style="width: {{ fulltotal }}%;" aria-valuenow="{{ fulltotal }}" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+{% endunless %}
+  <hr>
+<!-- PRODUCT LEFT  -->

@@ -1,0 +1,18 @@
+{%- if pages[sizechartpage].content != '' -%}
+<div class="detail-description rte mt-3" itemprop="description">
+        <h3>Sizing Information</h3>
+        <ul class="list-unstyled">
+            <li>
+                Individual brands may fit differently, so we recommend always reviewing the size chart before placing your final order!
+            </li>
+        </ul>
+
+        <div class="">
+           {%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                      
+                            {%- if pages[sizechartpage].content != '' -%}{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                            {{ pages[sizechartpage].content }}
+{%- endif -%}
+                    </div>
+    </div>
+{%- endif -%}

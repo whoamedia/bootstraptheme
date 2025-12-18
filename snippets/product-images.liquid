@@ -1,0 +1,29 @@
+<link href="{{ 'magicscroll.css' | asset_url }}" rel="stylesheet">
+<link href="{{ 'magiczoomplus.css' | asset_url }}" rel="stylesheet">
+<script src="{{ 'magicscroll.js' | asset_url }}"></script>
+<script src="{{ 'magiczoomplus.js' | asset_url }}"></script>
+<script>
+var mzOptions = {
+zoomPosition: "inner",
+expand: "off"
+};
+</script>
+<div class="row g-0">
+    <div class="col-12  text-center">
+            <a href="{{ product.featured_image.src | img_url: 'master'}}" data-options="selectorTrigger:hover; zoomPosition: inner; zoomDistance: 150" class="MagicZoom" id="mainphoto">
+                <img id="zoom" class="img-fluid shirt lazyload" src="{{ product.featured_image.src | img_url: '500x'}}" data-src="{{ product.featured_image.src | img_url: '500x'}}" alt="{{ product.title }} Featured Image">
+            </a>
+    </div>
+           {% if product.available %}
+        {%- if product.images.size  -%}
+    <div class="col-12   text-center">
+        <div class="MagicScroll" data-options="width: auto; items: 4; draggable: true;" data-mobile-options="orientation:horizontal">
+            {%- for image in product.images -%}
+            <a data-color="{%- for variant in image.variants -%}{{ variant.option2 }} {%- endfor -%}" data-image="{{ image.src | img_url: '500x' }}" class="pb-2 px-2 px-md-0" data-thumb-id="mainphoto" data-zoom-id="mainphoto" href="{{ image.src | product_img_url: 'master'  }}">
+                <img src="{{ image.src | img_url: '70x' }}" data-src="{{ image.src | img_url: '70x' }}" alt="{{ product.title }} Image {{ image.position }}" /></a>
+                {%- endfor -%}
+        </div>
+    </div>
+    {%- endif -%}
+    {%- endif -%}
+</div>

@@ -1,0 +1,97 @@
+<div class="row">
+                    <div class="col-12 text-center">
+                        <form action="/cart" method="post" novalidate="">
+                            <div class="row overlay ">
+                                <div class="col-12 col-md-8 mt-md-0 cartdata">
+                                    <div  data-section-id="{{ section.id }}" data-section-type="cart-template" id="CartSection">
+                                        <div class="table-responsive cart-table">
+                                            <table class="table" data-cart-view="data-cart-view">
+                                                <thead class="carttablebg">
+                                                    <tr>
+                                                        <th class="d-md-table-cell text-left" colspan="3" scope="col">Item</th>
+                                                        <th class="d-none d-md-table-cell text-center" scope="col">Price</th>
+                                                        <th class="text-center" scope="col" style="width: 20%">Quantity</th>
+                                                        <th class="text-center" scope="col">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr rv-each-item="cart.items">
+                                                        <td class="align-middle d-none d-md-table-cell text-center">
+                                                            <span class="plusminus">
+                                                                <a class="icon-cross-circle" href="#" rv-data-cart-remove="index | plus 1"></a>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <a class='' rv-href='item.url'>
+                                                                <img class="img-fluid cartimg" rv-src="item.image" width="100px">
+                                                            </a>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <a class='' rv-href='item.url'>
+                                                                <span rv-text="item.title"></span>
+                                                            </a>
+                                                            <ul rv-hide="item.propertyArray | empty">
+                                                                <li rv-each-property="item.propertyArray < properties">
+                                                                    <small class="text-muted">{property.name}: {property.value}</small>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td class="d-none d-md-table-cell align-middle text-center" rv-html="item.price | money Currency.currentCurrency"></td>
+                                                        <td class="d-table-cell d-sm-none align-middle text-center" colspan="2">
+                                                            <span class="plusminus">
+                                                                <a class="icon-circle-minus" href="#" rv-data-cart-quantity="item.quantity | minus 1" rv-data-cart-update="index | plus 1"></a>
+                                                                <span>
+                                                                    <span class="cartitemqty" rv-text="item.quantity"></span>
+                                                                    <span class="plusminus">
+                                                                        <a class="icon-plus-circle" href="#" rv-data-cart-quantity="item.quantity | plus 1" rv-data-cart-update="index | plus 1"></a>
+                                                                    </span>
+                                                                </td>
+                                                                <td class="d-none d-md-table-cell align-middle text-center">
+                                                                    <span class="plusminus">
+                                                                        <a class="icon-circle-minus" href="#" rv-data-cart-quantity="item.quantity | minus 1" rv-data-cart-update="index | plus 1"></a>
+                                                                        <span>
+                                                                            <span class="cartitemqty" rv-text="item.quantity"></span>
+                                                                            <span class="plusminus">
+                                                                                <a class="icon-plus-circle" href="#" rv-data-cart-quantity="item.quantity | plus 1" rv-data-cart-update="index | plus 1"></a>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td class="align-middle text-center" rv-html="item.line_price | money Currency.currentCurrency"></td>
+                                                                    </tr>
+                                                                    <tr class="align-middle text-center" rv-show="cart.item_count | lt 1">
+                                                                        <td class="" colspan="6">
+                                                                            <div class="image-empty-cart">
+                                                                                <img alt="" class="img-fluid" src="data:image/png;base64,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">
+                                                                                <div class="text-empty-cart-1">SHOPPING CART IS</div>
+                                                                                <div class="text-empty-cart-2">EMPTY</div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <hr class="">
+                                                        </div>
+                                                        <!-- /.table-responsive -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4 text-center" data-cart-view="data-cart-view">
+                                                    <div class="cart_subtotal_header ">Subtotal</div>
+                                                    <div class="cart_subtotal_money mt-2" rv-html="cart.total_price | money Currency.currentCurrency"></div>
+                                                    <p class="mt-1">Shipping & taxes<br>
+                                                        calculated at checkout</p>
+                                                    <button class="btn button button-3d button-rounded button-red mt-2" type="submit"  name="checkout">
+                                                        <span class="icon-cart"></span>
+                                                        {{ 'cart.general.checkout_continue' | t }}</button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+{% schema %}
+{
+  "name": "Main cart",
+  "settings": []
+}
+{% endschema %}
+

@@ -1,0 +1,80 @@
+        {%- if collection.description != '' -%}
+            {%- if template == 'collection' -%}
+                <div class="row align-items-center">
+                    {%- if collection.image -%}
+                        <div class="d-none d-md-block col-12 col-md-4 gutter-10">
+                            <img alt="{{collection.title | escape }}" class="img-fluid" src="{{ collection.image | image_url: width: 600, height: 600, crop: 'center' }}" width="600" height="600" loading="lazy">
+                        </div>
+                        <div class="col-12 col-md-8 align-middle">
+                            <div class="coll-back rounded">
+                                <h1 class="coll-title-header  mt-4 mt-sm-0">{{ collection.title }}
+                                </h1> 
+                                <div class="">{{ collection.description | split: '
+            <!-- split -->' | last }}
+                                </div>
+                                <div class="addthis_inline_share_toolbox_hd22 mt-2"></div>
+                            </div>
+                        </div>
+                    {%- else -%}
+                        <div class="col-12">
+                            <div class="cat-banner">
+                                <h1 class="coll-title-header mt-4 mt-sm-0">{{ collection.title }}
+                                </h1>
+                                <div class="">{{ collection.description | split: '
+            <!-- split -->' | last }}
+                                </div>
+                                <div class="mt-2 mb-2 addthis_inline_share_toolbox_hd22"></div>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                </div>
+            {%- endif -%}
+        {%- else -%}
+            {%- if collection.description != '' -%}
+                <div class="row align-items-center gutter-10">
+                    <div class="d-none d-md-block col-md-5 col-sm-12">
+                        <img class="img-fluid rounded" src="{{ collection.image | image_url: width: 400, height: 400, crop: 'center' }}" alt="{{collection.title | escape }}" width="400" height="400" loading="lazy">
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <div class="coll-back rounded">
+                            <h1 class="coll-title-header mt-4 mt-sm-0">{{ collection.title }}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            {%- endif -%}
+            <div class="row">
+                <div class="col-12">
+                    <div class="dealheader  mb-1 mt-1">
+                        <h1>
+                            <span>{{ collection.title }}</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+    {%- endif -%}
+{%- paginate collection.products by 60 -%}
+{%- unless collection.handle == 'gifts' -%}
+{%- render 'mixfilterbrand' -%}
+{%- endunless %}
+<div class="row gutter-10 sorter collection mt-2">
+  {%- for product in collection.products -%}
+  {%- assign total = 0 %}
+  {%- for variant in product.variants -%}
+  {%- unless variant.inventory_management == '' -%}        
+  {%- capture temp -%}{{ total | plus: variant.inventory_quantity }}{%- endcapture -%}
+  {%- assign total = temp -%}
+  {%- endunless -%}        
+  {%- endfor -%}
+   {%- render 'product-list', product_list: 4, product: product -%}
+  {%- endfor -%}
+  {%- for product in collection.products -%}
+  {%- unless collection.handle == 'cheapundies-brand' or collection.handle == 'gifts' -%}
+  {%- render 'product-list-soldout', product_list_soldout: 4, product: product  -%}
+  {%- endunless -%}
+  {%- endfor -%}
+    </div>
+  {% endpaginate %}
+<!-- Collection Content -->
+{%- render 'video' -%}
+{%- render 'gallery' -%}

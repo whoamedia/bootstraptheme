@@ -1,0 +1,30 @@
+{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+{%- if pages[sizechartpage].content != '' -%}
+
+    <a class="SizeChartLink align-middle" data-bs-toggle="modal" data-bs-target="#sizeModal" href=""><i class="lni lni-ruler"></i>
+       Sizing & Fit
+    </a>
+
+<div class="modal fade text-start" id="sizeModal" tabindex="-1" aria-labelledby="sizeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="size-modal-vendor">{{ product.vendor }}</div>
+                    </div>
+                    <div class="col-12">
+                        <h2 class="modal-title" id="exampleModalLabel">Size Guide</h2>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                {%- if pages[sizechartpage].content != '' -%}{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                {{ pages[sizechartpage].content }}
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>{%- endif -%}

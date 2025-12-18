@@ -1,0 +1,85 @@
+ <div class="row pt-5 justify-content-end">
+    <div class="col-12 ">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            {% assign desc = product.description | strip %}
+                {% if desc != '<p>.</p>' %} 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button  text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Product Details
+                    </button>
+                </h2>
+
+                <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+
+                        <div class="detail-description rte mb-3"> {{ product.description }}
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+                    {% endif %}{%- if product.metafields.product.fabric -%}
+           <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button  text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                       Fabric Content:
+                    </button>
+                </h2>
+
+                <div id="flush-collapseFour" class="accordion-collapse collapse show" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+
+                        <div class="detail-description rte mb-3">    {{ product.metafields.product.fabric }}
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+        {%- endif -%}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Size Chart
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        {%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                        {%- if pages[sizechartpage].content != '' -%}
+                        <div class="row">
+                            <div class="col my-auto">
+                                {%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                                {%- if pages[sizechartpage].content != '' -%}{%- capture sizechartpage -%}size-chart-{{ product.vendor | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '=', '-' | replace: "'", '' }}{%- endcapture -%}
+                                {{ pages[sizechartpage].content }}
+                                {%- endif -%}
+                            </div>
+                        </div>
+                        {%- endif -%}</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Shipping & Returns
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>
+                                <strong>Ships in 1 - 3 days</strong>
+                            </li>
+                            <li>
+                                Shipping starts at $5.99 per order for our standard options.
+                            </li>
+                            <li>
+                                Faster rushed 2 days shipping options avaiable at checkout!
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
