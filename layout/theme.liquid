@@ -22,15 +22,18 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"></noscript>
     
+    {%- comment -%} Critical CSS: Load essential styles synchronously {%- endcomment -%}
     {{ 'bootstrap5.min.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
-
     {{ 'home.scss.css' | asset_url | stylesheet_tag }}
+    
+    {%- comment -%} Non-critical CSS: Defer icon fonts and animations {%- endcomment -%}
     <link rel="preload" as="style" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://pro-cdn.lineicons.com/3.0/regular/lineicons.css"></noscript>
     {{ 'custom-css.css' | asset_url | stylesheet_tag }}
     {{ 'components.css' | asset_url | stylesheet_tag }}
-    {{ 'animations.css' | asset_url | stylesheet_tag }}
+    <link rel="preload" href="{{ 'animations.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>{{ 'animations.css' | asset_url | stylesheet_tag }}</noscript>
     {% case template.name %}
       {% when 'index' %}
         {{ 'home.css' | asset_url | stylesheet_tag }}
@@ -46,6 +49,8 @@
     {% if template.directory == 'customers' %}
       {{ 'customer.css' | asset_url | stylesheet_tag }}
     {% endif %}
+    {%- comment -%} Preload critical above-the-fold images {%- endcomment -%}
+    <link rel="preload" as="image" href="{{ 'culogo@2x.png' | asset_url }}" fetchpriority="high">
     {% if template.name == 'index' %}
     <link rel="preload" as="image" href="{{ 'slide4.png' | asset_url }}" imagesrcset="{{ 'slide4.png' | asset_url }} 1600w" imagesizes="100vw" fetchpriority="high">
     {% endif %}
