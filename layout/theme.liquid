@@ -1,8 +1,5 @@
 <!doctype html>
-<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
 <html class="no-js supports-no-cookies" lang="{{ shop.locale }}">
-<!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
@@ -12,8 +9,7 @@
     <meta content="CheapUndies" name="author">
     <meta content="G21GuBHHzBqLhZB0qZldEjV10BwHbcuEfDZ38F6tMJ0" name="google-site-verification" />
     {%- render 'head-seo' -%}
-    <meta content="index" name="robots">
-    <meta content="follow" name="robots">
+    <meta name="robots" content="index, follow">
     {%- render 'head-social' -%}
     
     {%- comment -%} LCP Optimization: Preload Google Fonts instead of render-blocking @import {%- endcomment -%}
