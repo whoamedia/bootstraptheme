@@ -123,21 +123,32 @@
     <script type="module">
       import { subscribeToCartAjaxRequests } from '{{ "liquid-ajax-cart-v1.10.3.js" | asset_url }}';
 
-      /* Re-fetch the my-cart section HTML and replace the data-ajax-cart-section
-         container so that quantities, line prices, and subtotals stay in sync
-         with the server after every cart change (add / change / update / clear). */
+      /* Re-fetch the my-cart section HTML and merge it into the live DOM.
+         Unlike a raw innerHTML swap this preserves:
+           • data-ajax-cart-messages  (error text injected by the library)
+           • data-ajax-cart-static-element (third-party app content)
+           • scroll position inside the items list                      */
       function refreshCartSection() {
-        fetch(window.location.pathname + '?section_id=my-cart')
+        return fetch(window.location.pathname + '?section_id=my-cart')
           .then(function(r) { return r.text(); })
           .then(function(html) {
             var container = document.querySelector('[data-ajax-cart-section]');
             if (!container) return;
 
-            /* Preserve scroll position inside the items list */
+            /* ---- save state that must survive the swap ---- */
             var scrollArea = container.querySelector('[data-ajax-cart-section-scroll]');
             var scrollTop = scrollArea ? scrollArea.scrollTop : 0;
 
-            /* Parse the fresh section HTML */
+            var savedMessages = {};
+            container.querySelectorAll('[data-ajax-cart-messages]').forEach(function(el) {
+              var key = el.getAttribute('data-ajax-cart-messages');
+              if (el.innerHTML.trim()) savedMessages[key] = el.innerHTML;
+            });
+
+            var staticEl = container.querySelector('[data-ajax-cart-static-element]');
+            var savedStaticNodes = staticEl ? Array.from(staticEl.childNodes).map(function(n) { return n.cloneNode(true); }) : [];
+
+            /* ---- parse fresh server HTML ---- */
             var temp = document.createElement('div');
             temp.innerHTML = html;
             var newContainer = temp.querySelector('[data-ajax-cart-section]');
@@ -145,13 +156,23 @@
 
             container.innerHTML = newContainer.innerHTML;
 
-            /* Restore scroll position */
+            /* ---- restore preserved state ---- */
+            Object.keys(savedMessages).forEach(function(key) {
+              var el = container.querySelector('[data-ajax-cart-messages="' + CSS.escape(key) + '"]');
+              if (el) el.innerHTML = savedMessages[key];
+            });
+
+            var newStaticEl = container.querySelector('[data-ajax-cart-static-element]');
+            if (newStaticEl && savedStaticNodes.length) {
+              newStaticEl.innerHTML = '';
+              savedStaticNodes.forEach(function(n) { newStaticEl.appendChild(n); });
+            }
+
             var newScrollArea = container.querySelector('[data-ajax-cart-section-scroll]');
             if (newScrollArea) newScrollArea.scrollTop = scrollTop;
-
-            /* Counter is updated by the caller from the response body
-               (resultState.responseData.body.item_count) which is more
-               reliable than parsing the section HTML. */
+          })
+          .catch(function(err) {
+            console.error('refreshCartSection failed:', err);
           });
       }
 
@@ -194,15 +215,15 @@
             });
           }
 
-          /* After a quantity change completes, re-render the cart section so the
-             displayed qty, line prices, and subtotal match the server state.
-             This handles the case where Shopify caps the qty due to stock limits. */
+          /* After a quantity change completes, sync the cart drawer with the
+             server state. This handles the case where Shopify caps the qty
+             due to stock limits—the qty, prices, and subtotal all update
+             while the library's error messages are preserved. */
           if (requestState.requestType === 'change') {
             subscribeToResult((resultState) => {
               if (resultState.responseData?.ok) {
                 refreshCartSection();
 
-                /* Sync the header cart counter */
                 var counterEl = document.getElementById('counter');
                 var newCount = resultState.responseData.body?.item_count;
                 if (counterEl && typeof newCount === 'number') {
