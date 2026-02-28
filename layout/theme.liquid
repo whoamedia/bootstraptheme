@@ -123,6 +123,45 @@
     <script type="module">
       import { subscribeToCartAjaxRequests } from '{{ "liquid-ajax-cart-v1.10.3.js" | asset_url }}';
 
+      /* Re-fetch the my-cart section HTML and replace the data-ajax-cart-section
+         container so that quantities, line prices, and subtotals stay in sync
+         with the server after every cart change (add / change / update / clear). */
+      function refreshCartSection() {
+        fetch(window.location.pathname + '?section_id=my-cart')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var container = document.querySelector('[data-ajax-cart-section]');
+            if (!container) return;
+
+            /* Preserve scroll position inside the items list */
+            var scrollArea = container.querySelector('[data-ajax-cart-section-scroll]');
+            var scrollTop = scrollArea ? scrollArea.scrollTop : 0;
+
+            /* Parse the fresh section HTML */
+            var temp = document.createElement('div');
+            temp.innerHTML = html;
+            var newContainer = temp.querySelector('[data-ajax-cart-section]');
+            if (!newContainer) return;
+
+            container.innerHTML = newContainer.innerHTML;
+
+            /* Restore scroll position */
+            var newScrollArea = container.querySelector('[data-ajax-cart-section-scroll]');
+            if (newScrollArea) newScrollArea.scrollTop = scrollTop;
+
+            /* Update the header cart counter */
+            var counterEl = document.getElementById('counter');
+            if (counterEl) {
+              var countMatch = html.match(/item_count['"]\s*:\s*(\d+)/);
+              /* Fall back to counting visible cart items */
+              if (!countMatch) {
+                var items = container.querySelectorAll('[data-ajax-cart-quantity-input]');
+                counterEl.textContent = items.length;
+              }
+            }
+          });
+      }
+
       document.addEventListener('DOMContentLoaded', function() {
         subscribeToCartAjaxRequests((requestState, subscribeToResult) => {
           if (requestState.requestType === 'add') {
@@ -155,6 +194,26 @@
 
                 if (itemEl && itemEl.length) {
                   itemEl.html('<span class="icon-cart"></span> Add to Cart');
+                }
+
+                refreshCartSection();
+              }
+            });
+          }
+
+          /* After a quantity change completes, re-render the cart section so the
+             displayed qty, line prices, and subtotal match the server state.
+             This handles the case where Shopify caps the qty due to stock limits. */
+          if (requestState.requestType === 'change') {
+            subscribeToResult((resultState) => {
+              if (resultState.responseData?.ok) {
+                refreshCartSection();
+
+                /* Sync the header cart counter */
+                var counterEl = document.getElementById('counter');
+                var newCount = resultState.responseData.body?.item_count;
+                if (counterEl && typeof newCount === 'number') {
+                  counterEl.textContent = newCount;
                 }
               }
             });
