@@ -216,12 +216,13 @@
           }
 
           /* After a quantity change completes, sync the cart drawer with the
-             server state. This handles the case where Shopify caps the qty
-             due to stock limits—the qty, prices, and subtotal all update
-             while the library's error messages are preserved. */
+             server state. Shopify returns 422 when qty exceeds stock but
+             still caps the cart to the available amount—so we must refresh
+             on BOTH success (200) and stock-limit (422) responses. */
           if (requestState.requestType === 'change') {
             subscribeToResult((resultState) => {
-              if (resultState.responseData?.ok) {
+              var status = resultState.responseData?.status;
+              if (status === 200 || status === 422) {
                 refreshCartSection();
 
                 var counterEl = document.getElementById('counter');
