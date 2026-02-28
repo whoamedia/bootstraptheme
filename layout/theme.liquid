@@ -149,16 +149,9 @@
             var newScrollArea = container.querySelector('[data-ajax-cart-section-scroll]');
             if (newScrollArea) newScrollArea.scrollTop = scrollTop;
 
-            /* Update the header cart counter */
-            var counterEl = document.getElementById('counter');
-            if (counterEl) {
-              var countMatch = html.match(/item_count['"]\s*:\s*(\d+)/);
-              /* Fall back to counting visible cart items */
-              if (!countMatch) {
-                var items = container.querySelectorAll('[data-ajax-cart-quantity-input]');
-                counterEl.textContent = items.length;
-              }
-            }
+            /* Counter is updated by the caller from the response body
+               (resultState.responseData.body.item_count) which is more
+               reliable than parsing the section HTML. */
           });
       }
 
