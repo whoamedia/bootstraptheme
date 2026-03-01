@@ -4,14 +4,14 @@
     <meta content="website" property="og:type">
     <meta content="{{- page_title -}}" property="og:title"/>
     <meta content="{{- page_description -}}" property="og:description"/>
-        <meta content="http:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image"/>
-    <meta content="https:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image:secure_url"/>
+        <meta content="http:{{ 'safe_image.jpg' | asset_url }}" property="og:image"/>
+    <meta content="https:{{ 'safe_image.jpg' | asset_url }}" property="og:image:secure_url"/>
     {%- elsif template.name == 'product' -%}
     <meta content="product" property="og:type"/>
     <meta content="{{ product.title | strip_html | escape }}" property="og:title"/>
     {%- for image in product.images -%}
-        <meta content="http:{{ image | img_url: 'master' }}" property="og:image"/>
-        <meta content="https:{{ image | img_url: 'master' }}" property="og:image:secure_url"/>
+        <meta content="http:{{ image | image_url }}" property="og:image"/>
+        <meta content="https:{{ image | image_url }}" property="og:image:secure_url"/>
         <meta content="{{ image.width }}" property="og:image:width"/>
         <meta content="{{ image.height }}" property="og:image:height"/>
     {%- endfor -%}
@@ -39,7 +39,7 @@
 {% else %}
 	<meta name="twitter:description" content="{{ product.description | strip_html | strip_newlines | escape  | remove: '•' | remove: '”'  }}" />
 	{% endif %}
-  <meta name="twitter:image" content="https:{{ product.featured_image.src | img_url: 'master', format: 'pjpg'}}" />
+  <meta name="twitter:image" content="https:{{ product.featured_image.src | image_url: format: 'pjpg' }}" />
   <meta name="twitter:label1" content="Price" />
   <meta name="twitter:data1" content="{{ product.price | money}} {{ shop.currency }}" />
   
@@ -53,15 +53,15 @@
     <meta content="{{- collection.title | strip_html | escape -}}" property="og:title"/>
     <meta content="{{- collection.description | strip_html | escape  | truncate: 155 -}}" property="og:description"/>
     {%- if collection.image -%}
-    <meta content="http:{{ collection.image | img_url: 'master' }}" property="og:image"/>
-    <meta content="https:{{ collection.image | img_url: 'master'  }}" property="og:image:secure_url"/><meta content="{{ collection.image.width }}" property="og:image:width"/><meta content="{{ collection.image.height }}" property="og:image:height"/>
+    <meta content="http:{{ collection.image | image_url }}" property="og:image"/>
+    <meta content="https:{{ collection.image | image_url }}" property="og:image:secure_url"/><meta content="{{ collection.image.width }}" property="og:image:width"/><meta content="{{ collection.image.height }}" property="og:image:height"/>
     {%- endif -%}
     {%- elsif template contains 'article' -%}
     <meta content="article" property="og:type"/>
     <meta content="{{- article.title | strip_html | escape -}}" property="og:title"/>
     {%- if article.image -%}
-    <meta content="http:{{ article.image | img_url: 'master' }}" property="og:image"/>
-    <meta content="https:{{ article.image | img_url: 'master' }}" property="og:image:secure_url"/>
+    <meta content="http:{{ article.image | image_url }}" property="og:image"/>
+    <meta content="https:{{ article.image | image_url }}" property="og:image:secure_url"/>
     <meta content="{{ article.image.width }}" property="og:image:width"/>
     <meta content="{{ article.image.height }}" property="og:image:height"/>
     {% endif %}
@@ -77,8 +77,8 @@
 {%- else -%}
     <meta property="og:type" content="website" /> 
     <meta content="{{- page_title | escape -}}" property="og:title"/>
-        <meta content="http:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image"/>
-    <meta content="https:{{ 'safe_image.jpg' | asset_img_url }}" property="og:image:secure_url"/>
+        <meta content="http:{{ 'safe_image.jpg' | asset_url }}" property="og:image"/>
+    <meta content="https:{{ 'safe_image.jpg' | asset_url }}" property="og:image:secure_url"/>
     <meta name="twitter:site" content="@cheapundies">
 <meta name="twitter:card" content="http:{{ 'websitelogo.png' | asset_url }}">
 <meta name="twitter:title" content="{{- page_title | escape -}}">

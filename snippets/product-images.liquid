@@ -15,8 +15,8 @@ expand: "off"
 </script>
 <div class="row g-0">
     <div class="col-12  text-center">
-            <a href="{{ product.featured_image.src | img_url: 'master'}}" data-options="selectorTrigger:hover; zoomPosition: inner; zoomDistance: 150" class="MagicZoom" id="mainphoto">
-                <img id="zoom" class="img-fluid shirt lazyload" src="{{ product.featured_image.src | img_url: '500x'}}" data-src="{{ product.featured_image.src | img_url: '500x'}}" alt="{{ product.title }} Featured Image" width="500" height="500">
+                        <a href="{{ product.featured_image.src | image_url }}" data-options="selectorTrigger:hover; zoomPosition: inner; zoomDistance: 150" class="MagicZoom" id="mainphoto">
+                            <img id="zoom" class="img-fluid shirt lazyload" src="{{ product.featured_image.src | image_url: width: 500 }}" data-src="{{ product.featured_image.src | image_url: width: 500 }}" alt="{{ product.title }} Featured Image" width="500" height="500">
             </a>
     </div>
            {% if product.available %}
@@ -24,8 +24,8 @@ expand: "off"
     <div class="col-12   text-center">
         <div class="MagicScroll" data-options="width: auto; items: 4; draggable: true;" data-mobile-options="orientation:horizontal">
             {%- for image in product.images -%}
-            <a data-color="{%- for variant in image.variants -%}{{ variant.option2 }} {%- endfor -%}" data-image="{{ image.src | img_url: '500x' }}" class="pb-2 px-2 px-md-0" data-thumb-id="mainphoto" data-zoom-id="mainphoto" href="{{ image.src | product_img_url: 'master'  }}">
-                <img src="{{ image.src | img_url: '70x' }}" data-src="{{ image.src | img_url: '70x' }}" alt="{{ product.title }} Image {{ image.position }}" width="70" height="70" /></a>
+                        <a data-color="{%- for variant in image.variants -%}{{ variant.option2 }} {%- endfor -%}" data-image="{{ image.src | image_url: width: 500 }}" class="pb-2 px-2 px-md-0" data-thumb-id="mainphoto" data-zoom-id="mainphoto" href="{{ image.src | image_url }}">
+                            <img src="{{ image.src | image_url: width: 70 }}" data-src="{{ image.src | image_url: width: 70 }}" alt="{{ product.title }} Image {{ image.position }}" width="70" height="70" /></a>
                 {%- endfor -%}
         </div>
     </div>

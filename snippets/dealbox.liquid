@@ -63,7 +63,7 @@
 <section class="card-area pb-2 dealbox">
     <div class="single-card card-style-one">
         <div class="card-image">
-            <img src="{{ collection.image | img_url: '600x' }}"
+            <img src="{{ collection.image | image_url: width: 600 }}"
                  alt="{{ collection.image.alt | escape }}"
                  class="img-fluid w-100"
                  loading="lazy"
