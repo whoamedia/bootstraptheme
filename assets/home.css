@@ -184,6 +184,12 @@ div.fbox-icon .lni-sad-4,
   font-weight: 600;
 }
 
+.carousel-item img {
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+}
+
 .carousel-caption {
   background: #ffffffeb;
   line-height: 1.4rem;
