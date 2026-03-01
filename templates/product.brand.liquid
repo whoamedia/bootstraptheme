@@ -1,4 +1,4 @@
-{%- include 'rich-code' -%}
+{%- render 'rich-code', product: product -%}
 <div class="product brand">
    
 
@@ -11,8 +11,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="easyzoom easyzoom--overlay" id="ProductPhoto">
-                                    <a href="{{ product.featured_image.src | img_url: 'master', format: 'pjpg'}}">
-                                        <img alt="{{ product.title }} Featured Image" class="img-fluid shirt lazyload" data-src="{{ product.featured_image.src | img_url: '400x', format: 'pjpg'}}" src="{{ product.featured_image.src | img_url: '1x', format: 'pjpg'}}" style=" background-image: url('{{ product.featured_image.src | img_url: '400x', format: 'pjpg'}}')" width="400" height="400" loading="lazy">
+                                    <a href="{{ product.featured_image | image_url: width: 2048, format: 'pjpg' }}">
+                                        <img alt="{{ product.title }} Featured Image" class="img-fluid shirt lazyload" data-src="{{ product.featured_image | image_url: width: 400, format: 'pjpg' }}" src="{{ product.featured_image | image_url: width: 1, format: 'pjpg' }}" style=" background-image: url('{{ product.featured_image | image_url: width: 400, format: 'pjpg' }}')" width="400" height="400" loading="lazy">
                                     </a>
                                 </div>
                                 {% if product.available %}
@@ -24,14 +24,14 @@
                                                 {%- for image in product.images -%}
                                                     {% if product.options.first and product.options.first == "Color" %}
                                                         <li>
-                                                            <a data-color="{%- for variant in image.variants -%}{{ variant.option1 }} {%- endfor -%}" data-image="{{ image.src | img_url: '400x', format: 'pjpg' }}" data-zoom-id="thumbs" href="{{ image.src | product_img_url: 'master' , format: 'pjpg' }}">
-                                                                <img alt="{{ product.title }} Image {{ image.position }}" class="lazyload" data-src="{{ image.src | img_url: '50x', format: 'pjpg' }}" src="{{ product.featured_image.src | img_url: '1x', format: 'pjpg'}}" width="50" height="50" loading="lazy"/>
-                                                            </a>
-                                                        </li>
-                                                    {%- else -%}
-                                                        <li>
-                                                            <a data-color="{%- for variant in image.variants -%}{{ variant.option2 }} {%- endfor -%}" data-image="{{ image.src | img_url: '400x', format: 'pjpg' }}" data-zoom-id="thumbs" href="{{ image.src | product_img_url: 'master' , format: 'pjpg' }}">
-                                                                <img alt="{{ product.title }} Image {{ image.position }}" class="lazyload" data-src="{{ image.src | img_url: '50x', format: 'pjpg' }}" src="{{ image.src | img_url: '1x', format: 'pjpg' }}" width="50" height="50" loading="lazy"/>
+                                                            <a data-color="{%- for variant in image.variants -%}{{ variant.option1 }} {%- endfor -%}"                                                     data-image="{{ image | image_url: width: 400, format: 'pjpg' }}" data-zoom-id="thumbs" href="{{ image | image_url: width: 2048, format: 'pjpg' }}">
+                                                                                                                    <img alt="{{ product.title }} Image {{ image.position }}" class="lazyload" data-src="{{ image | image_url: width: 50, format: 'pjpg' }}" src="{{ product.featured_image | image_url: width: 1, format: 'pjpg' }}" width="50" height="50" loading="lazy"/>
+                                                                                                                </a>
+                                                                                                            </li>
+                                                                                                        {%- else -%}
+                                                                                                            <li>
+                                                                                                                <a data-color="{%- for variant in image.variants -%}{{ variant.option2 }} {%- endfor -%}" data-image="{{ image | image_url: width: 400, format: 'pjpg' }}" data-zoom-id="thumbs" href="{{ image | image_url: width: 2048, format: 'pjpg' }}">
+                                                                                                                    <img alt="{{ product.title }} Image {{ image.position }}" class="lazyload" data-src="{{ image | image_url: width: 50, format: 'pjpg' }}" src="{{ image | image_url: width: 1, format: 'pjpg' }}" width="50" height="50" loading="lazy"/>
                                                             </a>
                                                         </li>
                                                     {%- endif -%}
@@ -54,10 +54,10 @@
                                     <a class="SizeChartLink align-middle" data-bs-target="#questionModal" data-bs-toggle="modal" href=""><img class="mr-2 align-middle" src="{{ 'question.png' | asset_img_url: '16x'  }}" width="16" height="16"/>
                                         <span class="align-middle">Have a Question?</span>
                                     </a>
-                                    {%- include 'product-question' %}
+                                    {%- render 'product-question', product: product %}
                                 </div>
                                 <div class="col-6 text-center">
-                                    {%- include 'product-size-guide' -%}</div>
+                                    {%- render 'product-size-guide', product: product -%}</div>
                             </div>
                             <div class="mt-1">
                                 <hr>
@@ -110,11 +110,9 @@
                                                 {%- assign total = temp -%}
                                             {%- endunless -%}
                                         {%- endfor -%}
-                                        {%- assign fulltotal = total | plus:0 -%}
                                         {% form 'product', product, id: "oldID", class: "old-class",  data-cart-submit: "data-cart-submit"  %}
                                             <ul class="variant_selector variant-size mt-3">
                                                 {% for variant in product.variants %}
-                                                    {% assign single = variant.title | downcase %}
                                                     <li>
                                                         <input id="{{variant.id}}" type="radio" data-id="{{ variant.id }}" name="id" value="{{ variant.id }}" {% if variant.inventory_quantity <= 0 %} disabled {% endif %}/>
                                                         <label class="comman_class rounded {% if variant.inventory_quantity <= 0 %}soldout{% endif %}" for="{{ variant.id }}">
@@ -262,7 +260,7 @@
 </div>
 
 
-            {%- include 'gallery' -%}
+            {%- render 'gallery', product: product, collection: collection -%}
 
          
 

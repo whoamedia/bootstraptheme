@@ -11,11 +11,11 @@
              {% if collection.image %}
                 <div class="col-6 col-md-3 mb-3 cats">
                     <div class="card">
-                        <a href="/collections/{{ collection.handle }}">
+                        <a href="{{ routes.collections_url }}/{{ collection.handle }}">
                             <img alt=" {{ collection.title }}" class="card-img-top" src="{{ collection.image | image_url: width: 400, height: 400, crop: 'center' }}" width="400" height="400" loading="lazy"/></a>
                         <div class="card-body text-center">
                             <p class="card-text">
-                                <a href="/collections/{{ collection.handle }}" title="{{ collection.title }}">{{ collection.title }}</a>
+                                <a href="{{ routes.collections_url }}/{{ collection.handle }}" title="{{ collection.title }}">{{ collection.title }}</a>
                             </p>
                         </div>
                     </div>
