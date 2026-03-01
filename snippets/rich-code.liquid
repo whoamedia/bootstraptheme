@@ -17,8 +17,8 @@
              "sku": "{{ product.variants.first.sku | escape  }}",
           
              {%- endif -%}
-             "image": "https:{{ product | img_url: 'grande' }}",
-             {% if product.metafields.loox.num_reviews %} 
+                          "image": "https:{{ product | image_url: width: 600 }}",
+                          {% if product.metafields.loox.num_reviews %} 
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "{{ product.metafields.loox.avg_rating }}",
@@ -37,8 +37,8 @@
                  "sku": "{{ variant.sku  | escape }}",
                  "gtin13": "{{ variant.barcode  | escape }}",
                  "url": "{{ shop.secure_url }}{{ variant.url }}",
-                 "image": "https:{{ product | img_url: 'grande' }}",
-                  "seller": {
+                                  "image": "https:{{ product | image_url: width: 600 }}",
+                                   "seller": {
                     "@type": "Organization",
                     "name": "CheapUndies" 
                    {% if forloop.last == true %}
