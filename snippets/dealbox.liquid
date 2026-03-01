@@ -63,13 +63,11 @@
 <section class="card-area pb-2 dealbox">
     <div class="single-card card-style-one">
         <div class="card-image">
-            {% include 'responsive-image' with
-            image: collection.image,
-            image_class: "image",
-            wrapper_class: "image-wrapper",
-            max_width: 486,
-            max_height: 324
-            %}
+            <img src="{{ collection.image | img_url: '600x' }}"
+                 alt="{{ collection.image.alt | escape }}"
+                 class="img-fluid w-100"
+                 loading="lazy"
+                 decoding="async">
         </div>
         <div class="card-content">
             <div class="row bg-light info">

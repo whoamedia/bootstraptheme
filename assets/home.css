@@ -211,7 +211,7 @@ div.fbox-icon .lni-sad-4,
 
 .single-card .card-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 .single-card .card-content .card-title {
