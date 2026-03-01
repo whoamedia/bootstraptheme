@@ -4,8 +4,8 @@
         {% for imageURL in extraImages %}
             <img alt="{{ product.title }}" class="img-fluid" src="{{ imageURL }}"/>
         {% endfor %}
-        <!--     <img class="img-fluid" alt="{{ product.title }}" src="{{ product.featured_image.src | img_url: '600x'}}"/> -->
-        <!--    <img class="img-fluid" alt="{{ product.title }}" src="{{ product.images.last | img_url: '600x' }}"/> -->
+        <!--     <img class="img-fluid" alt="{{ product.title }}" src="{{ product.featured_image.src | image_url: width: 600 }}"/> -->
+        <!--    <img class="img-fluid" alt="{{ product.title }}" src="{{ product.images.last | image_url: width: 600 }}"/> -->
     </a>
     <div class="row">
         <div class="col-12">
